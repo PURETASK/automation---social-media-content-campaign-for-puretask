@@ -1,0 +1,120 @@
+{
+  "type": "object",
+  "properties": {
+    "title": {
+      "type": "string"
+    },
+    "audience": {
+      "type": "string",
+      "enum": [
+        "Busy Homeowners",
+        "Working Professionals",
+        "Families",
+        "Seniors",
+        "Cleaners / Recruiting"
+      ]
+    },
+    "pillar": {
+      "type": "string",
+      "enum": [
+        "Convenience",
+        "Trust",
+        "Transformation",
+        "Recruitment",
+        "Local",
+        "Proof"
+      ]
+    },
+    "hook": {
+      "type": "string"
+    },
+    "primary_caption": {
+      "type": "string"
+    },
+    "short_caption": {
+      "type": "string"
+    },
+    "long_caption": {
+      "type": "string"
+    },
+    "cta_1": {
+      "type": "string"
+    },
+    "cta_2": {
+      "type": "string"
+    },
+    "cta_3": {
+      "type": "string"
+    },
+    "image_prompt": {
+      "type": "string"
+    },
+    "video_prompt": {
+      "type": "string"
+    },
+    "script_15sec": {
+      "type": "string"
+    },
+    "script_30sec": {
+      "type": "string"
+    },
+    "comment_replies": {
+      "type": "string"
+    },
+    "platform_x": {
+      "type": "string"
+    },
+    "platform_instagram": {
+      "type": "string"
+    },
+    "platform_facebook": {
+      "type": "string"
+    },
+    "platform_linkedin": {
+      "type": "string"
+    },
+    "platform_tiktok": {
+      "type": "string"
+    },
+    "platform_pinterest": {
+      "type": "string"
+    },
+    "blog_post": {
+      "type": "string"
+    },
+    "status": {
+      "type": "string",
+      "enum": [
+        "Draft",
+        "Pending Approval",
+        "Approved",
+        "Rejected",
+        "Scheduled",
+        "Posted"
+      ]
+    },
+    "week_tag": {
+      "type": "string"
+    },
+    "campaign_tag": {
+      "type": "string"
+    },
+    "city": {
+      "type": "string"
+    },
+    "editor_notes": {
+      "type": "string"
+    },
+    "clarity_score": {
+      "type": "number"
+    },
+    "relatability_score": {
+      "type": "number"
+    },
+    "conversion_score": {
+      "type": "number"
+    }
+  },
+  "required": [],
+  "name": "ContentDraft"
+}
