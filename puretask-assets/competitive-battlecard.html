@@ -1,0 +1,419 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>PureTask Competitive Battlecard 2026</title>
+<style>
+  :root {
+    --blue: #0099FF;
+    --blue-dark: #0077CC;
+    --blue-light: #E8F4FF;
+    --bg: #0a0d14;
+    --bg2: #0f131c;
+    --bg3: #161b28;
+    --bg4: #1e2536;
+    --text: #ffffff;
+    --text2: rgba(255,255,255,0.75);
+    --text3: rgba(255,255,255,0.45);
+    --win: #10b981;
+    --lose: #ef4444;
+    --tie: #f59e0b;
+    --border: rgba(255,255,255,0.08);
+  }
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body { background: var(--bg); color: var(--text); font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif; }
+  header { background: linear-gradient(135deg, #003d80, #0099FF); padding: 32px 40px; display:flex; align-items:center; gap:20px; }
+  .logo { width:52px; height:52px; background:white; border-radius:12px; display:flex; align-items:center; justify-content:center; font-size:26px; font-weight:900; color:#0099FF; }
+  header h1 { font-size:26px; font-weight:800; }
+  header p { font-size:13px; color:rgba(255,255,255,0.7); margin-top:4px; }
+  .tabs { display:flex; gap:4px; padding:20px 40px 0; border-bottom: 1px solid var(--border); overflow-x:auto; }
+  .tab { padding:10px 20px; border:none; background:none; color:var(--text2); cursor:pointer; font-size:14px; font-weight:500; border-bottom:2px solid transparent; white-space:nowrap; transition:all 0.2s; }
+  .tab:hover { color:var(--text); }
+  .tab.active { color:var(--blue); border-bottom:2px solid var(--blue); }
+  .content { display:none; padding:32px 40px; max-width:1200px; }
+  .content.active { display:block; }
+  .section-title { font-size:20px; font-weight:700; margin-bottom:20px; color:var(--text); }
+  .badge { display:inline-block; padding:3px 10px; border-radius:20px; font-size:11px; font-weight:700; text-transform:uppercase; letter-spacing:.5px; }
+  .badge-win { background:rgba(16,185,129,0.15); color:var(--win); }
+  .badge-lose { background:rgba(239,68,68,0.15); color:var(--lose); }
+  .badge-tie { background:rgba(245,158,11,0.15); color:var(--tie); }
+
+  /* Matrix */
+  .matrix-table { width:100%; border-collapse:collapse; font-size:13px; }
+  .matrix-table th { background:var(--bg3); padding:12px 16px; text-align:left; font-size:12px; font-weight:600; color:var(--text3); text-transform:uppercase; letter-spacing:.5px; }
+  .matrix-table td { padding:12px 16px; border-bottom:1px solid var(--border); vertical-align:middle; }
+  .matrix-table tr:hover td { background:var(--bg4); }
+  .matrix-table .feature-col { color:var(--text); font-weight:500; }
+  .check { color:var(--win); font-size:16px; }
+  .cross { color:var(--lose); font-size:16px; }
+  .partial { color:var(--tie); font-size:16px; }
+  .puretask-col { background:rgba(0,153,255,0.06); }
+
+  /* Competitor cards */
+  .comp-grid { display:grid; grid-template-columns:1fr 1fr; gap:20px; margin-bottom:28px; }
+  .card { background:var(--bg2); border:1px solid var(--border); border-radius:12px; padding:20px; }
+  .card h3 { font-size:14px; font-weight:700; margin-bottom:12px; color:var(--blue); display:flex; align-items:center; gap:8px; }
+  .card ul { list-style:none; }
+  .card ul li { font-size:13px; color:var(--text2); padding:5px 0; border-bottom:1px solid var(--border); display:flex; align-items:flex-start; gap:8px; }
+  .card ul li:last-child { border-bottom:none; }
+  .win-li::before { content:"✅"; }
+  .lose-li::before { content:"❌"; }
+  .warn-li::before { content:"⚠️"; }
+
+  .profile-grid { display:grid; grid-template-columns:repeat(3,1fr); gap:12px; margin-bottom:20px; }
+  .profile-stat { background:var(--bg3); border-radius:8px; padding:14px; }
+  .profile-stat .label { font-size:11px; color:var(--text3); text-transform:uppercase; letter-spacing:.5px; margin-bottom:4px; }
+  .profile-stat .value { font-size:16px; font-weight:700; color:var(--text); }
+
+  .talk-track { background:var(--bg3); border-radius:10px; padding:16px; margin-bottom:12px; }
+  .talk-track .scenario { font-size:12px; font-weight:700; color:var(--blue); text-transform:uppercase; letter-spacing:.5px; margin-bottom:8px; }
+  .talk-track p { font-size:13px; color:var(--text2); line-height:1.6; }
+
+  .landmine { background:rgba(239,68,68,0.06); border:1px solid rgba(239,68,68,0.2); border-radius:10px; padding:14px; margin-bottom:10px; }
+  .landmine .q { font-size:13px; font-weight:600; color:var(--text); margin-bottom:6px; }
+  .landmine .why { font-size:12px; color:var(--text3); }
+
+  .divider { height:1px; background:var(--border); margin:24px 0; }
+  h2.sub { font-size:16px; font-weight:700; margin:24px 0 14px; color:var(--text); }
+
+  @media(max-width:700px) {
+    .comp-grid { grid-template-columns:1fr; }
+    .profile-grid { grid-template-columns:1fr 1fr; }
+    header { padding:20px; }
+    .content, .tabs { padding-left:16px; padding-right:16px; }
+  }
+</style>
+</head>
+<body>
+
+<header>
+  <div class="logo">P</div>
+  <div>
+    <h1>PureTask Competitive Battlecard</h1>
+    <p>Updated April 2026 &nbsp;·&nbsp; vs. Handy · TaskRabbit · Thumbtack · Homeaglow</p>
+  </div>
+</header>
+
+<div class="tabs">
+  <button class="tab active" onclick="showTab('matrix')">📊 Comparison Matrix</button>
+  <button class="tab" onclick="showTab('handy')">🟠 Handy</button>
+  <button class="tab" onclick="showTab('taskrabbit')">🐇 TaskRabbit</button>
+  <button class="tab" onclick="showTab('thumbtack')">📌 Thumbtack</button>
+  <button class="tab" onclick="showTab('homeaglow')">💡 Homeaglow</button>
+  <button class="tab" onclick="showTab('puretask')">✅ Our Advantages</button>
+</div>
+
+<!-- MATRIX -->
+<div id="matrix" class="content active">
+  <div class="section-title">Feature Comparison: PureTask vs. Competitors</div>
+  <table class="matrix-table">
+    <thead>
+      <tr>
+        <th style="width:26%">Feature</th>
+        <th class="puretask-col" style="width:18%">🏆 PureTask</th>
+        <th style="width:14%">Handy</th>
+        <th style="width:14%">TaskRabbit</th>
+        <th style="width:14%">Thumbtack</th>
+        <th style="width:14%">Homeaglow</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr><td class="feature-col">Escrow Payment (pay only on approval)</td><td class="puretask-col"><span class="check">✅ Yes</span></td><td><span class="cross">❌</span></td><td><span class="cross">❌</span></td><td><span class="cross">❌</span></td><td><span class="cross">❌</span></td></tr>
+      <tr><td class="feature-col">GPS Check-in/Check-out Verified</td><td class="puretask-col"><span class="check">✅ Yes</span></td><td><span class="partial">⚠️ App only</span></td><td><span class="cross">❌</span></td><td><span class="cross">❌</span></td><td><span class="cross">❌</span></td></tr>
+      <tr><td class="feature-col">Before/After Photo Proof</td><td class="puretask-col"><span class="check">✅ Every job</span></td><td><span class="cross">❌</span></td><td><span class="cross">❌</span></td><td><span class="cross">❌</span></td><td><span class="cross">❌</span></td></tr>
+      <tr><td class="feature-col">Criminal Background Check</td><td class="puretask-col"><span class="check">✅ + Annual renewal</span></td><td><span class="partial">⚠️ One-time</span></td><td><span class="partial">⚠️ One-time</span></td><td><span class="partial">⚠️ Some pros</span></td><td><span class="cross">❌ Unclear</span></td></tr>
+      <tr><td class="feature-col">Sex Offender Registry Check</td><td class="puretask-col"><span class="check">✅ Yes</span></td><td><span class="cross">❌ Not confirmed</span></td><td><span class="cross">❌ Not confirmed</span></td><td><span class="cross">❌</span></td><td><span class="cross">❌</span></td></tr>
+      <tr><td class="feature-col">Reliability Score / Rating System</td><td class="puretask-col"><span class="check">✅ 0–100 score</span></td><td><span class="partial">⚠️ Stars only</span></td><td><span class="partial">⚠️ Stars only</span></td><td><span class="partial">⚠️ Stars only</span></td><td><span class="partial">⚠️ Stars only</span></td></tr>
+      <tr><td class="feature-col">Cleaner Payout Percentage</td><td class="puretask-col"><span class="check">✅ 80–85%</span></td><td><span class="lose">~55–60%</span></td><td><span class="partial">~70–80% + fees</span></td><td><span class="partial">Varies (lead fees)</span></td><td><span class="lose">~50–60%</span></td></tr>
+      <tr><td class="feature-col">Transparent Pricing Before Booking</td><td class="puretask-col"><span class="check">✅ Full breakdown</span></td><td><span class="partial">⚠️ Estimate only</span></td><td><span class="partial">⚠️ Estimate only</span></td><td><span class="cross">❌ Quote-based</span></td><td><span class="cross">❌ Hidden sub fees</span></td></tr>
+      <tr><td class="feature-col">Credits Never Expire</td><td class="puretask-col"><span class="check">✅ Yes</span></td><td><span class="cross">❌</span></td><td><span class="cross">❌</span></td><td><span class="cross">❌</span></td><td><span class="cross">❌</span></td></tr>
+      <tr><td class="feature-col">Dispute Protection (funds held)</td><td class="puretask-col"><span class="check">✅ Escrow-backed</span></td><td><span class="partial">⚠️ Happiness Guarantee</span></td><td><span class="partial">⚠️ Happiness Pledge</span></td><td><span class="cross">❌</span></td><td><span class="cross">❌ FTC complaints</span></td></tr>
+      <tr><td class="feature-col">Tier System for Cleaners</td><td class="puretask-col"><span class="check">✅ Bronze→Platinum</span></td><td><span class="cross">❌</span></td><td><span class="cross">❌</span></td><td><span class="cross">❌</span></td><td><span class="cross">❌</span></td></tr>
+      <tr><td class="feature-col">Instant Booking</td><td class="puretask-col"><span class="check">✅ &lt;60 seconds</span></td><td><span class="check">✅</span></td><td><span class="check">✅</span></td><td><span class="cross">❌ Quote/match</span></td><td><span class="check">✅</span></td></tr>
+      <tr><td class="feature-col">No Hidden Subscription Fees</td><td class="puretask-col"><span class="check">✅ Yes</span></td><td><span class="partial">⚠️ Recurring plan</span></td><td><span class="check">✅</span></td><td><span class="check">✅</span></td><td><span class="lose">❌ FTC complaints</span></td></tr>
+      <tr><td class="feature-col">Overall Trust Score (Public Reviews)</td><td class="puretask-col"><span class="check">4.9★</span></td><td><span class="lose">~2.5★ (Trustpilot)</span></td><td><span class="partial">~3.8★</span></td><td><span class="partial">~3.5★</span></td><td><span class="lose">~1.5★ (FTC complaints)</span></td></tr>
+    </tbody>
+  </table>
+
+  <h2 class="sub">Quick Win Guide — When to Lead With What</h2>
+  <div class="comp-grid">
+    <div class="card">
+      <h3>🎯 When client mentions Handy</h3>
+      <ul>
+        <li class="win-li">We hold your money in escrow — you literally can't be burned</li>
+        <li class="win-li">GPS-verified arrivals + photo proof after every clean</li>
+        <li class="win-li">Handy has a 2.5★ Trustpilot rating — we have 4.9★</li>
+        <li class="win-li">No-show or late arrival = immediate dispute protection</li>
+      </ul>
+    </div>
+    <div class="card">
+      <h3>🎯 When client mentions TaskRabbit</h3>
+      <ul>
+        <li class="win-li">Escrow protection — TaskRabbit charges you immediately</li>
+        <li class="win-li">Our Reliability Score (0–100) is more transparent than stars</li>
+        <li class="win-li">Before/after photo documentation on every single job</li>
+        <li class="win-li">Annual background check renewals vs. one-time check</li>
+      </ul>
+    </div>
+    <div class="card">
+      <h3>🎯 When cleaner mentions TaskRabbit</h3>
+      <ul>
+        <li class="win-li">You keep 80–85% vs. TaskRabbit's lower take-home</li>
+        <li class="win-li">Tier system — the better you perform, the more you earn</li>
+        <li class="win-li">Weekly or instant payouts, you choose</li>
+        <li class="win-li">Bronze→Platinum progression = career path, not just gigs</li>
+      </ul>
+    </div>
+    <div class="card">
+      <h3>🎯 When client mentions Homeaglow</h3>
+      <ul>
+        <li class="win-li">No hidden subscriptions, no surprise charges</li>
+        <li class="win-li">Homeaglow has active FTC complaints — we're fully transparent</li>
+        <li class="win-li">Credits never expire — your money stays yours</li>
+        <li class="win-li">Full escrow — pay only when you approve the photos</li>
+      </ul>
+    </div>
+  </div>
+</div>
+
+<!-- HANDY -->
+<div id="handy" class="content">
+  <div class="section-title">🟠 Handy — Competitor Deep Dive</div>
+  <div class="profile-grid">
+    <div class="profile-stat"><div class="label">Founded</div><div class="value">2012</div></div>
+    <div class="profile-stat"><div class="label">Market</div><div class="value">US, Canada, UK</div></div>
+    <div class="profile-stat"><div class="label">Trustpilot</div><div class="value" style="color:var(--lose)">~2.5★</div></div>
+    <div class="profile-stat"><div class="label">Cleaner Payout</div><div class="value" style="color:var(--lose)">~55–60%</div></div>
+    <div class="profile-stat"><div class="label">Payment Model</div><div class="value">Charged upfront</div></div>
+    <div class="profile-stat"><div class="label">Background Check</div><div class="value">One-time only</div></div>
+  </div>
+
+  <div class="comp-grid">
+    <div class="card">
+      <h3>❌ Their Weaknesses (our opportunities)</h3>
+      <ul>
+        <li class="lose-li">Massive no-show problem — Reddit is full of complaints</li>
+        <li class="lose-li">Charged upfront, no escrow — clients stuck after bad cleans</li>
+        <li class="lose-li">Customer service is hard to reach, no real accountability</li>
+        <li class="lose-li">No photo documentation — no proof of what was done</li>
+        <li class="lose-li">Cleaners earn poorly (~55–60%), leading to low morale</li>
+        <li class="lose-li">Background checks done once, never renewed</li>
+      </ul>
+    </div>
+    <div class="card">
+      <h3>✅ Their Strengths (stay aware)</h3>
+      <ul>
+        <li class="win-li">Brand recognition — been around since 2012</li>
+        <li class="win-li">Large network across 20+ cities</li>
+        <li class="win-li">In-app cleaner arrival tracking (basic GPS)</li>
+        <li class="win-li">Happiness Guarantee (though poorly enforced)</li>
+      </ul>
+    </div>
+  </div>
+
+  <h2 class="sub">Talk Tracks vs. Handy</h2>
+  <div class="talk-track"><div class="scenario">When a client switched from Handy</div><p>"We hear this a lot. The thing Handy got wrong is charging you before the job is done — and leaving you with no real recourse. At PureTask, your credits sit in escrow until you literally approve the photos. If the job isn't done right, you don't pay. That's not a guarantee — that's how the money actually works."</p></div>
+  <div class="talk-track"><div class="scenario">When a client asks "how are you different from Handy?"</div><p>"Three things Handy can't say: GPS-verified check-in on every job, before/after photos uploaded in real-time, and escrow payment. We built the whole platform around accountability because we knew trust was the missing piece in this market."</p></div>
+
+  <h2 class="sub">Landmine Questions for Handy Users</h2>
+  <div class="landmine"><div class="q">"Has your cleaner ever not shown up — and what happened after?"</div><div class="why">Opens up the no-show / customer service nightmare that Handy is notorious for</div></div>
+  <div class="landmine"><div class="q">"Do you know if your cleaner's background check was done this year or years ago?"</div><div class="why">Handy does one-time checks — PureTask renews annually</div></div>
+  <div class="landmine"><div class="q">"If you paid and the clean wasn't satisfactory, what happened to your money?"</div><div class="why">Exposes the lack of escrow protection</div></div>
+</div>
+
+<!-- TASKRABBIT -->
+<div id="taskrabbit" class="content">
+  <div class="section-title">🐇 TaskRabbit — Competitor Deep Dive</div>
+  <div class="profile-grid">
+    <div class="profile-stat"><div class="label">Founded</div><div class="value">2008</div></div>
+    <div class="profile-stat"><div class="label">Owned By</div><div class="value">IKEA Group</div></div>
+    <div class="profile-stat"><div class="label">Market</div><div class="value">US, UK, Europe</div></div>
+    <div class="profile-stat"><div class="label">Cleaner Payout</div><div class="value" style="color:var(--tie)">~70–80% (+ fees)</div></div>
+    <div class="profile-stat"><div class="label">Payment Model</div><div class="value">Charged after task</div></div>
+    <div class="profile-stat"><div class="label">Background Check</div><div class="value">One-time criminal only</div></div>
+  </div>
+
+  <div class="comp-grid">
+    <div class="card">
+      <h3>❌ Their Weaknesses</h3>
+      <ul>
+        <li class="lose-li">Criminal check only — no ID verification, no sex offender check</li>
+        <li class="lose-li">No escrow — payment disputes are handled by "Happiness Pledge" (weak)</li>
+        <li class="lose-li">No GPS verification — client has no real-time confirmation</li>
+        <li class="lose-li">No photo documentation standard</li>
+        <li class="lose-li">No cleaner tier system — no career progression built in</li>
+        <li class="lose-li">Registration fee for taskers ($25 one-time) discourages quality applicants</li>
+      </ul>
+    </div>
+    <div class="card">
+      <h3>✅ Their Strengths</h3>
+      <ul>
+        <li class="win-li">Massive brand — IKEA backing, very well known</li>
+        <li class="win-li">Broad service categories beyond cleaning</li>
+        <li class="win-li">Strong cleaner community and tools</li>
+        <li class="win-li">Cleaners set their own rates (similar to us)</li>
+      </ul>
+    </div>
+  </div>
+
+  <h2 class="sub">Talk Tracks vs. TaskRabbit</h2>
+  <div class="talk-track"><div class="scenario">On safety comparison</div><p>"TaskRabbit runs a one-time criminal background check. We run criminal history, identity verification, AND sex offender registry — and we renew every single year. When someone enters your home, you should know that check is current, not from 3 years ago."</p></div>
+  <div class="talk-track"><div class="scenario">For recruiter/cleaner pitch</div><p>"TaskRabbit takes a bigger cut and charges you a registration fee just to get started. With PureTask you keep 80–85%, and the better your Reliability Score, the higher your rate ceiling. We're built for cleaners who want to actually grow, not just gig."</p></div>
+
+  <h2 class="sub">Landmine Questions</h2>
+  <div class="landmine"><div class="q">"When you book a cleaner, do you get any confirmation of when they actually arrive?"</div><div class="why">TaskRabbit has no GPS verification — PureTask does</div></div>
+  <div class="landmine"><div class="q">"If something went wrong after a TaskRabbit job, what protection did you have?"</div><div class="why">Their Happiness Pledge is vague — ours is escrow-backed</div></div>
+</div>
+
+<!-- THUMBTACK -->
+<div id="thumbtack" class="content">
+  <div class="section-title">📌 Thumbtack — Competitor Deep Dive</div>
+  <div class="profile-grid">
+    <div class="profile-stat"><div class="label">Model</div><div class="value">Lead marketplace</div></div>
+    <div class="profile-stat"><div class="label">Pricing</div><div class="value">Quote-based</div></div>
+    <div class="profile-stat"><div class="label">Background Check</div><div class="value">Optional / inconsistent</div></div>
+    <div class="profile-stat"><div class="label">Avg Cleaning Cost</div><div class="value">$174–$256</div></div>
+    <div class="profile-stat"><div class="label">Escrow</div><div class="value" style="color:var(--lose)">None</div></div>
+    <div class="profile-stat"><div class="label">Photo Proof</div><div class="value" style="color:var(--lose)">None</div></div>
+  </div>
+
+  <div class="comp-grid">
+    <div class="card">
+      <h3>❌ Their Weaknesses</h3>
+      <ul>
+        <li class="lose-li">Lead marketplace, not a booking platform — inconsistent quality</li>
+        <li class="lose-li">Pros pay for leads even if the client ghosts them</li>
+        <li class="lose-li">No escrow, no payment protection</li>
+        <li class="lose-li">Background checks inconsistent — not all pros are verified</li>
+        <li class="lose-li">No GPS, no photo proof standard</li>
+        <li class="lose-li">Pricing opacity — quotes vary wildly</li>
+      </ul>
+    </div>
+    <div class="card">
+      <h3>✅ Their Strengths</h3>
+      <ul>
+        <li class="win-li">Huge SEO presence — dominates cleaning cost searches</li>
+        <li class="win-li">Wide service variety (not just cleaning)</li>
+        <li class="win-li">Review system is fairly robust</li>
+      </ul>
+    </div>
+  </div>
+
+  <h2 class="sub">Talk Track vs. Thumbtack</h2>
+  <div class="talk-track"><div class="scenario">On booking experience</div><p>"Thumbtack is more like Craigslist with reviews — you post a request, get quotes, and hope for the best. PureTask is an actual marketplace where every cleaner is pre-verified, pricing is transparent before you book, and your payment is protected in escrow. No quotes, no surprises."</p></div>
+</div>
+
+<!-- HOMEAGLOW -->
+<div id="homeaglow" class="content">
+  <div class="section-title">💡 Homeaglow — Competitor Deep Dive</div>
+  <div class="profile-grid">
+    <div class="profile-stat"><div class="label">Known For</div><div class="value">$19 intro clean</div></div>
+    <div class="profile-stat"><div class="label">FTC Status</div><div class="value" style="color:var(--lose)">Active complaints</div></div>
+    <div class="profile-stat"><div class="label">Model</div><div class="value">Subscription trap</div></div>
+    <div class="profile-stat"><div class="label">Cleaner Pay</div><div class="value" style="color:var(--lose)">~50–60%</div></div>
+    <div class="profile-stat"><div class="label">Trustpilot</div><div class="value" style="color:var(--lose)">~1.5★</div></div>
+    <div class="profile-stat"><div class="label">Background Check</div><div class="value" style="color:var(--lose)">Unclear/minimal</div></div>
+  </div>
+
+  <div class="comp-grid">
+    <div class="card">
+      <h3>❌ Their Major Issues</h3>
+      <ul>
+        <li class="lose-li">FTC + BBB complaints for hidden subscription traps</li>
+        <li class="lose-li">$19 promo auto-enrolls users in expensive recurring plans</li>
+        <li class="lose-li">Cleaners complain of poor pay and lack of support</li>
+        <li class="lose-li">No escrow, no photo proof, no GPS verification</li>
+        <li class="lose-li">Background checks are minimal or unclear</li>
+        <li class="lose-li">Very low customer satisfaction scores publicly</li>
+      </ul>
+    </div>
+    <div class="card">
+      <h3>✅ Their Strengths</h3>
+      <ul>
+        <li class="win-li">Low intro price drives trial — good acquisition</li>
+        <li class="win-li">TikTok / social viral marketing has worked short-term</li>
+      </ul>
+    </div>
+  </div>
+
+  <h2 class="sub">Talk Track vs. Homeaglow</h2>
+  <div class="talk-track"><div class="scenario">When a prospect was burned by Homeaglow</div><p>"Homeaglow's model is built on subscription traps and introductory pricing — the FTC has received complaints about it. PureTask is the opposite: no subscriptions, no hidden fees, credits that never expire, and you literally don't pay until you approve the photos. We exist because that model needed to be replaced."</p></div>
+
+  <div class="landmine"><div class="q">"Did you know your $19 clean enrolled you in a recurring plan?"</div><div class="why">Homeaglow's #1 complaint — users didn't realize they signed up for a subscription</div></div>
+</div>
+
+<!-- PURETASK ADVANTAGES -->
+<div id="puretask" class="content">
+  <div class="section-title">✅ PureTask — Our Unique Advantages</div>
+
+  <div class="comp-grid">
+    <div class="card">
+      <h3>🔐 Trust & Safety Stack (no competitor has all 5)</h3>
+      <ul>
+        <li class="win-li">Criminal background check — renewed annually</li>
+        <li class="win-li">Identity verification (ID + photo)</li>
+        <li class="win-li">Sex offender registry screening</li>
+        <li class="win-li">GPS check-in/out with client notification</li>
+        <li class="win-li">Before/after timestamped photos every room</li>
+      </ul>
+    </div>
+    <div class="card">
+      <h3>💰 Payment System (industry-first escrow)</h3>
+      <ul>
+        <li class="win-li">Credits held in escrow — not charged until you approve</li>
+        <li class="win-li">24-hour photo review window before release</li>
+        <li class="win-li">Dispute opens = funds stay frozen</li>
+        <li class="win-li">Credits never expire — no lock-in anxiety</li>
+        <li class="win-li">1 credit = $1 USD — transparent</li>
+      </ul>
+    </div>
+    <div class="card">
+      <h3>📈 Cleaner Career System (unique to PureTask)</h3>
+      <ul>
+        <li class="win-li">Reliability Score 0–100 (multi-dimensional, not just stars)</li>
+        <li class="win-li">Bronze → Silver → Gold → Platinum tier progression</li>
+        <li class="win-li">Higher score = higher rate ceiling + lower platform fee</li>
+        <li class="win-li">80–85% earnings split (industry-leading)</li>
+        <li class="win-li">Weekly or instant Stripe payouts</li>
+      </ul>
+    </div>
+    <div class="card">
+      <h3>🎯 Content Angles That Win</h3>
+      <ul>
+        <li class="win-li">"Pay only when you approve the photos" — nobody else can say this</li>
+        <li class="win-li">"GPS check-in so you always know they arrived"</li>
+        <li class="win-li">"Background checked AND renewed every year"</li>
+        <li class="win-li">"Keep 80–85% of every booking" — recruiting magnet</li>
+        <li class="win-li">"4.9★ from 10K+ clients across 50+ cities"</li>
+      </ul>
+    </div>
+  </div>
+
+  <h2 class="sub">Positioning Statement</h2>
+  <div class="talk-track">
+    <div class="scenario">Core Positioning</div>
+    <p>PureTask is the only home cleaning marketplace that protects both sides of every booking with escrow payments, GPS verification, and photo proof — so clients pay only when they're satisfied, and cleaners build real careers with transparent scoring and industry-leading payouts.</p>
+  </div>
+
+  <h2 class="sub">Stats to Always Have Ready</h2>
+  <div class="profile-grid">
+    <div class="profile-stat"><div class="label">Happy Clients</div><div class="value" style="color:var(--win)">10K+</div></div>
+    <div class="profile-stat"><div class="label">Verified Cleaners</div><div class="value" style="color:var(--win)">2,400+</div></div>
+    <div class="profile-stat"><div class="label">Avg Rating</div><div class="value" style="color:var(--win)">4.9★</div></div>
+    <div class="profile-stat"><div class="label">Satisfaction Rate</div><div class="value" style="color:var(--win)">98%</div></div>
+    <div class="profile-stat"><div class="label">Cities Served</div><div class="value" style="color:var(--win)">50+</div></div>
+    <div class="profile-stat"><div class="label">Cleaner Payout</div><div class="value" style="color:var(--win)">80–85%</div></div>
+  </div>
+</div>
+
+<script>
+function showTab(id) {
+  document.querySelectorAll('.content').forEach(c => c.classList.remove('active'));
+  document.querySelectorAll('.tab').forEach(t => t.classList.remove('active'));
+  document.getElementById(id).classList.add('active');
+  event.target.classList.add('active');
+}
+</script>
+</body>
+</html>

@@ -1,176 +1,169 @@
 ---
 name: applying-brand-guidelines
-description: This skill applies consistent corporate branding and styling to all generated documents including colors, fonts, layouts, and messaging
+description: This skill applies consistent PureTask branding and styling to all generated documents including colors, fonts, layouts, and messaging
 ---
 
----
-name: applying-brand-guidelines
-description: This skill applies consistent corporate branding and styling to all generated documents including colors, fonts, layouts, and messaging
----
+# PureTask Brand Guidelines Skill
 
-# Corporate Brand Guidelines Skill
-
-This skill ensures all generated documents adhere to corporate brand standards for consistent, professional communication.
+This skill ensures all generated content adheres to PureTask brand standards for consistent, professional communication across every platform and asset type.
 
 ## Brand Identity
 
-### Company: Acme Corporation
-**Tagline**: "Innovation Through Excellence"
-**Industry**: Technology Solutions
+### Company: PureTask
+**Tagline**: "Cleaning you can actually trust."
+**Secondary tagline**: "Pay Only When You're Happy."
+**Industry**: Home Cleaning Marketplace (Trust-First)
+**Website**: puretask.co
 
 ## Visual Standards
 
 ### Color Palette
 
 **Primary Colors**:
-- **Acme Blue**: #0066CC (RGB: 0, 102, 204) - Headers, primary buttons
-- **Acme Navy**: #003366 (RGB: 0, 51, 102) - Text, accents
-- **White**: #FFFFFF - Backgrounds, reverse text
+- **PureTask Blue**: #0099FF (RGB: 0, 153, 255) — CTA buttons, key word highlights, logo, accents
+- **Deep Navy**: #003d80 — Gradient starts, hero backgrounds
+- **White**: #FFFFFF — Primary backgrounds, reverse text
 
-**Secondary Colors**:
-- **Success Green**: #28A745 (RGB: 40, 167, 69) - Positive metrics
-- **Warning Amber**: #FFC107 (RGB: 255, 193, 7) - Cautions
-- **Error Red**: #DC3545 (RGB: 220, 53, 69) - Negative values
-- **Neutral Gray**: #6C757D (RGB: 108, 117, 125) - Secondary text
+**Secondary / Supporting Colors**:
+- **Background Light**: #F8FAFC — Page backgrounds, card fills
+- **Text Dark**: #0F172A — Headlines, primary text
+- **Text Medium**: #64748B — Body copy, subtext
+- **Text Light**: #94A3B8 — Captions, labels
+- **Border**: #E2E8F0 — Dividers, card borders
+- **Success Green**: #10B981 — Checkmarks, trust signals, positive metrics
+- **Warning Yellow**: #F59E0B — Star ratings, caution states
+- **Error Red**: #EF4444 — Negative metrics, dispute flags
 
 ### Typography
 
-**Primary Font Family**: Segoe UI, system-ui, -apple-system, sans-serif
+**Font Family**: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif (clean bold sans-serif)
 
 **Font Hierarchy**:
-- **H1**: 32pt, Bold, Acme Blue
-- **H2**: 24pt, Semibold, Acme Navy
-- **H3**: 18pt, Semibold, Acme Navy
-- **Body**: 11pt, Regular, Acme Navy
-- **Caption**: 9pt, Regular, Neutral Gray
+- **H1 Hero**: 48–60pt, ExtraBold (800), Black (#0F172A), key word in Blue (#0099FF)
+- **H1 Page**: 36–48pt, Bold (700), Black
+- **H2 Section**: 24–32pt, Bold (700), Black or Blue
+- **H3 Card**: 16–20pt, SemiBold (600), Black
+- **Body**: 14–16pt, Regular (400), Medium Gray (#64748B)
+- **Label/Caption**: 11–12pt, Medium (500), Light Gray (#94A3B8), UPPERCASE, letter-spacing
+
+**Key rule**: Accent critical words in PureTask Blue. e.g. "Cleaning you can **actually trust.**" — "trust." is blue.
 
 ### Logo Usage
 
-- Position: Top-left corner on first page/slide
-- Size: 120px width (maintain aspect ratio)
-- Clear space: Minimum 20px padding on all sides
-- Never distort, rotate, or apply effects
+- **Logomark**: Blue rounded square (#0099FF bg) with white bold "P" lettermark
+- **Wordmark**: "PureTask" in dark bold sans-serif (#0F172A)
+- **Combined**: Icon left, wordmark right
+- **Min size**: 32px icon / 120px combined
+- **Clear space**: 16px minimum on all sides
+- **Never**: Distort, rotate, recolor, or add drop shadows
+
+### Visual Style
+
+- **Minimal + Premium**: White-dominant. Lots of breathing room. No clutter.
+- **Photography**: Real lifestyle photography. Clean modern interiors. Natural light. No staged stock photos.
+- **Icons**: Simple line icons in blue or gray. No skeuomorphic icons.
+- **Cards**: Rounded corners (10–14px). Subtle borders (1px, low opacity). Clean white fill.
+- **Buttons**: Primary = solid blue (#0099FF) with white text, 8px radius. Secondary = white with dark border.
+- **Trust Badges**: Green checkmark ✅ for verified features. Gold star ⭐ for ratings.
+
+## Content & Copy Standards
+
+### Voice & Tone
+
+**Always**: Direct. Confident. Human. Punchy.
+**Never**: Corporate-speak. Fluff. Hedging. Over-punctuation.
+
+| DO | DON'T |
+|----|-------|
+| "Your money stays frozen until you approve." | "We offer payment protection features." |
+| "Background checked. GPS verified. Every cleaner." | "We care about your safety." |
+| "Book in 60 seconds." | "Our streamlined booking process..." |
+| "4.9★ from 10K+ clients." | "Thousands of satisfied customers." |
+| Short sentences. Active voice. | Long paragraphs. Passive voice. |
+
+### Key Brand Phrases (always use these exact phrases)
+
+- "Cleaning you can actually trust."
+- "Pay Only When You're Happy."
+- "Cleaning rebuilt on trust."
+- "Background checked. GPS verified. Photo documented."
+- "Escrow protection — pay only when you approve."
+- "Credits only release when YOU approve."
+- "Book in under 60 seconds."
+- "Credits never expire."
+- "Keep 80–85% of every booking." (for cleaner-facing content)
+- "Bronze → Silver → Gold → Platinum" (tier progression)
+
+### Stats to Reference
+
+- 10K+ happy clients
+- 2,400+ verified cleaners
+- 4.9★ average rating
+- 98% satisfaction rate
+- 50+ cities served
+
+### Key Differentiators (always present these)
+
+1. **Escrow Payment** — credits held, released ONLY when client approves. Never charged upfront.
+2. **GPS Check-ins** — cleaner checks in/out via GPS, client gets notified
+3. **Before/After Photo Proof** — timestamped photos of every room, every job
+4. **Background Checks** — criminal history, ID verification, sex offender registry, renewed annually
+5. **Reliability Score** — 0–100 composite score per cleaner
+6. **Tier System** — Bronze → Silver → Gold → Platinum
+7. **Cleaner keeps 80–85%** — industry-leading split
+
+## Platform-Specific Formatting
+
+### Facebook
+- 2–4 paragraphs, conversational, practical
+- One CTA, optional emojis (sparse)
+- Lead with a real-world scenario or question
+
+### Instagram
+- 1–2 punchy paragraphs + 3–5 hashtags MAX
+- Visual-first, lifestyle/aspirational angle
+- Always pair with a high-quality image
+
+### TikTok
+- First line IS the hook — must grab in 1 second
+- Casual, fast, POV/relatable format
+- Short punchy sentences
+
+### LinkedIn
+- Professional but personal, insight-driven
+- Short story → insight → PureTask connection
+- No hard sell
+
+### Threads
+- Opinion-forward, conversational, punchy
+- 1–3 short paragraphs, no hashtags
+
+### Pinterest
+- Aspirational + keyword-rich
+- 5–8 hashtags
+- Always needs an image/title
 
 ## Document Standards
 
-### PowerPoint Presentations
+### HTML Assets
+- Use CSS variables for all brand colors (--blue: #0099FF, --bg: #F8FAFC, etc.)
+- Headers: gradient 135deg from #003d80 to #0099FF
+- Cards: white bg, 1px #E2E8F0 border, 12px border-radius
+- Font: -apple-system system stack
 
-**Slide Templates**:
-1. **Title Slide**: Company logo, presentation title, date, presenter
-2. **Section Divider**: Section title with blue background
-3. **Content Slide**: Title bar with blue background, white content area
-4. **Data Slide**: For charts/graphs, maintain color palette
+### Markdown Docs
+- Use blue/trust/green/red emoji consistently
+- Bold key phrases and numbers
+- Short paragraphs, lots of whitespace
 
-**Layout Rules**:
-- Margins: 0.5 inches all sides
-- Title position: Top 15% of slide
-- Bullet indentation: 0.25 inches per level
-- Maximum 6 bullet points per slide
-- Charts use brand colors exclusively
+## Quality Checklist
 
-### Excel Spreadsheets
-
-**Formatting Standards**:
-- **Headers**: Row 1, Bold, White text on Acme Blue background
-- **Subheaders**: Bold, Acme Navy text
-- **Data cells**: Regular, Acme Navy text
-- **Borders**: Thin, Neutral Gray
-- **Alternating rows**: Light gray (#F8F9FA) for readability
-
-**Chart Defaults**:
-- Primary series: Acme Blue
-- Secondary series: Success Green
-- Gridlines: Neutral Gray, 0.5pt
-- No 3D effects or gradients
-
-### PDF Documents
-
-**Page Layout**:
-- **Header**: Company logo left, document title center, page number right
-- **Footer**: Copyright notice left, date center, classification right
-- **Margins**: 1 inch all sides
-- **Line spacing**: 1.15
-- **Paragraph spacing**: 12pt after
-
-**Section Formatting**:
-- Main headings: Acme Blue, 16pt, bold
-- Subheadings: Acme Navy, 14pt, semibold
-- Body text: Acme Navy, 11pt, regular
-
-## Content Guidelines
-
-### Tone of Voice
-
-- **Professional**: Formal but approachable
-- **Clear**: Avoid jargon, use simple language
-- **Active**: Use active voice, action-oriented
-- **Positive**: Focus on solutions and benefits
-
-### Standard Phrases
-
-**Opening Statements**:
-- "At Acme Corporation, we..."
-- "Our commitment to innovation..."
-- "Delivering excellence through..."
-
-**Closing Statements**:
-- "Thank you for your continued partnership."
-- "We look forward to serving your needs."
-- "Together, we achieve excellence."
-
-### Data Presentation
-
-**Numbers**:
-- Use comma separators for thousands
-- Currency: $X,XXX.XX format
-- Percentages: XX.X% (one decimal)
-- Dates: Month DD, YYYY
-
-**Tables**:
-- Headers in brand blue
-- Alternating row colors
-- Right-align numbers
-- Left-align text
-
-## Quality Standards
-
-### Before Finalizing
-
-Always ensure:
-1. Logo is properly placed and sized
-2. All colors match brand palette exactly
-3. Fonts are consistent throughout
-4. No typos or grammatical errors
-5. Data is accurately presented
-6. Professional tone maintained
-
-### Prohibited Elements
-
-Never use:
-- Clip art or stock photos without approval
-- Comic Sans, Papyrus, or decorative fonts
-- Rainbow colors or gradients
-- Animations or transitions (unless specified)
-- Competitor branding or references
-
-## Application Instructions
-
-When creating any document:
-1. Start with brand colors and fonts
-2. Apply appropriate template structure
-3. Include logo on first page/slide
-4. Use consistent formatting throughout
-5. Review against brand standards
-6. Ensure professional appearance
-
-## Scripts
-
-- `apply_brand.py`: Automatically applies brand formatting to documents
-- `validate_brand.py`: Checks documents for brand compliance
-
-## Notes
-
-- These guidelines apply to all external communications
-- Internal documents may use simplified formatting
-- Special projects may have exceptions (request approval)
-- Brand guidelines updated quarterly - check for latest version
+Before finalizing any asset:
+- [ ] Primary color is correct (#0099FF, not purple, not teal)
+- [ ] Key words accented in blue
+- [ ] Tagline included where appropriate
+- [ ] At least 2 of the 7 key differentiators referenced
+- [ ] Stats cited (10K+, 4.9★, 98%, 50+ cities) where relevant
+- [ ] Voice is direct and punchy — no corporate fluff
+- [ ] CTA is clear and specific
+- [ ] Platform formatting rules followed
