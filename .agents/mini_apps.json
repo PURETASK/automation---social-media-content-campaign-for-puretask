@@ -2,11 +2,11 @@
   "app_id": "69d5e9e7beaeb910ea903abd",
   "slug": "pure-task-specialist-app-ea903abd",
   "pages": {
-    "ContentDashboard": {
-      "title": "ContentDashboard"
-    },
     "BrainstormDashboard": {
       "title": "BrainstormDashboard"
+    },
+    "ContentDashboard": {
+      "title": "ContentDashboard"
     }
   }
 }
