@@ -1,0 +1,88 @@
+{
+  "type": "object",
+  "properties": {
+    "title": {
+      "type": "string"
+    },
+    "research_type": {
+      "type": "string",
+      "enum": [
+        "Trending Topic",
+        "Competitor Intel",
+        "Audience Pain Point",
+        "Seasonal Trend",
+        "Industry News",
+        "Platform Algorithm Change",
+        "Viral Format"
+      ]
+    },
+    "source": {
+      "type": "string"
+    },
+    "source_url": {
+      "type": "string"
+    },
+    "summary": {
+      "type": "string"
+    },
+    "relevance_to_puretask": {
+      "type": "string"
+    },
+    "suggested_pillar": {
+      "type": "string",
+      "enum": [
+        "Convenience",
+        "Trust",
+        "Transformation",
+        "Recruitment",
+        "Local",
+        "Proof"
+      ]
+    },
+    "suggested_audience": {
+      "type": "string",
+      "enum": [
+        "Busy Homeowners",
+        "Working Professionals",
+        "Families",
+        "Seniors",
+        "Cleaners / Recruiting"
+      ]
+    },
+    "sentiment": {
+      "type": "string",
+      "enum": [
+        "Positive",
+        "Negative",
+        "Neutral",
+        "Frustrated",
+        "Curious"
+      ]
+    },
+    "urgency": {
+      "type": "string",
+      "enum": [
+        "High",
+        "Medium",
+        "Low"
+      ]
+    },
+    "actionable": {
+      "type": "boolean"
+    },
+    "used_in_brainstorm": {
+      "type": "boolean"
+    },
+    "research_date": {
+      "type": "string"
+    },
+    "season_tag": {
+      "type": "string"
+    },
+    "notes": {
+      "type": "string"
+    }
+  },
+  "required": [],
+  "name": "MarketResearch"
+}

@@ -1,0 +1,98 @@
+{
+  "type": "object",
+  "properties": {
+    "idea_title": {
+      "type": "string"
+    },
+    "concept": {
+      "type": "string"
+    },
+    "pillar": {
+      "type": "string",
+      "enum": [
+        "Convenience",
+        "Trust",
+        "Transformation",
+        "Recruitment",
+        "Local",
+        "Proof"
+      ]
+    },
+    "audience": {
+      "type": "string",
+      "enum": [
+        "Busy Homeowners",
+        "Working Professionals",
+        "Families",
+        "Seniors",
+        "Cleaners / Recruiting"
+      ]
+    },
+    "hook_options": {
+      "type": "string"
+    },
+    "angle": {
+      "type": "string"
+    },
+    "format_suggestion": {
+      "type": "string",
+      "enum": [
+        "Short Post",
+        "Carousel",
+        "Reel / Short Video",
+        "Story Sequence",
+        "Long-form Blog",
+        "Testimonial Style",
+        "Before/After",
+        "FAQ / Objection",
+        "Trending Audio Overlay",
+        "Meme / Relatable",
+        "How-To / Tutorial"
+      ]
+    },
+    "source_research_id": {
+      "type": "string"
+    },
+    "predicted_score": {
+      "type": "number"
+    },
+    "selection_reasoning": {
+      "type": "string"
+    },
+    "status": {
+      "type": "string",
+      "enum": [
+        "Brainstormed",
+        "Selected",
+        "Rejected",
+        "Converted to Draft"
+      ]
+    },
+    "pillar_gap_bonus": {
+      "type": "number"
+    },
+    "trend_relevance_score": {
+      "type": "number"
+    },
+    "winner_pattern_match": {
+      "type": "number"
+    },
+    "seasonal_relevance": {
+      "type": "boolean"
+    },
+    "week_tag": {
+      "type": "string"
+    },
+    "campaign_tag": {
+      "type": "string"
+    },
+    "converted_draft_id": {
+      "type": "string"
+    },
+    "notes": {
+      "type": "string"
+    }
+  },
+  "required": [],
+  "name": "ContentIdea"
+}

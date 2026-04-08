@@ -4,6 +4,9 @@
   "pages": {
     "ContentDashboard": {
       "title": "ContentDashboard"
+    },
+    "BrainstormDashboard": {
+      "title": "BrainstormDashboard"
     }
   }
 }
