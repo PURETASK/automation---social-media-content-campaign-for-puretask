@@ -122,14 +122,13 @@ export default function ContentDashboard() {
           <div className="w-9 h-9 bg-indigo-600 rounded-xl flex items-center justify-center text-white font-bold text-lg">P</div>
           <div>
             <h1 className="text-base font-bold text-gray-900">PureTask Content Studio</h1>
-            <p className="text-xs text-gray-400">Research · Brainstorm · Create · Analyze</p>
+            <p className="text-xs text-gray-400">Platform-specific brainstorm · Create · Analyze</p>
           </div>
         </div>
         <div className="flex items-center gap-2 text-xs">
           <span className="bg-yellow-100 text-yellow-700 px-2 py-1 rounded-full font-medium">{sc2["Pending Approval"]||0} pending</span>
           <span className="bg-blue-100 text-blue-700 px-2 py-1 rounded-full font-medium">{sc2["Scheduled"]||0} scheduled</span>
           <span className="bg-green-100 text-green-700 px-2 py-1 rounded-full font-medium">{ideas.filter(i=>i.status==="Selected").length} ideas selected</span>
-          <span className="bg-yellow-50 text-yellow-600 px-2 py-1 rounded-full font-medium">🏆 {winners.length}</span>
         </div>
       </div>
 
@@ -193,10 +192,10 @@ export default function ContentDashboard() {
         <div className="max-w-5xl mx-auto p-6">
           <div className="flex items-center justify-between mb-6">
             <div>
-              <h2 className="text-lg font-bold text-gray-900">Brainstorm & Idea Selection</h2>
-              <p className="text-sm text-gray-400">AI-generated ideas scored by data — top picks auto-selected</p>
+              <h2 className="text-lg font-bold text-gray-900">Brainstorm & Platform-Specific Ideas</h2>
+              <p className="text-sm text-gray-400">Ideas scored and optimized per platform — top picks auto-selected</p>
             </div>
-            <span className="text-xs bg-green-50 text-green-600 px-3 py-1.5 rounded-full font-medium">{ideas.filter(i=>i.status==="Selected").length} selected this cycle</span>
+            <span className="text-xs bg-green-50 text-green-600 px-3 py-1.5 rounded-full font-medium">{ideas.filter(i=>i.status==="Selected").length} selected</span>
           </div>
           <div className="flex flex-wrap gap-2 mb-4">
             {["All","Selected","Brainstormed","Converted to Draft","Rejected"].map(f => (
@@ -207,40 +206,60 @@ export default function ContentDashboard() {
             <div className="bg-white rounded-xl border p-12 text-center text-gray-400">
               <div className="text-5xl mb-4">💡</div>
               <p className="font-medium text-gray-500">No ideas yet.</p>
-              <p className="text-sm mt-1">The brainstorm engine runs every Monday at 6am PT. Ideas will appear here with scores.</p>
+              <p className="text-sm mt-1">The brainstorm engine runs every Monday at 6am PT. Ideas will appear here with platform scores.</p>
             </div>
           ) : (
             <div className="space-y-3">
               {filteredIdeas.map(idea => (
                 <div key={idea.id} className={`bg-white rounded-xl border p-4 shadow-sm ${idea.status==="Selected"?"border-green-200 bg-green-50/30":""}`}>
-                  <div className="flex items-start justify-between mb-2">
+                  <div className="flex items-start justify-between mb-3">
                     <div className="flex-1">
                       <div className="flex items-center gap-2 mb-1">
-                        {idea.status==="Selected" && <span className="text-green-600 text-sm">✅</span>}
+                        {idea.status==="Selected" && <span className="text-green-600 text-sm font-bold">✅</span>}
                         <h3 className="text-sm font-semibold text-gray-800">{idea.idea_title}</h3>
                       </div>
                       <p className="text-sm text-gray-600">{idea.concept}</p>
                     </div>
-                    <div className="flex items-center gap-2 ml-3 shrink-0">
+                    <div className="flex items-center gap-3 ml-3 shrink-0">
                       <div className="text-center">
                         <p className="text-lg font-bold text-indigo-600">{idea.predicted_score?.toFixed(1)}</p>
-                        <p className="text-xs text-gray-400">Score</p>
+                        <p className="text-xs text-gray-400">Overall</p>
                       </div>
                       <span className={`text-xs px-2 py-0.5 rounded-full font-medium ${IS_C[idea.status]}`}>{idea.status}</span>
                     </div>
                   </div>
+
+                  {/* Platform-specific scores */}
+                  {(idea.platform_x_score || idea.platform_instagram_score || idea.platform_facebook_score || idea.platform_linkedin_score || idea.platform_tiktok_score || idea.platform_pinterest_score) && (
+                    <div className="bg-gray-50 rounded-lg p-3 mb-3">
+                      <p className="text-xs text-gray-500 font-semibold mb-2">📱 Platform Scores</p>
+                      <div className="grid grid-cols-6 gap-2">
+                        {[["X",idea.platform_x_score,"𝕏"],["IG",idea.platform_instagram_score,"📸"],["FB",idea.platform_facebook_score,"👤"],["LI",idea.platform_linkedin_score,"💼"],["TikTok",idea.platform_tiktok_score,"🎵"],["Pin",idea.platform_pinterest_score,"📌"]].map(([l,s,i]) => s ? (
+                          <div key={l} className="text-center">
+                            <p className={`text-lg font-bold ${s>=8?"text-green-600":s>=6?"text-yellow-600":"text-gray-400"}`}>{s?.toFixed(1)}</p>
+                            <p className="text-xs text-gray-500">{l}</p>
+                          </div>
+                        ) : null)}
+                      </div>
+                      {idea.best_platform && <p className="text-xs text-indigo-600 mt-2">🎯 Best for: <span className="font-semibold">{idea.best_platform}</span></p>}
+                    </div>
+                  )}
+
                   {idea.hook_options && <p className="text-xs text-gray-500 italic mb-2">🎣 Hooks: {idea.hook_options}</p>}
+                  
                   <div className="flex items-center gap-2 flex-wrap mb-2">
                     {idea.pillar && <span className={`text-xs px-2 py-0.5 rounded-full ${PC[idea.pillar]}`}>{idea.pillar}</span>}
                     {idea.audience && <span className="text-xs bg-gray-100 text-gray-500 px-2 py-0.5 rounded-full">{idea.audience}</span>}
                     {idea.format_suggestion && <span className="text-xs bg-indigo-50 text-indigo-600 px-2 py-0.5 rounded-full">{idea.format_suggestion}</span>}
                     {idea.seasonal_relevance && <span className="text-xs bg-emerald-50 text-emerald-600 px-2 py-0.5 rounded-full">🌱 Seasonal</span>}
                   </div>
+
                   {idea.selection_reasoning && (
-                    <div className="bg-gray-50 rounded-lg p-2 mt-2">
-                      <p className="text-xs text-gray-500"><span className="font-medium text-gray-700">Why selected:</span> {idea.selection_reasoning}</p>
+                    <div className="bg-yellow-50 rounded-lg p-2">
+                      <p className="text-xs text-gray-600"><span className="font-semibold text-gray-800">Why selected:</span> {idea.selection_reasoning}</p>
                     </div>
                   )}
+
                   <div className="flex gap-4 mt-2 text-xs text-gray-400">
                     <span>Trend: {idea.trend_relevance_score||0}/10</span>
                     <span>Winner Match: {idea.winner_pattern_match||0}/10</span>
@@ -417,11 +436,11 @@ export default function ContentDashboard() {
           <div className="flex items-center justify-between mb-6">
             <div>
               <h2 className="text-lg font-bold text-gray-900">Winner DNA Patterns</h2>
-              <p className="text-sm text-gray-400">Extracted patterns from top-performing content — feeds the brainstorm engine</p>
+              <p className="text-sm text-gray-400">Extracted from 8+ rated posts — feeds back into brainstorm</p>
             </div>
           </div>
           {dna.length===0 ? (
-            <div className="bg-white rounded-xl border p-12 text-center"><div className="text-5xl mb-4">🧬</div><p className="text-gray-500 font-medium">No winner DNA yet.</p><p className="text-gray-400 text-sm mt-1">When posts score 8+ they get analyzed and their patterns saved here.</p></div>
+            <div className="bg-white rounded-xl border p-12 text-center"><div className="text-5xl mb-4">🧬</div><p className="text-gray-500 font-medium">No winner DNA yet.</p><p className="text-gray-400 text-sm mt-1">When posts score 8+, their patterns get saved here and feed into future brainstorms.</p></div>
           ) : (
             <div className="space-y-4">
               {dna.map(w => (

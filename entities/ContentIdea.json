@@ -80,6 +80,27 @@
     "seasonal_relevance": {
       "type": "boolean"
     },
+    "platform_x_score": {
+      "type": "number"
+    },
+    "platform_instagram_score": {
+      "type": "number"
+    },
+    "platform_facebook_score": {
+      "type": "number"
+    },
+    "platform_linkedin_score": {
+      "type": "number"
+    },
+    "platform_tiktok_score": {
+      "type": "number"
+    },
+    "platform_pinterest_score": {
+      "type": "number"
+    },
+    "best_platform": {
+      "type": "string"
+    },
     "week_tag": {
       "type": "string"
     },
