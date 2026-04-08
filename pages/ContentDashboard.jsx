@@ -14,7 +14,6 @@ const STATUS_STYLE = {
   Scheduled: "bg-blue-100 text-blue-700",
   Posted: "bg-purple-100 text-purple-700"
 };
-
 const PILLAR_STYLE = {
   Convenience: "bg-blue-50 text-blue-600",
   Trust: "bg-green-50 text-green-600",
@@ -23,7 +22,6 @@ const PILLAR_STYLE = {
   Local: "bg-teal-50 text-teal-600",
   Proof: "bg-pink-50 text-pink-600"
 };
-
 const PERF_STYLE = {
   Winner: "bg-yellow-100 text-yellow-700",
   Good: "bg-green-100 text-green-700",
@@ -31,7 +29,6 @@ const PERF_STYLE = {
   Underperformer: "bg-red-100 text-red-600",
   Pending: "bg-gray-100 text-gray-500"
 };
-
 const RESEARCH_STYLE = {
   "Trending Topic": "bg-rose-50 text-rose-600",
   "Competitor Intel": "bg-amber-50 text-amber-600",
@@ -41,7 +38,6 @@ const RESEARCH_STYLE = {
   "Platform Algorithm Change": "bg-indigo-50 text-indigo-600",
   "Viral Format": "bg-fuchsia-50 text-fuchsia-600"
 };
-
 const IDEA_STYLE = {
   Brainstormed: "bg-gray-100 text-gray-600",
   Selected: "bg-green-100 text-green-700",
@@ -82,6 +78,7 @@ export default function ContentDashboard() {
   const [editing, setEditing] = useState(false);
   const [editData, setEditData] = useState({});
   const [saving, setSaving] = useState(false);
+  const [posting, setPosting] = useState(false);
   const [activePlatform, setActivePlatform] = useState("platform_instagram");
   const [toast, setToast] = useState(null);
   const [showScheduler, setShowScheduler] = useState(false);
@@ -90,6 +87,7 @@ export default function ContentDashboard() {
   const [perfEntry, setPerfEntry] = useState({});
   const [resFilter, setResFilter] = useState("All");
   const [ideaFilter, setIdeaFilter] = useState("All");
+  const [postMode, setPostMode] = useState("now"); // "now" or "schedule"
 
   useEffect(() => { fetchAll(); }, []);
 
@@ -110,7 +108,7 @@ export default function ContentDashboard() {
 
   function showToast(msg, type = "success") {
     setToast({ msg, type });
-    setTimeout(() => setToast(null), 3000);
+    setTimeout(() => setToast(null), 4000);
   }
 
   const filteredDrafts = drafts.filter(d => statusFilter === "All" || d.status === statusFilter);
@@ -121,15 +119,13 @@ export default function ContentDashboard() {
   const pillarStats = perfs.reduce((a, p) => {
     if (!p.pillar) return a;
     if (!a[p.pillar]) a[p.pillar] = { t: 0, c: 0 };
-    a[p.pillar].t += p.performance_score || 0;
-    a[p.pillar].c += 1;
+    a[p.pillar].t += p.performance_score || 0; a[p.pillar].c += 1;
     return a;
   }, {});
 
   const platStats = perfs.reduce((a, p) => {
     if (!a[p.platform]) a[p.platform] = { t: 0, c: 0 };
-    a[p.platform].t += p.performance_score || 0;
-    a[p.platform].c += 1;
+    a[p.platform].t += p.performance_score || 0; a[p.platform].c += 1;
     return a;
   }, {});
 
@@ -151,14 +147,44 @@ export default function ContentDashboard() {
     showToast("💾 Saved!");
   }
 
-  async function schedulePost() {
-    if (!scheduleData.date || scheduleData.platforms.length === 0) { showToast("Pick a date and at least one platform", "error"); return; }
-    setSaving(true);
-    await ContentDraft.update(selected.id, { status: "Scheduled", scheduled_date: scheduleData.date, scheduled_platforms: scheduleData.platforms.join(", ") });
-    await fetchAll();
-    setSelected(p => ({ ...p, status: "Scheduled", scheduled_date: scheduleData.date, scheduled_platforms: scheduleData.platforms.join(", ") }));
-    setShowScheduler(false); setSaving(false);
-    showToast("📅 Scheduled!");
+  // Send to Ayrshare — post now or schedule
+  async function publishToAyrshare(mode = "now") {
+    if (scheduleData.platforms.length === 0) { showToast("Select at least one platform", "error"); return; }
+    if (mode === "schedule" && !scheduleData.date) { showToast("Pick a date and time to schedule", "error"); return; }
+    setPosting(true);
+    try {
+      const payload = {
+        draft_id: selected.id,
+        platforms: scheduleData.platforms,
+        ...(mode === "schedule" ? { schedule_date: new Date(scheduleData.date).toISOString() } : {})
+      };
+      const res = await fetch(`/functions/postToSocials`, {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(payload)
+      });
+      const data = await res.json();
+      if (data.ok) {
+        const posted = data.posted_to || [];
+        const failed = data.failed || [];
+        if (posted.length > 0) {
+          showToast(mode === "schedule"
+            ? `📅 Scheduled to: ${posted.join(", ")}`
+            : `🚀 Posted to: ${posted.join(", ")}${failed.length ? ` | Failed: ${failed.join(", ")}` : ""}`
+          );
+        } else {
+          showToast(`Failed to post: ${JSON.stringify(data.results)}`, "error");
+        }
+        await fetchAll();
+        setSelected(p => ({ ...p, status: mode === "schedule" ? "Scheduled" : "Posted" }));
+        setShowScheduler(false);
+      } else {
+        showToast(data.error || "Something went wrong", "error");
+      }
+    } catch (e) {
+      showToast("Network error: " + e.message, "error");
+    }
+    setPosting(false);
   }
 
   async function savePerformance() {
@@ -194,9 +220,8 @@ export default function ContentDashboard() {
 
   return (
     <div className="min-h-screen bg-gray-50 font-sans">
-      {/* Toast */}
       {toast && (
-        <div className={`fixed top-4 right-4 z-50 px-5 py-3 rounded-xl shadow-lg text-sm font-medium ${toast.type === "error" ? "bg-red-500 text-white" : "bg-green-500 text-white"}`}>
+        <div className={`fixed top-4 right-4 z-50 px-5 py-3 rounded-xl shadow-lg text-sm font-medium max-w-sm ${toast.type === "error" ? "bg-red-500 text-white" : "bg-green-500 text-white"}`}>
           {toast.msg}
         </div>
       )}
@@ -207,13 +232,13 @@ export default function ContentDashboard() {
           <div className="w-9 h-9 bg-indigo-600 rounded-xl flex items-center justify-center text-white font-bold text-lg">P</div>
           <div>
             <h1 className="text-base font-bold text-gray-900">PureTask Content Studio</h1>
-            <p className="text-xs text-gray-400">Research · Brainstorm · Create · Analyze</p>
+            <p className="text-xs text-gray-400">Research · Brainstorm · Create · Publish via Ayrshare</p>
           </div>
         </div>
         <div className="flex items-center gap-2 text-xs flex-wrap justify-end">
           <span className="bg-yellow-100 text-yellow-700 px-2 py-1 rounded-full font-medium">{statusCounts["Pending Approval"] || 0} pending</span>
           <span className="bg-blue-100 text-blue-700 px-2 py-1 rounded-full font-medium">{statusCounts["Scheduled"] || 0} scheduled</span>
-          <span className="bg-green-100 text-green-700 px-2 py-1 rounded-full font-medium">{ideas.filter(i => i.status === "Selected").length} ideas selected</span>
+          <span className="bg-purple-100 text-purple-700 px-2 py-1 rounded-full font-medium">{statusCounts["Posted"] || 0} posted</span>
           <span className="bg-yellow-50 text-yellow-600 px-2 py-1 rounded-full font-medium">🏆 {winners.length}</span>
         </div>
       </div>
@@ -249,7 +274,7 @@ export default function ContentDashboard() {
             <div className="bg-white rounded-xl border p-12 text-center">
               <div className="text-5xl mb-4">🔬</div>
               <p className="font-medium text-gray-500">No research data yet.</p>
-              <p className="text-sm text-gray-400 mt-1">The market scan runs every Sunday at 6pm PT and will populate this automatically.</p>
+              <p className="text-sm text-gray-400 mt-1">Market scan runs every Sunday at 6pm PT and populates this automatically.</p>
             </div>
           ) : (
             <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
@@ -281,7 +306,7 @@ export default function ContentDashboard() {
           <div className="flex items-center justify-between mb-4">
             <div>
               <h2 className="text-lg font-bold text-gray-900">Brainstorm & Platform-Scored Ideas</h2>
-              <p className="text-sm text-gray-400">Scored per platform — top picks auto-selected by AI</p>
+              <p className="text-sm text-gray-400">Scored per platform — top picks auto-selected by AI using data</p>
             </div>
             <span className="text-xs bg-green-50 text-green-600 px-3 py-1.5 rounded-full font-medium">{ideas.filter(i => i.status === "Selected").length} selected</span>
           </div>
@@ -316,21 +341,18 @@ export default function ContentDashboard() {
                       <Pill label={idea.status} style={IDEA_STYLE[idea.status] || "bg-gray-100 text-gray-500"} />
                     </div>
                   </div>
-
-                  {/* Platform scores */}
                   <div className="bg-gray-50 rounded-lg p-3 mb-3">
                     <p className="text-xs font-semibold text-gray-500 mb-2">📱 Platform Scores</p>
                     <div className="grid grid-cols-6 gap-2 text-center">
-                      {[["X", idea.platform_x_score], ["IG", idea.platform_instagram_score], ["FB", idea.platform_facebook_score], ["LI", idea.platform_linkedin_score], ["TikTok", idea.platform_tiktok_score], ["Pin", idea.platform_pinterest_score]].map(([label, score]) => (
+                      {[["X", idea.platform_x_score],["IG", idea.platform_instagram_score],["FB", idea.platform_facebook_score],["LI", idea.platform_linkedin_score],["TT", idea.platform_tiktok_score],["Pin", idea.platform_pinterest_score]].map(([label, score]) => (
                         <div key={label}>
                           <ScoreBadge score={score} />
                           <p className="text-xs text-gray-400 mt-0.5">{label}</p>
                         </div>
                       ))}
                     </div>
-                    {idea.best_platform && <p className="text-xs text-indigo-600 mt-2">🎯 Best for: <span className="font-semibold">{idea.best_platform}</span></p>}
+                    {idea.best_platform && <p className="text-xs text-indigo-600 mt-2 font-medium">🎯 Best for: {idea.best_platform}</p>}
                   </div>
-
                   {idea.hook_options && <p className="text-xs text-gray-500 italic mb-2">🎣 {idea.hook_options}</p>}
                   <div className="flex flex-wrap gap-2 mb-2">
                     {idea.pillar && <Pill label={idea.pillar} style={PILLAR_STYLE[idea.pillar] || "bg-gray-100 text-gray-500"} />}
@@ -346,7 +368,7 @@ export default function ContentDashboard() {
                   <div className="flex gap-4 mt-2 text-xs text-gray-400">
                     <span>Trend: {idea.trend_relevance_score || 0}/10</span>
                     <span>Winner Match: {idea.winner_pattern_match || 0}/10</span>
-                    <span>Pillar Gap: +{idea.pillar_gap_bonus || 0}</span>
+                    <span>Gap Bonus: +{idea.pillar_gap_bonus || 0}</span>
                   </div>
                 </div>
               ))}
@@ -358,7 +380,6 @@ export default function ContentDashboard() {
       {/* ====== QUEUE ====== */}
       {tab === "📋 Queue" && (
         <div className="flex" style={{ height: "calc(100vh - 113px)" }}>
-          {/* Sidebar */}
           <div className="w-80 bg-white border-r border-gray-100 flex flex-col shrink-0">
             <div className="p-4 border-b border-gray-100">
               <div className="flex flex-wrap gap-1.5">
@@ -390,7 +411,6 @@ export default function ContentDashboard() {
             </div>
           </div>
 
-          {/* Detail panel */}
           <div className="flex-1 overflow-y-auto">
             {!selected ? (
               <div className="flex flex-col items-center justify-center h-full text-gray-400">
@@ -399,7 +419,6 @@ export default function ContentDashboard() {
               </div>
             ) : (
               <div className="max-w-3xl mx-auto p-6">
-                {/* Title + actions */}
                 <div className="flex items-start justify-between mb-4 gap-3">
                   <div>
                     <h2 className="text-xl font-bold text-gray-900 mb-2">{selected.is_winner && "🏆 "}{selected.title}</h2>
@@ -414,11 +433,21 @@ export default function ContentDashboard() {
                     {!editing ? (
                       <>
                         <button onClick={() => setEditing(true)} className="text-sm px-3 py-2 bg-gray-100 text-gray-700 rounded-lg hover:bg-gray-200 font-medium">✏️ Edit</button>
-                        {selected.status === "Approved" && <button onClick={() => setShowScheduler(true)} className="text-sm px-3 py-2 bg-blue-500 text-white rounded-lg font-medium">📅 Schedule</button>}
-                        {selected.status === "Posted" && <button onClick={() => { setPerfEntry({ platform: "", reach: 0, impressions: 0, likes: 0, comments: 0, shares: 0, saves: 0, clicks: 0, follower_growth: 0, posted_at: new Date().toISOString().slice(0, 10) }); setShowPerfModal(true); }} className="text-sm px-3 py-2 bg-purple-500 text-white rounded-lg font-medium">📊 Log Stats</button>}
-                        {!["Approved","Scheduled","Posted"].includes(selected.status) && <button onClick={() => updateStatus(selected.id, "Approved")} className="text-sm px-3 py-2 bg-green-500 text-white rounded-lg font-medium">✅ Approve</button>}
-                        {!["Rejected","Posted"].includes(selected.status) && <button onClick={() => updateStatus(selected.id, "Rejected")} className="text-sm px-3 py-2 bg-red-500 text-white rounded-lg font-medium">❌ Reject</button>}
-                        {selected.status === "Scheduled" && <button onClick={() => updateStatus(selected.id, "Posted")} className="text-sm px-3 py-2 bg-purple-500 text-white rounded-lg font-medium">📤 Mark Posted</button>}
+                        {selected.status === "Approved" && (
+                          <button onClick={() => setShowScheduler(true)} className="text-sm px-3 py-2 bg-indigo-500 text-white rounded-lg font-medium hover:bg-indigo-600">🚀 Publish</button>
+                        )}
+                        {selected.status === "Posted" && (
+                          <button onClick={() => { setPerfEntry({ platform: "", reach: 0, impressions: 0, likes: 0, comments: 0, shares: 0, saves: 0, clicks: 0, follower_growth: 0, posted_at: new Date().toISOString().slice(0, 10) }); setShowPerfModal(true); }} className="text-sm px-3 py-2 bg-purple-500 text-white rounded-lg font-medium">📊 Log Stats</button>
+                        )}
+                        {!["Approved","Scheduled","Posted"].includes(selected.status) && (
+                          <button onClick={() => updateStatus(selected.id, "Approved")} className="text-sm px-3 py-2 bg-green-500 text-white rounded-lg font-medium">✅ Approve</button>
+                        )}
+                        {!["Rejected","Posted"].includes(selected.status) && (
+                          <button onClick={() => updateStatus(selected.id, "Rejected")} className="text-sm px-3 py-2 bg-red-500 text-white rounded-lg font-medium">❌ Reject</button>
+                        )}
+                        {selected.status === "Scheduled" && (
+                          <button onClick={() => updateStatus(selected.id, "Posted")} className="text-sm px-3 py-2 bg-purple-500 text-white rounded-lg font-medium">📤 Mark Posted</button>
+                        )}
                       </>
                     ) : (
                       <>
@@ -429,27 +458,60 @@ export default function ContentDashboard() {
                   </div>
                 </div>
 
-                {/* Schedule modal */}
+                {/* Ayrshare Publish Panel */}
                 {showScheduler && (
-                  <div className="bg-blue-50 border border-blue-200 rounded-xl p-4 mb-4">
-                    <h3 className="text-sm font-bold text-blue-800 mb-3">📅 Schedule This Post</h3>
-                    <div className="mb-3">
-                      <label className="text-xs text-blue-700 font-medium block mb-1">Date & Time</label>
-                      <input type="datetime-local" className="border border-blue-200 rounded-lg px-3 py-2 text-sm w-full bg-white" value={scheduleData.date} onChange={e => setScheduleData(p => ({ ...p, date: e.target.value }))} />
+                  <div className="bg-indigo-50 border border-indigo-200 rounded-xl p-5 mb-5">
+                    <div className="flex items-center justify-between mb-4">
+                      <h3 className="text-sm font-bold text-indigo-800">🚀 Publish via Ayrshare</h3>
+                      <button onClick={() => setShowScheduler(false)} className="text-xs text-gray-400 hover:text-gray-600">✕</button>
                     </div>
-                    <div className="mb-3">
-                      <label className="text-xs text-blue-700 font-medium block mb-1">Platforms</label>
+
+                    {/* Mode toggle */}
+                    <div className="flex gap-2 mb-4">
+                      <button onClick={() => setPostMode("now")} className={`text-xs px-4 py-2 rounded-full font-medium ${postMode === "now" ? "bg-indigo-600 text-white" : "bg-white text-indigo-600 border border-indigo-200"}`}>⚡ Post Now</button>
+                      <button onClick={() => setPostMode("schedule")} className={`text-xs px-4 py-2 rounded-full font-medium ${postMode === "schedule" ? "bg-indigo-600 text-white" : "bg-white text-indigo-600 border border-indigo-200"}`}>📅 Schedule</button>
+                    </div>
+
+                    {postMode === "schedule" && (
+                      <div className="mb-4">
+                        <label className="text-xs text-indigo-700 font-medium block mb-1">Date & Time</label>
+                        <input type="datetime-local" className="border border-indigo-200 rounded-lg px-3 py-2 text-sm w-full bg-white" value={scheduleData.date} onChange={e => setScheduleData(p => ({ ...p, date: e.target.value }))} />
+                      </div>
+                    )}
+
+                    <div className="mb-4">
+                      <label className="text-xs text-indigo-700 font-medium block mb-1">Select Platforms</label>
                       <div className="flex flex-wrap gap-2">
                         {PLATFORM_NAMES.map(pl => (
                           <button key={pl} onClick={() => setScheduleData(p => ({ ...p, platforms: p.platforms.includes(pl) ? p.platforms.filter(x => x !== pl) : [...p.platforms, pl] }))}
-                            className={`text-xs px-3 py-1.5 rounded-full font-medium ${scheduleData.platforms.includes(pl) ? "bg-blue-600 text-white" : "bg-white text-blue-600 border border-blue-200"}`}>{pl}</button>
+                            className={`text-xs px-3 py-2 rounded-lg font-medium transition-all ${scheduleData.platforms.includes(pl) ? "bg-indigo-600 text-white" : "bg-white text-indigo-600 border border-indigo-200 hover:bg-indigo-50"}`}>
+                            {pl}
+                          </button>
                         ))}
                       </div>
+                      <button onClick={() => setScheduleData(p => ({ ...p, platforms: [...PLATFORM_NAMES] }))} className="text-xs text-indigo-500 mt-2 hover:underline">Select all</button>
                     </div>
-                    <div className="flex gap-2">
-                      <button onClick={() => setShowScheduler(false)} className="text-sm px-3 py-2 bg-white text-gray-600 border rounded-lg">Cancel</button>
-                      <button onClick={schedulePost} disabled={saving} className="text-sm px-4 py-2 bg-blue-600 text-white rounded-lg font-medium disabled:opacity-50">{saving ? "..." : "📅 Confirm"}</button>
-                    </div>
+
+                    {scheduleData.platforms.length > 0 && (
+                      <div className="bg-white rounded-lg p-3 mb-4 border border-indigo-100">
+                        <p className="text-xs text-gray-500 mb-1 font-medium">Each platform gets its own copy:</p>
+                        {scheduleData.platforms.map(pl => {
+                          const key = `platform_${pl.toLowerCase() === "x" ? "x" : pl.toLowerCase()}`;
+                          const content = selected[key] || selected.primary_caption || "";
+                          return (
+                            <div key={pl} className="mb-2">
+                              <span className="text-xs font-semibold text-indigo-700">{pl}:</span>
+                              <p className="text-xs text-gray-600 line-clamp-2 mt-0.5">{content || "No platform-specific copy — will use primary caption"}</p>
+                            </div>
+                          );
+                        })}
+                      </div>
+                    )}
+
+                    <button onClick={() => publishToAyrshare(postMode)} disabled={posting || scheduleData.platforms.length === 0}
+                      className="w-full py-3 bg-indigo-600 text-white rounded-xl font-semibold text-sm hover:bg-indigo-700 disabled:opacity-50 transition-all">
+                      {posting ? "Publishing..." : postMode === "now" ? `🚀 Post Now to ${scheduleData.platforms.length} platform${scheduleData.platforms.length !== 1 ? "s" : ""}` : `📅 Schedule to ${scheduleData.platforms.length} platform${scheduleData.platforms.length !== 1 ? "s" : ""}`}
+                    </button>
                   </div>
                 )}
 
@@ -483,7 +545,6 @@ export default function ContentDashboard() {
                   </div>
                 )}
 
-                {/* AI Scores */}
                 {(selected.clarity_score || selected.relatability_score || selected.conversion_score) && (
                   <div className="grid grid-cols-3 gap-3 mb-6">
                     <div className="bg-blue-50 rounded-xl p-3 text-center"><p className="text-2xl font-bold text-blue-600">{selected.clarity_score}/10</p><p className="text-xs text-blue-500 font-medium">Clarity</p></div>
@@ -492,11 +553,10 @@ export default function ContentDashboard() {
                   </div>
                 )}
 
-                {/* Performance results */}
                 {selectedPerfs.length > 0 && (
                   <Section label="Performance Results" icon="📊">
                     {selectedPerfs.map(p => (
-                      <div key={p.id} className="mb-3 last:mb-0">
+                      <div key={p.id} className="mb-4 last:mb-0">
                         <div className="flex justify-between items-center mb-2">
                           <span className="font-semibold text-gray-800 text-sm">{p.platform}</span>
                           <Pill label={p.performance_label} style={PERF_STYLE[p.performance_label] || "bg-gray-100 text-gray-500"} />
@@ -516,7 +576,6 @@ export default function ContentDashboard() {
                     : <p className="text-gray-800 font-medium text-base italic">"{selected.hook}"</p>}
                 </Section>
 
-                {/* Platform tabs */}
                 <div className="mb-6">
                   <h3 className="text-xs font-semibold text-gray-400 uppercase tracking-wider mb-3">Platform Content</h3>
                   <div className="flex gap-2 flex-wrap mb-3">
@@ -624,10 +683,9 @@ export default function ContentDashboard() {
                       </div>
                       {d.scheduled_date && <p className="text-xs text-gray-400 mt-1">📅 {new Date(d.scheduled_date).toLocaleString()}</p>}
                     </div>
-                    <div className="flex gap-2">
-                      {s === "Scheduled" && <button onClick={() => updateStatus(d.id, "Posted")} className="text-xs px-3 py-1.5 bg-purple-500 text-white rounded-lg font-medium">Mark Posted</button>}
-                      {s === "Posted" && <button onClick={() => { openDraft(d); setTab("📋 Queue"); setPerfEntry({ platform: "", reach: 0, impressions: 0, likes: 0, comments: 0, shares: 0, saves: 0, clicks: 0, follower_growth: 0, posted_at: new Date().toISOString().slice(0, 10) }); setShowPerfModal(true); }} className="text-xs px-3 py-1.5 bg-purple-500 text-white rounded-lg font-medium">📊 Log Stats</button>}
-                    </div>
+                    {s === "Posted" && (
+                      <button onClick={() => { openDraft(d); setTab("📋 Queue"); setPerfEntry({ platform: "", reach: 0, impressions: 0, likes: 0, comments: 0, shares: 0, saves: 0, clicks: 0, follower_growth: 0, posted_at: new Date().toISOString().slice(0, 10) }); setShowPerfModal(true); }} className="text-xs px-3 py-1.5 bg-purple-500 text-white rounded-lg font-medium">📊 Log Stats</button>
+                    )}
                   </div>
                 ))}
             </div>
@@ -643,7 +701,7 @@ export default function ContentDashboard() {
             <div className="bg-white rounded-xl border p-12 text-center">
               <div className="text-5xl mb-4">📊</div>
               <p className="text-gray-500 font-medium">No data yet.</p>
-              <p className="text-gray-400 text-sm mt-1">Post content, log stats, and your analytics will build here automatically.</p>
+              <p className="text-gray-400 text-sm mt-1">Post content, log stats, and analytics will build here automatically.</p>
             </div>
           ) : (
             <>
@@ -653,29 +711,23 @@ export default function ContentDashboard() {
                 <div className="bg-green-50 rounded-xl p-4 text-center"><p className="text-2xl font-bold text-green-600">{(perfs.reduce((a, p) => a + (p.performance_score || 0), 0) / perfs.length).toFixed(1)}/10</p><p className="text-xs text-green-500 font-medium mt-1">Avg Score</p></div>
                 <div className="bg-blue-50 rounded-xl p-4 text-center"><p className="text-2xl font-bold text-blue-600">{perfs.reduce((a, p) => a + (p.reach || 0), 0).toLocaleString()}</p><p className="text-xs text-blue-500 font-medium mt-1">Total Reach</p></div>
               </div>
-
               <div className="bg-white rounded-xl border p-5 mb-4 shadow-sm">
-                <h3 className="text-sm font-bold text-gray-700 mb-4">📌 Performance by Pillar</h3>
+                <h3 className="text-sm font-bold text-gray-700 mb-4">📌 By Pillar</h3>
                 <div className="space-y-3">
-                  {Object.entries(pillarStats).sort((a, b) => (b[1].t / b[1].c) - (a[1].t / a[1].c)).map(([p, s]) => {
-                    const avg = (s.t / s.c).toFixed(1);
-                    const pct = Math.round(s.t / s.c * 10);
-                    return (
-                      <div key={p} className="flex items-center gap-3">
-                        <Pill label={p} style={PILLAR_STYLE[p] || "bg-gray-100 text-gray-500"} extra="w-28 text-center" />
-                        <div className="flex-1 bg-gray-100 rounded-full h-2.5">
-                          <div className="bg-indigo-500 h-2.5 rounded-full" style={{ width: `${pct}%` }}></div>
-                        </div>
-                        <span className="text-sm font-bold text-gray-700 w-12 text-right">{avg}/10</span>
-                        <span className="text-xs text-gray-400">{s.c} posts</span>
+                  {Object.entries(pillarStats).sort((a, b) => (b[1].t / b[1].c) - (a[1].t / a[1].c)).map(([p, s]) => (
+                    <div key={p} className="flex items-center gap-3">
+                      <Pill label={p} style={PILLAR_STYLE[p] || "bg-gray-100 text-gray-500"} extra="w-28 text-center" />
+                      <div className="flex-1 bg-gray-100 rounded-full h-2.5">
+                        <div className="bg-indigo-500 h-2.5 rounded-full" style={{ width: `${Math.round(s.t / s.c * 10)}%` }}></div>
                       </div>
-                    );
-                  })}
+                      <span className="text-sm font-bold text-gray-700 w-12 text-right">{(s.t / s.c).toFixed(1)}/10</span>
+                      <span className="text-xs text-gray-400">{s.c} posts</span>
+                    </div>
+                  ))}
                 </div>
               </div>
-
               <div className="bg-white rounded-xl border p-5 mb-4 shadow-sm">
-                <h3 className="text-sm font-bold text-gray-700 mb-4">📱 Performance by Platform</h3>
+                <h3 className="text-sm font-bold text-gray-700 mb-4">📱 By Platform</h3>
                 <div className="grid grid-cols-3 gap-3">
                   {Object.entries(platStats).map(([p, s]) => (
                     <div key={p} className="bg-gray-50 rounded-xl p-3 text-center">
@@ -686,7 +738,6 @@ export default function ContentDashboard() {
                   ))}
                 </div>
               </div>
-
               {winners.length > 0 && (
                 <div className="bg-white rounded-xl border p-5 shadow-sm">
                   <h3 className="text-sm font-bold text-gray-700 mb-4">🏆 Winner Posts</h3>
@@ -720,13 +771,13 @@ export default function ContentDashboard() {
         <div className="max-w-4xl mx-auto p-6">
           <div className="mb-6">
             <h2 className="text-lg font-bold text-gray-900">Winner DNA Patterns</h2>
-            <p className="text-sm text-gray-400">Extracted from 8+ rated posts — feeds back into brainstorm scoring</p>
+            <p className="text-sm text-gray-400">Extracted from 8+ scoring posts — feeds into future brainstorms</p>
           </div>
           {dna.length === 0 ? (
             <div className="bg-white rounded-xl border p-12 text-center">
               <div className="text-5xl mb-4">🧬</div>
               <p className="text-gray-500 font-medium">No winner DNA yet.</p>
-              <p className="text-gray-400 text-sm mt-1">When posts score 8+, their patterns get extracted here and improve future brainstorms.</p>
+              <p className="text-gray-400 text-sm mt-1">Posts scoring 8+ get their patterns extracted here automatically.</p>
             </div>
           ) : (
             <div className="space-y-4">
