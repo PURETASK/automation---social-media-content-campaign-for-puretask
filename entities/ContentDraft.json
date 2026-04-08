@@ -113,6 +113,24 @@
     },
     "conversion_score": {
       "type": "number"
+    },
+    "scheduled_date": {
+      "type": "string"
+    },
+    "scheduled_platforms": {
+      "type": "string"
+    },
+    "posted_platforms": {
+      "type": "string"
+    },
+    "is_winner": {
+      "type": "boolean"
+    },
+    "avg_performance_score": {
+      "type": "number"
+    },
+    "top_performing_platform": {
+      "type": "string"
     }
   },
   "required": [],
