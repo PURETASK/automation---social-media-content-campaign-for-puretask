@@ -265,7 +265,7 @@ export default function ContentDashboard() {
           <div className="w-9 h-9 bg-indigo-600 rounded-xl flex items-center justify-center text-white font-bold text-lg">P</div>
           <div>
             <h1 className="text-base font-bold text-gray-900">PureTask Content Studio</h1>
-            <p className="text-xs text-gray-400">Research · Brainstorm · Create · Publish via Ayrshare</p>
+            <p className="text-xs text-gray-400">🤖 Full Autopilot · AI generates, approves, schedules & posts</p>
           </div>
         </div>
         <div className="flex items-center gap-2 text-xs flex-wrap justify-end">
@@ -415,8 +415,12 @@ export default function ContentDashboard() {
         <div className="flex" style={{ height: "calc(100vh - 113px)" }}>
           <div className="w-80 bg-white border-r border-gray-100 flex flex-col shrink-0">
             <div className="p-4 border-b border-gray-100">
+              <div className="flex items-center gap-2 mb-3">
+                <span className="text-xs font-bold text-gray-700">Content Queue</span>
+                <span className="text-xs bg-green-100 text-green-700 px-2 py-0.5 rounded-full font-medium">🤖 Autopilot ON</span>
+              </div>
               <div className="flex flex-wrap gap-1.5">
-                {["All","Pending Approval","Approved","Scheduled","Posted","Rejected"].map(s => (
+                {["All","Approved","Scheduled","Posted","Draft","Rejected"].map(s => (
                   <button key={s} onClick={() => setStatusFilter(s)}
                     className={`text-xs px-2.5 py-1 rounded-full font-medium ${statusFilter === s ? "bg-indigo-600 text-white" : "bg-gray-100 text-gray-500 hover:bg-gray-200"}`}>
                     {s}{s !== "All" && statusCounts[s] ? ` (${statusCounts[s]})` : ""}
@@ -446,9 +450,20 @@ export default function ContentDashboard() {
 
           <div className="flex-1 overflow-y-auto">
             {!selected ? (
-              <div className="flex flex-col items-center justify-center h-full text-gray-400">
-                <div className="text-5xl mb-4">📝</div>
-                <p className="text-lg font-medium text-gray-500">Select a draft to review</p>
+              <div className="flex flex-col items-center justify-center h-full text-gray-400 p-8">
+                <div className="text-5xl mb-4">🤖</div>
+                <p className="text-lg font-medium text-gray-700 mb-1">Autopilot is running</p>
+                <p className="text-sm text-gray-400 text-center max-w-xs mb-6">AI generates, scores, approves, schedules, and posts everything. You just observe — or override when needed.</p>
+                <div className="bg-white rounded-xl border border-gray-100 p-4 text-left w-full max-w-xs text-xs text-gray-500 space-y-2 shadow-sm">
+                  <p className="font-semibold text-gray-700 mb-2">🔄 What runs automatically:</p>
+                  <p>✅ Content generated daily at 7am PT</p>
+                  <p>✅ Scores calculated (clarity · relatability · conversion)</p>
+                  <p>✅ Avg ≥7.0 → auto-approved + scheduled</p>
+                  <p>✅ Platform-specific copy selected per channel</p>
+                  <p>✅ Posted at optimal times via Ayrshare</p>
+                  <p>✅ Performance analyzed every 12hrs</p>
+                  <p>✅ Winner DNA extracted every 2 days</p>
+                </div>
               </div>
             ) : (
               <div className="max-w-3xl mx-auto p-6">
@@ -475,11 +490,12 @@ export default function ContentDashboard() {
                         {selected.status === "Posted" && (
                           <button onClick={() => { setPerfEntry({ platform: "", reach: 0, impressions: 0, likes: 0, comments: 0, shares: 0, saves: 0, clicks: 0, follower_growth: 0, posted_at: new Date().toISOString().slice(0, 10) }); setShowPerfModal(true); }} className="text-sm px-3 py-2 bg-purple-500 text-white rounded-lg font-medium">📊 Log Stats</button>
                         )}
-                        {!["Approved","Scheduled","Posted"].includes(selected.status) && (
-                          <button onClick={() => updateStatus(selected.id, "Approved")} className="text-sm px-3 py-2 bg-green-500 text-white rounded-lg font-medium">✅ Approve</button>
+                        {/* Override controls — AI handles approval automatically, these are manual overrides only */}
+                        {selected.status === "Draft" && (
+                          <button onClick={() => updateStatus(selected.id, "Approved")} className="text-sm px-3 py-2 bg-green-500 text-white rounded-lg font-medium" title="Override: manually approve this draft">⬆️ Force Approve</button>
                         )}
-                        {!["Rejected","Posted"].includes(selected.status) && (
-                          <button onClick={() => updateStatus(selected.id, "Rejected")} className="text-sm px-3 py-2 bg-red-500 text-white rounded-lg font-medium">❌ Reject</button>
+                        {selected.status === "Approved" && (
+                          <button onClick={() => updateStatus(selected.id, "Rejected")} className="text-sm px-3 py-2 bg-red-400 text-white rounded-lg font-medium" title="Override: pull this from the queue">🚫 Pull</button>
                         )}
                         {selected.status === "Scheduled" && (
                           <button onClick={() => updateStatus(selected.id, "Posted")} className="text-sm px-3 py-2 bg-purple-500 text-white rounded-lg font-medium">📤 Mark Posted</button>
@@ -791,10 +807,16 @@ export default function ContentDashboard() {
                     : <p className="text-gray-500 text-sm italic">{selected.editor_notes || "No notes yet."}</p>}
                 </Section>
 
-                {!editing && selected.status === "Pending Approval" && (
-                  <div className="flex gap-3 mt-6 pt-6 border-t border-gray-100">
-                    <button onClick={() => updateStatus(selected.id, "Approved")} className="flex-1 py-3 bg-green-500 text-white rounded-xl font-semibold text-sm hover:bg-green-600">✅ Approve</button>
-                    <button onClick={() => updateStatus(selected.id, "Rejected")} className="flex-1 py-3 bg-red-500 text-white rounded-xl font-semibold text-sm hover:bg-red-600">❌ Reject</button>
+                {!editing && selected.status === "Draft" && (
+                  <div className="mt-6 pt-6 border-t border-gray-100">
+                    <div className="bg-amber-50 border border-amber-200 rounded-xl p-4 mb-3">
+                      <p className="text-xs font-semibold text-amber-700 mb-1">⚠️ Below auto-approve threshold</p>
+                      <p className="text-xs text-amber-600">AI scored this below 7.0/10. You can force-approve it anyway, or it will be rewritten in the next cycle.</p>
+                    </div>
+                    <div className="flex gap-3">
+                      <button onClick={() => updateStatus(selected.id, "Approved")} className="flex-1 py-3 bg-green-500 text-white rounded-xl font-semibold text-sm hover:bg-green-600">⬆️ Force Approve Anyway</button>
+                      <button onClick={() => updateStatus(selected.id, "Rejected")} className="flex-1 py-3 bg-gray-200 text-gray-600 rounded-xl font-semibold text-sm hover:bg-gray-300">🗑 Discard</button>
+                    </div>
                   </div>
                 )}
               </div>

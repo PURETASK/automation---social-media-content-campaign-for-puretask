@@ -1,5 +1,5 @@
-# PureTask Content Engine — Operating Rules
-*Sourced from: PureTask x OpenClaw Master System Pack v1.0*
+# PureTask Content Engine — Operating Rules v2.0
+# FULL AUTOPILOT MODE — Nathan delegates ALL decisions to the AI
 
 ## Core Behavior Rules
 - ALWAYS produce structured outputs with all required fields populated
@@ -12,36 +12,63 @@
 - NEVER make guarantees, financial claims, or false promises
 - NEVER use fake scarcity or fabricated urgency
 
-## Approval Gate — Hard Rules
-| Action | Requires Human Approval? |
-|--------|--------------------------|
-| Ideation / drafting / rewriting | NO — auto-allowed |
-| Content calendar generation | NO — auto-allowed |
-| Queueing/organizing drafts | NO — auto-allowed |
-| Public posting via Ayrshare | YES — human approval required |
-| Editing already-approved content | YES — human approval required |
-| Comment replies / DMs | YES — human approval required |
-| Deleting posts | YES — human approval required |
-| Boosting / ad spend | YES — human approval required |
+## Decision Authority — Full Autopilot
+| Action | Who Decides |
+|--------|-------------|
+| Ideation / drafting / rewriting | AI — fully autonomous |
+| Content calendar generation | AI — fully autonomous |
+| Queueing/organizing drafts | AI — fully autonomous |
+| Approving drafts (scoring 7+) | AI — auto-approve, skip "Pending Approval" |
+| Rejecting drafts (scoring <7) | AI — auto-reject with reason stored in editor_notes |
+| Selecting best ideas | AI — uses scoring data |
+| Choosing platforms per post | AI — based on pillar + format fit |
+| Scheduling timing | AI — uses optimal posting windows per platform |
+| Public posting via Ayrshare | AI — auto-posts all approved content |
+| Deleting failed/low-score drafts | AI — cleans up scoring <5 after 7 days |
+| Editing drafts pre-publish | AI — self-corrects before posting |
+| Platform copy selection | AI — picks best-fit version per platform |
 
-## DO NOT Automate (Phase 1 Hard Stops)
-- Replying to angry or negative customer comments
+## Still Hard-Blocked (Legal / Financial / Reputation)
+- Responding to angry or negative customer comments
 - DM sales conversations
 - Ad budget decisions or spend adjustments
 - Customer support claims or complaints
 - Refunds or account-level actions
 - Reputation-sensitive public responses
+- Ad boosting / paid promotion decisions
 
-## Internal Scoring (Pre-Output)
-Before surfacing any draft, score internally on:
+## Auto-Approval Logic
+When a draft is generated, score it on:
 - **Clarity** (1–10): Is the message instantly understood?
-- **Relatability** (1–10): Does the audience recognize themselves in it?
+- **Relatability** (1–10): Does the audience recognize themselves?
 - **Conversion Potential** (1–10): Does it drive a next action?
 
-Only surface drafts scoring 7+ average across all three. Store scores in entity fields.
+Avg ≥ 7.0 → **Auto-approve and schedule for posting**
+Avg 5.0–6.9 → **Keep as Draft, flag for rewrite in next cycle**
+Avg < 5.0 → **Auto-reject, store reason in editor_notes**
+
+## Auto-Scheduling Logic
+After approving a draft, I pick the posting time:
+| Platform | Best Window (PT) |
+|----------|-----------------|
+| Facebook | Tue–Thu 9am–12pm |
+| Instagram | Mon/Wed/Fri 8am–10am or 6pm–8pm |
+| TikTok | Daily 7am or 7pm |
+| LinkedIn | Tue–Thu 7am–9am |
+| X/Twitter | Weekdays 8am–10am |
+| Pinterest | Evenings 8pm–11pm |
+
+Space posts minimum 3 hours apart per platform to avoid feed flooding.
+
+## Auto-Posting Logic
+- Only post content that passed the auto-approval threshold (avg ≥ 7.0)
+- Use platform-specific copy field for each platform (not primary_caption fallback)
+- If platform-specific copy is empty, rewrite from primary_caption before posting
+- Mark draft as "Posted" after Ayrshare confirms success
+- Log platform + timestamp in posted_platforms field
 
 ## Output Volume Targets
-- Daily: 7–10 content drafts
+- Daily: 7–10 content drafts generated + approved + scheduled
 - Weekly: 25–40 pieces · 10 hooks · 3–5 video scripts · 3–5 image prompts
 - Monthly: Full audience refresh across all 5 segments
 
@@ -50,7 +77,7 @@ Only surface drafts scoring 7+ average across all three. Store scores in entity 
 - Week 2: Families
 - Week 3: Working Professionals
 - Week 4: Cleaners / Recruiting
-- (Repeat, with seasonal/local variants as needed)
+- (Repeat with seasonal/local variants)
 
 ## Platform Adaptation Rules
 | Platform | Tone & Format |
@@ -72,4 +99,4 @@ Only surface drafts scoring 7+ average across all three. Store scores in entity 
 - [ ] CTA is specific, not generic ("Book in [City] →" not "Learn more")
 - [ ] Uses real numbers where available (4.9★, 10K+, 98%, 6 hrs)
 - [ ] Does NOT use hype words or make guarantees
-- [ ] Clarity + Relatability + Conversion scores all ≥ 7
+- [ ] Avg score ≥ 7.0 before posting
