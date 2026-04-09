@@ -88,6 +88,10 @@ export default function ContentDashboard() {
   const [resFilter, setResFilter] = useState("All");
   const [ideaFilter, setIdeaFilter] = useState("All");
   const [postMode, setPostMode] = useState("now"); // "now" or "schedule"
+  const [showKling, setShowKling] = useState(false);
+  const [klingGenerating, setKlingGenerating] = useState(false);
+  const [klingResult, setKlingResult] = useState(null);
+  const [klingOpts, setKlingOpts] = useState({ aspect_ratio: "9:16", duration: "5", mode: "std", use_draft_image: true, generate_both: false });
 
   useEffect(() => { fetchAll(); }, []);
 
@@ -199,6 +203,35 @@ export default function ContentDashboard() {
     setShowPerfModal(false); setPerfEntry({});
     setSaving(false);
     showToast(`📊 Logged! Rated: ${label}`);
+  }
+
+  async function generateKlingVideo() {
+    setKlingGenerating(true);
+    setKlingResult(null);
+    try {
+      const payload = {
+        draft_id: selected.id,
+        ...klingOpts,
+      };
+      const res = await fetch(`/functions/generateKlingVideo`, {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(payload),
+      });
+      const data = await res.json();
+      if (data.success && data.videos?.length > 0) {
+        setKlingResult(data);
+        await fetchAll();
+        const refreshed = drafts.find(d => d.id === selected.id);
+        if (refreshed) setSelected(refreshed);
+        showToast(`🎬 Video${data.videos.length > 1 ? "s" : ""} generated!`);
+      } else {
+        showToast(data.error || "Kling generation failed", "error");
+      }
+    } catch (e) {
+      showToast("Network error: " + e.message, "error");
+    }
+    setKlingGenerating(false);
   }
 
   function openDraft(draft) {
@@ -436,6 +469,9 @@ export default function ContentDashboard() {
                         {selected.status === "Approved" && (
                           <button onClick={() => setShowScheduler(true)} className="text-sm px-3 py-2 bg-indigo-500 text-white rounded-lg font-medium hover:bg-indigo-600">🚀 Publish</button>
                         )}
+                        {(selected.status === "Approved" || selected.status === "Draft" || selected.status === "Pending Approval") && (
+                          <button onClick={() => { setShowKling(p => !p); setKlingResult(null); }} className="text-sm px-3 py-2 bg-violet-600 text-white rounded-lg font-medium hover:bg-violet-700 flex items-center gap-1.5">🎬 Video</button>
+                        )}
                         {selected.status === "Posted" && (
                           <button onClick={() => { setPerfEntry({ platform: "", reach: 0, impressions: 0, likes: 0, comments: 0, shares: 0, saves: 0, clicks: 0, follower_growth: 0, posted_at: new Date().toISOString().slice(0, 10) }); setShowPerfModal(true); }} className="text-sm px-3 py-2 bg-purple-500 text-white rounded-lg font-medium">📊 Log Stats</button>
                         )}
@@ -457,6 +493,109 @@ export default function ContentDashboard() {
                     )}
                   </div>
                 </div>
+
+                {/* Kling Video Generation Panel */}
+                {showKling && (
+                  <div className="bg-violet-50 border border-violet-200 rounded-xl p-5 mb-5">
+                    <div className="flex items-center justify-between mb-4">
+                      <div>
+                        <h3 className="text-sm font-bold text-violet-800">🎬 Generate Video with Kling AI</h3>
+                        <p className="text-xs text-violet-500 mt-0.5">Creates short-form video from this draft's prompt + scripts</p>
+                      </div>
+                      <button onClick={() => { setShowKling(false); setKlingResult(null); }} className="text-xs text-gray-400 hover:text-gray-600">✕</button>
+                    </div>
+
+                    {/* Options */}
+                    <div className="grid grid-cols-2 gap-3 mb-4">
+                      <div>
+                        <label className="text-xs text-violet-700 font-medium block mb-1">Format</label>
+                        <div className="flex gap-2">
+                          {["9:16","16:9"].map(ar => (
+                            <button key={ar} onClick={() => setKlingOpts(p => ({ ...p, aspect_ratio: ar, generate_both: false }))}
+                              className={`flex-1 text-xs py-2 rounded-lg font-medium border transition-all ${klingOpts.aspect_ratio === ar && !klingOpts.generate_both ? "bg-violet-600 text-white border-violet-600" : "bg-white text-violet-600 border-violet-200 hover:bg-violet-50"}`}>
+                              {ar === "9:16" ? "📱 9:16" : "🖥 16:9"}
+                            </button>
+                          ))}
+                          <button onClick={() => setKlingOpts(p => ({ ...p, generate_both: true }))}
+                            className={`flex-1 text-xs py-2 rounded-lg font-medium border transition-all ${klingOpts.generate_both ? "bg-violet-600 text-white border-violet-600" : "bg-white text-violet-600 border-violet-200 hover:bg-violet-50"}`}>
+                            ✨ Both
+                          </button>
+                        </div>
+                      </div>
+                      <div>
+                        <label className="text-xs text-violet-700 font-medium block mb-1">Duration</label>
+                        <div className="flex gap-2">
+                          {[["5","5s"],["10","10s"]].map(([val, label]) => (
+                            <button key={val} onClick={() => setKlingOpts(p => ({ ...p, duration: val }))}
+                              className={`flex-1 text-xs py-2 rounded-lg font-medium border transition-all ${klingOpts.duration === val ? "bg-violet-600 text-white border-violet-600" : "bg-white text-violet-600 border-violet-200 hover:bg-violet-50"}`}>
+                              {label}
+                            </button>
+                          ))}
+                        </div>
+                      </div>
+                    </div>
+
+                    <div className="grid grid-cols-2 gap-3 mb-4">
+                      <div>
+                        <label className="text-xs text-violet-700 font-medium block mb-1">Quality</label>
+                        <div className="flex gap-2">
+                          {[["std","Standard"],["pro","Pro ✨"]].map(([val, label]) => (
+                            <button key={val} onClick={() => setKlingOpts(p => ({ ...p, mode: val }))}
+                              className={`flex-1 text-xs py-2 rounded-lg font-medium border transition-all ${klingOpts.mode === val ? "bg-violet-600 text-white border-violet-600" : "bg-white text-violet-600 border-violet-200 hover:bg-violet-50"}`}>
+                              {label}
+                            </button>
+                          ))}
+                        </div>
+                      </div>
+                      <div>
+                        <label className="text-xs text-violet-700 font-medium block mb-1">Reference Image</label>
+                        <button onClick={() => setKlingOpts(p => ({ ...p, use_draft_image: !p.use_draft_image }))}
+                          className={`w-full text-xs py-2 rounded-lg font-medium border transition-all ${klingOpts.use_draft_image ? "bg-violet-600 text-white border-violet-600" : "bg-white text-violet-600 border-violet-200 hover:bg-violet-50"}`}>
+                          {klingOpts.use_draft_image ? "🖼 Using Draft Image" : "⬜ Text Only"}
+                        </button>
+                      </div>
+                    </div>
+
+                    {/* Prompt preview */}
+                    {selected.video_prompt && (
+                      <div className="bg-white rounded-lg p-3 mb-4 border border-violet-100">
+                        <p className="text-xs font-semibold text-violet-700 mb-1">🎯 Video Prompt</p>
+                        <p className="text-xs text-gray-600 line-clamp-3">{selected.video_prompt}</p>
+                      </div>
+                    )}
+
+                    <button onClick={generateKlingVideo} disabled={klingGenerating}
+                      className="w-full py-3 bg-violet-600 text-white rounded-xl font-semibold text-sm hover:bg-violet-700 disabled:opacity-60 transition-all flex items-center justify-center gap-2">
+                      {klingGenerating ? (
+                        <>
+                          <span className="animate-spin">⏳</span>
+                          <span>Generating... (up to 6 min)</span>
+                        </>
+                      ) : (
+                        <>🎬 Generate {klingOpts.generate_both ? "Both Formats" : klingOpts.aspect_ratio + " Video"}</>
+                      )}
+                    </button>
+
+                    {/* Result */}
+                    {klingResult && klingResult.videos && (
+                      <div className="mt-4 space-y-3">
+                        <p className="text-xs font-bold text-violet-800">✅ Videos Ready!</p>
+                        {klingResult.videos.map((v, i) => (
+                          <div key={i} className="bg-white rounded-xl border border-violet-200 overflow-hidden">
+                            <video src={v.video_url} controls className="w-full max-h-64 bg-black" />
+                            <div className="p-3 flex items-center justify-between">
+                              <span className="text-xs font-medium text-violet-700">{v.aspect_ratio} · {klingResult.duration_seconds}s · {klingResult.mode}</span>
+                              <a href={v.video_url} target="_blank" rel="noreferrer"
+                                className="text-xs px-3 py-1.5 bg-violet-600 text-white rounded-lg font-medium hover:bg-violet-700">
+                                ⬇ Download
+                              </a>
+                            </div>
+                          </div>
+                        ))}
+                      </div>
+                    )}
+                  </div>
+                )}
 
                 {/* Ayrshare Publish Panel */}
                 {showScheduler && (
