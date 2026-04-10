@@ -19,7 +19,7 @@
 - ALWAYS prioritize clarity over cleverness
 - NEVER make guarantees, financial claims, or false promises
 - NEVER use fake scarcity or fabricated urgency
-- ALWAYS include puretask.co in every post, every platform, every time
+- ALWAYS include https://www.puretask.co in every post, every platform, every time
 
 ---
 
@@ -29,8 +29,8 @@
 | Ideation / drafting / rewriting | AI — fully autonomous |
 | Content calendar generation | AI — fully autonomous |
 | Queueing/organizing drafts | AI — fully autonomous |
-| Approving drafts (scoring 7+) | AI — auto-approve, skip "Pending Approval" |
-| Rejecting drafts (scoring <7) | AI — auto-reject with reason stored in editor_notes |
+| Approving drafts (scoring 7.5+) | AI — auto-approve, skip "Pending Approval" |
+| Rejecting drafts (scoring <7.5) | AI — auto-reject with reason stored in editor_notes |
 | Selecting best ideas | AI — uses scoring data |
 | Choosing platforms per post | AI — based on pillar + format fit |
 | Scheduling timing | AI — uses optimal posting windows per platform |
@@ -79,7 +79,7 @@ Does this make someone click, book, or share RIGHT NOW?
 
 ### AUTO-PENALTIES (applied before final avg):
 - No image or video attached → **-3 from Conversion score**
-- Missing puretask.co URL → **-2 from Clarity score**
+- Missing https://www.puretask.co URL → **-2 from Clarity score**
 - City post with no city-specific visual → **-2 from Relatability score**
 - Fewer than 5 relevant hashtags (Instagram/TikTok/Pinterest) → **-1 from Conversion score**
 - Same copy pasted across platforms (not adapted) → **-2 from Clarity score**
@@ -90,8 +90,6 @@ Does this make someone click, book, or share RIGHT NOW?
 - Avg ≥ 7.5 → **Auto-approve + post**
 - Avg 5.0–7.4 → **Draft — rewrite next cycle**
 - Avg < 5.0 → **Auto-reject, reason logged in editor_notes**
-
-*Note: Threshold raised from 7.0 to 7.5 to match stricter standards.*
 
 ---
 
@@ -121,7 +119,7 @@ Every post MUST have at least one image or video. No exceptions.
 - Clean, minimal, premium aesthetic
 - Real lifestyle photography style (bright interiors, before/after)
 - City posts: must show city name, skyline, or recognizable local element
-- Always include puretask.co in image if possible
+- Always include https://www.puretask.co in image if possible
 
 **Video standards:**
 - Hook in first 2 seconds
@@ -132,11 +130,9 @@ Every post MUST have at least one image or video. No exceptions.
 ---
 
 ## URL Rule — ABSOLUTE
-**The correct website is: puretask.co**
+**The correct website is: https://www.puretask.co**
 - NOT puretask.com
-- NOT www.puretask.co
-- NOT http://puretask.co
-- ALWAYS just: puretask.co
+- NOT just puretask.co (always use full https://www.puretask.co in post copy)
 - Must appear in EVERY post caption, every platform, every time — no exceptions
 
 ---
@@ -184,13 +180,13 @@ Space posts minimum 3 hours apart per platform to avoid feed flooding.
 ## Platform Adaptation Rules
 | Platform | Tone & Format |
 |----------|--------------|
-| X/Twitter | Short, punchy, minimal — under 280 chars, include puretask.co |
-| Instagram | Visual-first + emotional, 8–15 hashtags, include puretask.co in caption |
-| Facebook | Slightly longer, practical, city-specific where possible, include puretask.co |
-| LinkedIn | Trust + professionalism, story → insight → connection, include puretask.co |
-| TikTok/Reels | Fast hook + relatable scenario, POV format, include puretask.co in caption |
-| YouTube Shorts | Problem → solution → payoff structure, include puretask.co |
-| Pinterest | Aspirational, keyword-rich, 8–12 hashtags, include puretask.co |
+| X/Twitter | Short, punchy, minimal — under 280 chars, include https://www.puretask.co |
+| Instagram | Visual-first + emotional, 8–15 hashtags, include https://www.puretask.co in caption |
+| Facebook | Slightly longer, practical, city-specific where possible, include https://www.puretask.co |
+| LinkedIn | Trust + professionalism, story → insight → connection, include https://www.puretask.co |
+| TikTok/Reels | Fast hook + relatable scenario, POV format, include https://www.puretask.co in caption |
+| YouTube Shorts | Problem → solution → payoff structure, include https://www.puretask.co |
+| Pinterest | Aspirational, keyword-rich, 8–12 hashtags, include https://www.puretask.co |
 
 ---
 
@@ -200,10 +196,10 @@ Space posts minimum 3 hours apart per platform to avoid feed flooding.
 - [ ] Hook grabs in first line — specific, not generic
 - [ ] Pain → Solution → Outcome structure
 - [ ] Platform-specific versions adapted (NOT copy-pasted)
-- [ ] CTA is specific ("Book in [City] → puretask.co" not "Learn more")
+- [ ] CTA is specific ("Book in [City] → https://www.puretask.co" not "Learn more")
 - [ ] Uses real numbers where available (4.9★, 10K+, 98%, 6 hrs)
 - [ ] Does NOT use hype words or make guarantees
-- [ ] puretask.co included in every platform version
+- [ ] https://www.puretask.co included in every platform version
 - [ ] Image or video attached (image_prompt filled at minimum)
 - [ ] City posts have city-specific visual reference
 - [ ] Hashtags meet platform minimums (8+ for IG/TikTok/Pinterest)
