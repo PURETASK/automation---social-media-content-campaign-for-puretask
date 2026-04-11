@@ -52,10 +52,29 @@
     "video_prompt": {
       "type": "string"
     },
+    "heygen_video_id": {
+      "type": "string"
+    },
+    "heygen_status": {
+      "type": "string",
+      "enum": [
+        "None",
+        "Queued",
+        "Generating",
+        "Completed",
+        "Failed"
+      ]
+    },
+    "video_cdn_url": {
+      "type": "string"
+    },
     "script_15sec": {
       "type": "string"
     },
     "script_30sec": {
+      "type": "string"
+    },
+    "script_45sec": {
       "type": "string"
     },
     "comment_replies": {
@@ -77,6 +96,12 @@
       "type": "string"
     },
     "platform_pinterest": {
+      "type": "string"
+    },
+    "platform_threads": {
+      "type": "string"
+    },
+    "platform_youtube": {
       "type": "string"
     },
     "blog_post": {
