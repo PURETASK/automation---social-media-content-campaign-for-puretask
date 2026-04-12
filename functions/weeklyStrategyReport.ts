@@ -1,148 +1,101 @@
-import { base44 } from '@base44/core';
+// weeklyStrategyReport v2.0 — fixed deployment (uses Deno.serve)
+import { createClientFromRequest } from 'npm:@base44/sdk@0.8.23';
 
-// Generate weekly strategy changelog and commit to GitHub
-export default async function weeklyStrategyReport(req: Request) {
-  const GITHUB_TOKEN = Deno.env.get('GITHUB_TOKEN');
-  const REPO = 'PURETASK/automation---social-media-content-campaign-for-puretask';
-  const BASE_URL = `https://api.github.com/repos/${REPO}/contents`;
-
-  if (!GITHUB_TOKEN) {
-    return new Response(JSON.stringify({ error: 'GITHUB_TOKEN not set' }), { status: 500 });
-  }
-
-  // Get this week's content data
-  const today = new Date();
-  const weekStart = new Date(today);
-  weekStart.setDate(today.getDate() - today.getDay());
-  const weekStartStr = weekStart.toISOString().split('T')[0];
-
+Deno.serve(async (req) => {
   try {
-    // Fetch content drafts from this week
-    const drafts = await base44.asServiceRole.entities.ContentDraft.list({
-      limit: 100
-    });
+    const base44 = createClientFromRequest(req);
+    const db = base44.asServiceRole.entities;
+    const GITHUB_TOKEN = Deno.env.get("GITHUB_TOKEN");
+    const REPO = "PURETASK/automation---social-media-content-campaign-for-puretask";
+    const BASE_URL = `https://api.github.com/repos/${REPO}/contents`;
 
-    const weekDrafts = drafts.filter((d: any) => {
-      const created = new Date(d.created_date);
-      return created >= weekStart;
-    });
+    if (!GITHUB_TOKEN) return Response.json({ error: "GITHUB_TOKEN not set" }, { status: 500 });
 
-    // Fetch performance data
-    const posted = await base44.asServiceRole.entities.PostPerformance.list({
-      limit: 100
-    });
+    const today = new Date();
+    const weekStart = new Date(today);
+    weekStart.setDate(today.getDate() - today.getDay());
+    const weekStartStr = weekStart.toISOString().split("T")[0];
 
-    const weekPosted = posted.filter((p: any) => {
-      const postedDate = new Date(p.posted_at);
-      return postedDate >= weekStart;
-    });
+    const allDrafts = await db.ContentDraft.list();
+    const allPerfs = await db.PostPerformance.list();
 
-    // Calculate stats
+    const weekDrafts = allDrafts.filter((d: any) => new Date(d.created_date) >= weekStart);
+    const weekPerfs = allPerfs.filter((p: any) => p.posted_at && new Date(p.posted_at) >= weekStart);
+
     const pillarCounts: Record<string, number> = {};
     const audienceCounts: Record<string, number> = {};
-    let totalScore = 0;
-    let scoredCount = 0;
+    const statusCounts: Record<string, number> = {};
+    let totalScore = 0, scoredCount = 0;
+
+    allDrafts.forEach((d: any) => {
+      statusCounts[d.status] = (statusCounts[d.status] || 0) + 1;
+    });
 
     weekDrafts.forEach((d: any) => {
-      pillarCounts[d.pillar] = (pillarCounts[d.pillar] || 0) + 1;
-      audienceCounts[d.audience] = (audienceCounts[d.audience] || 0) + 1;
-      
+      if (d.pillar) pillarCounts[d.pillar] = (pillarCounts[d.pillar] || 0) + 1;
+      if (d.audience) audienceCounts[d.audience] = (audienceCounts[d.audience] || 0) + 1;
       if (d.clarity_score && d.relatability_score && d.conversion_score) {
         totalScore += (d.clarity_score + d.relatability_score + d.conversion_score) / 3;
-        scoredCount += 1;
+        scoredCount++;
       }
     });
 
-    const avgScore = scoredCount > 0 ? (totalScore / scoredCount).toFixed(1) : 'N/A';
-
-    // Get top performers
-    const topPerformers = weekPosted
+    const avgScore = scoredCount > 0 ? (totalScore / scoredCount).toFixed(1) : "N/A";
+    const topPerformers = weekPerfs
       .sort((a: any, b: any) => (b.performance_score || 0) - (a.performance_score || 0))
       .slice(0, 3);
 
-    // Build markdown report
-    let report = `# Weekly PureTask Content Strategy Report\n\n`;
-    report += `**Week of ${weekStartStr}**\n\n`;
-    
-    report += `## 📊 This Week's Output\n`;
-    report += `- **Total Drafts Generated**: ${weekDrafts.length}\n`;
-    report += `- **Posted**: ${weekPosted.length}\n`;
-    report += `- **Average Quality Score**: ${avgScore}\n\n`;
-
-    report += `## 🎯 Content by Pillar\n`;
-    Object.entries(pillarCounts).forEach(([pillar, count]) => {
-      report += `- ${pillar}: ${count}\n`;
-    });
-    report += `\n`;
-
-    report += `## 👥 Content by Audience\n`;
-    Object.entries(audienceCounts).forEach(([audience, count]) => {
-      report += `- ${audience}: ${count}\n`;
-    });
-    report += `\n`;
-
+    let report = `# PureTask Weekly Strategy Report\n**Week of ${weekStartStr}**\n\n`;
+    report += `## 📊 System Status\n`;
+    report += `- **Total Drafts:** ${allDrafts.length}\n`;
+    Object.entries(statusCounts).forEach(([s, c]) => { report += `  - ${s}: ${c}\n`; });
+    report += `- **This Week Generated:** ${weekDrafts.length}\n`;
+    report += `- **Avg Quality Score:** ${avgScore}\n\n`;
+    report += `## 🎯 This Week by Pillar\n`;
+    Object.entries(pillarCounts).forEach(([p, c]) => { report += `- ${p}: ${c}\n`; });
+    report += `\n## 👥 This Week by Audience\n`;
+    Object.entries(audienceCounts).forEach(([a, c]) => { report += `- ${a}: ${c}\n`; });
+    report += `\n## 🏆 Top Performers\n`;
     if (topPerformers.length > 0) {
-      report += `## 🏆 Top Performers\n`;
       topPerformers.forEach((p: any, i: number) => {
-        report += `${i + 1}. **${p.content_title}** (${p.platform}) - Score: ${p.performance_score}\n`;
-        report += `   - Reach: ${p.reach || 'N/A'} | Engagement: ${p.engagement_rate || 'N/A'}\n`;
+        report += `${i + 1}. **${p.content_title}** (${p.platform}) — Score: ${p.performance_score}\n`;
       });
-      report += `\n`;
+    } else {
+      report += `- No performance data yet this week\n`;
     }
+    report += `\n---\n*Auto-generated ${new Date().toISOString()}*\n`;
 
-    report += `## 🔄 What's Next\n`;
-    report += `- Next audience focus: Monitor performance trends\n`;
-    report += `- Continue testing platform-specific adaptations\n`;
-    report += `- Analyze winning hook patterns for next week's brainstorm\n\n`;
-
-    report += `---\n`;
-    report += `*Auto-generated by PureTask Content Engine. Generated: ${new Date().toISOString()}\n`;
-
-    // Push to GitHub
-    const filename = `weekly-reports/week-${weekStartStr.replace(/-/g, '')}-report.md`;
+    const filename = `weekly-reports/week-${weekStartStr.replace(/-/g, "")}-report.md`;
     const encodedContent = btoa(unescape(encodeURIComponent(report)));
-
-    let sha = null;
+    let sha: string | null = null;
     try {
-      const checkRes = await fetch(`${BASE_URL}/${filename}`, {
-        headers: { 'Authorization': `Bearer ${GITHUB_TOKEN}` }
+      const check = await fetch(`${BASE_URL}/${filename}`, {
+        headers: { "Authorization": `Bearer ${GITHUB_TOKEN}` }
       });
-      if (checkRes.ok) {
-        sha = (await checkRes.json()).sha;
-      }
+      if (check.ok) sha = (await check.json()).sha;
     } catch (_) {}
 
-    const payload: Record<string, string> = {
-      message: `Weekly strategy report: ${weekStartStr}`,
-      content: encodedContent
-    };
+    const payload: any = { message: `Weekly strategy report: ${weekStartStr}`, content: encodedContent };
     if (sha) payload.sha = sha;
 
     const res = await fetch(`${BASE_URL}/${filename}`, {
-      method: 'PUT',
+      method: "PUT",
       headers: {
-        'Authorization': `Bearer ${GITHUB_TOKEN}`,
-        'Accept': 'application/vnd.github+json',
-        'Content-Type': 'application/json'
+        "Authorization": `Bearer ${GITHUB_TOKEN}`,
+        "Accept": "application/vnd.github+json",
+        "Content-Type": "application/json"
       },
       body: JSON.stringify(payload)
     });
 
     const data = await res.json();
-    return new Response(
-      JSON.stringify({
-        success: res.ok,
-        report_file: filename,
-        stats: {
-          drafts_generated: weekDrafts.length,
-          posts_published: weekPosted.length,
-          average_score: avgScore
-        },
-        github_url: data?.content?.html_url || null
-      }),
-      { headers: { 'Content-Type': 'application/json' } }
-    );
-  } catch (e) {
-    return new Response(JSON.stringify({ error: String(e) }), { status: 500 });
+    return Response.json({
+      ok: res.ok,
+      report_file: filename,
+      github_url: data?.content?.html_url || null,
+      stats: { total_drafts: allDrafts.length, week_drafts: weekDrafts.length, avg_score: avgScore }
+    });
+  } catch (e: any) {
+    return Response.json({ error: e.message }, { status: 500 });
   }
-}
+});
