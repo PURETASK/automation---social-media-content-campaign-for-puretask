@@ -1,374 +1,260 @@
-// PureTask HeyGen Video Generation Engine v1.0
-// Picks queued drafts → generates videos → scores → auto-posts if ≥ 7.5
-// Platform logic: TikTok/Reels = 15s/30s 9:16 | Facebook/LinkedIn = 30s/45s 16:9 | YouTube = 45s 9:16
+// PureTask HeyGen Video Generation Engine v3.0 — VIDEO AGENT ONLY
+// Uses /v1/video_agent/generate exclusively — full scenes, B-roll, motion graphics, music
+// NEVER use /v2/video/generate — that produces raw VO-only output (horrible quality)
+//
+// How it works:
+//   1. Pick queued Approved drafts that have video_prompt populated
+//   2. Build a rich scene-by-scene Video Agent prompt from the draft data
+//   3. Submit to /v1/video_agent/generate with avatar_id + voice_id in config
+//   4. Poll for completion (Video Agent takes 5–15 min)
+//   5. Save video_cdn_url to ContentDraft, mark heygen_status = Completed
+//
+// Automation: Wednesday 9am PT (automation ID: 69dae0c83e06a07ea5224230)
 
 import { createClientFromRequest } from 'npm:@base44/sdk@0.8.23';
 
 const HEYGEN_API_KEY = Deno.env.get("HEYGEN_API_KEY");
-const AYRSHARE_API_KEY = Deno.env.get("AYRSHARE_API_KEY");
 const HEYGEN_BASE = "https://api.heygen.com";
-const AYRSHARE_BASE = "https://app.ayrshare.com/api";
 
-// Default PureTask avatar + voice
+// PureTask default avatar + voice — always use these unless draft specifies otherwise
 const DEFAULT_AVATAR_ID = "Abigail_expressive_2024112501";
-const DEFAULT_VOICE_ID = "PXNEIUJiwgmsriDe9m6P"; // addison carter - Voice 1
+const DEFAULT_VOICE_ID  = "PXNEIUJiwgmsriDe9m6P"; // addison carter - Voice 1
 
-// Platform config: which script + aspect ratio to use
-const PLATFORM_VIDEO_CONFIG: Record<string, { script: "script_15sec"|"script_30sec"|"script_45sec"; aspect_ratio: string; use_avatar: boolean }> = {
-  tiktok:    { script: "script_30sec", aspect_ratio: "9:16", use_avatar: false },
-  instagram: { script: "script_30sec", aspect_ratio: "9:16", use_avatar: false },
-  facebook:  { script: "script_45sec", aspect_ratio: "16:9", use_avatar: true  },
-  linkedin:  { script: "script_45sec", aspect_ratio: "16:9", use_avatar: true  },
-  youtube:   { script: "script_45sec", aspect_ratio: "9:16", use_avatar: false },
+// Brand constants injected into every prompt
+const BRAND = {
+  url:    "https://www.puretask.co",
+  blue:   "#0099FF",
+  white:  "#FFFFFF",
+  dark:   "#1A1A2E",
+  stats:  "10,000+ happy clients · 4.9★ · 98% satisfaction · 2,400+ verified cleaners · 50+ cities",
 };
 
-// Which pillar uses avatar vs VO-only
-function shouldUseAvatar(pillar: string, platform: string): boolean {
-  const avatarPillars = ["Trust", "Recruitment"];
-  const avatarPlatforms = ["facebook", "linkedin"];
-  return avatarPillars.includes(pillar) || avatarPlatforms.includes(platform);
+// Pillar → avatar decision: Trust + Recruitment use avatar; everything else VO-only
+function useAvatar(pillar: string): boolean {
+  return ["Trust", "Recruitment"].includes(pillar);
 }
 
-// Build HeyGen payload
-function buildHeyGenPayload(draft: any, platform: string, config: typeof PLATFORM_VIDEO_CONFIG[string]) {
-  const script = draft[config.script] || draft.script_30sec || draft.script_15sec || "";
-  if (!script) return null;
+// Pillar → aspect ratio: Recruitment/Trust for LinkedIn/FB = 16:9; everything else 9:16
+function aspectRatio(pillar: string): string {
+  return ["Trust", "Recruitment"].includes(pillar) ? "16:9" : "9:16";
+}
 
-  const useAvatar = shouldUseAvatar(draft.pillar || "", platform);
-  const [w, h] = config.aspect_ratio === "9:16" ? [720, 1280] : [1280, 720];
+// Pillar → duration
+function videoDuration(pillar: string): string {
+  return ["Trust", "Recruitment"].includes(pillar) ? "45 seconds" : "30 seconds";
+}
 
-  const payload: any = {
-    video_inputs: [
-      {
-        character: useAvatar ? {
-          type: "avatar",
-          avatar_id: DEFAULT_AVATAR_ID,
-          avatar_style: "normal"
-        } : {
-          type: "talking_photo",
-          talking_photo_id: DEFAULT_AVATAR_ID
-        },
-        voice: {
-          type: "text",
-          input_text: script,
-          voice_id: DEFAULT_VOICE_ID,
-          speed: 1.0
-        },
-        background: {
-          type: "color",
-          value: "#FFFFFF"
-        }
-      }
-    ],
-    dimension: { width: w, height: h },
-    caption: true, // always subtitles on
-    title: draft.title || "PureTask Video"
+// Build the Video Agent prompt from a ContentDraft record
+// This is the core of the system — richer prompt = better video
+function buildVideoAgentPrompt(draft: any): string {
+  const avatar     = useAvatar(draft.pillar || "");
+  const ratio      = aspectRatio(draft.pillar || "");
+  const duration   = videoDuration(draft.pillar || "");
+  const avatarLine = avatar
+    ? `Use the Abigail avatar (professional, warm, expressive). Place her on a clean PureTask branded background (${BRAND.blue} or ${BRAND.white}).`
+    : `Voice-over only — NO avatar. Use lifestyle stock footage and motion graphics throughout.`;
+
+  // Use the draft's video_prompt as the core scene direction if populated
+  const sceneDirection = draft.video_prompt
+    ? `\n\nSCENE DIRECTION FROM BRIEF:\n${draft.video_prompt}`
+    : "";
+
+  // Use the best available script
+  const script = draft.script_30sec || draft.script_45sec || draft.script_15sec || draft.hook || "";
+
+  // Build platform-aware caption note
+  const primaryCaption = draft.primary_caption || draft.platform_instagram || draft.platform_facebook || "";
+
+  return `Create a ${duration} ${ratio} vertical video for PureTask — a home cleaning marketplace.
+
+BRAND IDENTITY:
+- Primary color: ${BRAND.blue} (use for text highlights, CTAs, badges, overlays)
+- Background/text: ${BRAND.white} and ${BRAND.dark}
+- Visual style: Clean, bright, modern, lifestyle-authentic. Premium but warm. NEVER dark/moody/corporate/cluttered.
+- Brand stats available to use: ${BRAND.stats}
+- Website: ${BRAND.url} — MUST appear visually on screen in the outro
+
+AUDIENCE & MESSAGE:
+- Pillar: ${draft.pillar || "Convenience"}
+- Audience: ${draft.audience || "Busy Homeowners"}
+- Hook: ${draft.hook || ""}
+- Core message: ${draft.title || ""}
+
+AVATAR/VO:
+${avatarLine}
+
+VOICE STYLE:
+Warm, natural, conversational — like a real person talking to a friend. Never corporate or stiff. Confident and direct.
+
+SCRIPT TO FOLLOW:
+${script}
+${sceneDirection}
+
+PRODUCTION REQUIREMENTS:
+- Subtitles/captions: ALWAYS ON throughout the entire video
+- Intro card: PureTask logo + pillar tagline (0.5 seconds)
+- Outro card: PureTask logo + "${BRAND.url}" + CTA (last 3–4 seconds)
+- "${BRAND.url}" MUST be visible as text on screen in the outro — no exceptions
+- Music: Subtle, modern, lifestyle underscore. Uplifting but not hype. Matches the emotional arc.
+- Use motion graphics for stats, checklists, comparisons — animated, clean, branded
+- Use stock footage for lifestyle scenes (clean homes, happy families, bright interiors)
+- Before/after contrast where relevant (messy → clean, stressed → relaxed)
+- CTA in final scene: "Visit ${BRAND.url}" or "Book at ${BRAND.url}"
+
+VISUAL STYLE GUIDE:
+Use minimal, clean styled visuals. ${BRAND.blue}, ${BRAND.dark}, and ${BRAND.white} as main colors. Leverage motion graphics as B-roll overlays. Use AI-generated video or stock media for lifestyle scenes. Include an intro sequence, outro sequence, and smooth transitions between scenes. Every stat or trust signal should animate in — not just appear static.`;
+}
+
+// Submit one draft to Video Agent
+async function submitVideoAgent(draft: any): Promise<{ video_id: string } | { error: string }> {
+  const prompt = buildVideoAgentPrompt(draft);
+  const avatar  = useAvatar(draft.pillar || "");
+
+  const config: Record<string, string> = {
+    voice_id: DEFAULT_VOICE_ID,
   };
+  if (avatar) config.avatar_id = DEFAULT_AVATAR_ID;
 
-  return payload;
-}
-
-// Call HeyGen to generate a video
-async function generateVideo(payload: any): Promise<{ video_id: string } | { error: string }> {
   try {
-    const res = await fetch(`${HEYGEN_BASE}/v2/video/generate`, {
+    const res = await fetch(`${HEYGEN_BASE}/v1/video_agent/generate`, {
       method: "POST",
       headers: {
         "X-Api-Key": HEYGEN_API_KEY!,
-        "Content-Type": "application/json"
+        "Content-Type": "application/json",
       },
-      body: JSON.stringify(payload)
+      body: JSON.stringify({ prompt, config }),
     });
     const data = await res.json();
     if (data.data?.video_id) return { video_id: data.data.video_id };
-    return { error: data.message || data.error || "HeyGen generation failed" };
+    return { error: data.message || data.error || JSON.stringify(data) };
   } catch (e: any) {
     return { error: e.message };
   }
 }
 
-// Poll HeyGen for video status (up to 10 min)
-async function pollVideoStatus(video_id: string): Promise<{ status: string; video_url?: string; error?: string }> {
-  const maxAttempts = 20; // 20 x 30s = 10 min
+// Poll for completion — Video Agent typically takes 5–15 min
+// We poll up to 25 times × 36s = 15 min max
+async function pollStatus(video_id: string): Promise<{ status: string; video_url?: string; error?: string }> {
+  const maxAttempts = 25;
   for (let i = 0; i < maxAttempts; i++) {
-    await new Promise(r => setTimeout(r, 30000)); // wait 30 seconds
+    await new Promise(r => setTimeout(r, 36000)); // 36 seconds
     try {
       const res = await fetch(`${HEYGEN_BASE}/v1/video_status.get?video_id=${video_id}`, {
-        headers: { "X-Api-Key": HEYGEN_API_KEY! }
+        headers: { "X-Api-Key": HEYGEN_API_KEY! },
       });
       const data = await res.json();
       const status = data.data?.status;
       if (status === "completed") return { status: "completed", video_url: data.data.video_url };
-      if (status === "failed") return { status: "failed", error: data.data?.error || "Generation failed" };
-      // still processing — keep polling
+      if (status === "failed")    return { status: "failed", error: data.data?.error || "failed" };
+      // pending/processing — keep waiting
     } catch (e: any) {
       return { status: "failed", error: e.message };
     }
   }
-  return { status: "failed", error: "Timeout after 10 minutes" };
-}
-
-// Score the video on v3.0 rubric
-function scoreVideo(draft: any, script: string, platform: string): { clarity: number; relatability: number; conversion: number; avg: number; notes: string } {
-  let clarity = 8;
-  let relatability = 8;
-  let conversion = 8;
-  const issues: string[] = [];
-
-  // Check URL on script
-  if (!script.includes("puretask.co")) { clarity -= 2; issues.push("No URL in script"); }
-  // Check CTA at end
-  const lastSentence = script.split(".").filter(Boolean).pop() || "";
-  if (!lastSentence.toLowerCase().includes("visit") && !lastSentence.toLowerCase().includes("book") && !lastSentence.toLowerCase().includes("puretask")) {
-    conversion -= 3; issues.push("No CTA in final scene");
-  }
-  // Check hook speed (first sentence should be punchy — under 12 words)
-  const firstSentence = script.split(".")[0] || "";
-  if (firstSentence.split(" ").length > 12) { relatability -= 2; issues.push("Hook too slow (>12 words)"); }
-  // Check stats usage
-  const hasStats = /4\.9|10,000|98%|2,400|6 hours|80.85/.test(script);
-  if (!hasStats) { conversion -= 1; issues.push("Missing brand stats"); }
-  // Check platform-specific copy exists
-  const platField = `platform_${platform}`;
-  if (!draft[platField]) { clarity -= 2; issues.push(`No ${platform} copy`); }
-  // Check generic language
-  if (/are you tired|cleaning is hard|do you hate/i.test(script)) { relatability -= 2; issues.push("Generic hook detected"); }
-
-  // Clamp scores
-  clarity = Math.max(1, Math.min(10, clarity));
-  relatability = Math.max(1, Math.min(10, relatability));
-  conversion = Math.max(1, Math.min(10, conversion));
-  const avg = (clarity + relatability + conversion) / 3;
-
-  return {
-    clarity,
-    relatability,
-    conversion,
-    avg,
-    notes: issues.length ? `Video penalties: ${issues.join(", ")}` : "Clean score — no penalties"
-  };
-}
-
-// Post video to Ayrshare
-async function postVideoToAyrshare(platforms: string[], caption: string, videoUrl: string): Promise<{ ok: boolean; posted: string[]; failed: string[] }> {
-  const posted: string[] = [];
-  const failed: string[] = [];
-
-  for (const platform of platforms) {
-    try {
-      // Instagram: trim to 5 hashtags
-      let finalCaption = caption;
-      if (platform === "instagram") {
-        const hashtagMatches = caption.match(/#\w+/g) || [];
-        if (hashtagMatches.length > 5) {
-          const keep = hashtagMatches.slice(0, 5);
-          finalCaption = caption.replace(/#\w+/g, "").trim() + "\n\n" + keep.join(" ");
-        }
-      }
-
-      const body: any = {
-        post: finalCaption,
-        platforms: [platform === "x" ? "twitter" : platform],
-        mediaUrls: [videoUrl]
-      };
-
-      const res = await fetch(`${AYRSHARE_BASE}/post`, {
-        method: "POST",
-        headers: {
-          "Authorization": `Bearer ${AYRSHARE_API_KEY}`,
-          "Content-Type": "application/json",
-          "User-Agent": "curl/7.88.1"
-        },
-        body: JSON.stringify(body)
-      });
-      const data = await res.json();
-      if (data.status === "success" || data.postIds) {
-        posted.push(platform);
-      } else {
-        failed.push(platform);
-        console.log(`Ayrshare ${platform} failed:`, JSON.stringify(data));
-      }
-    } catch (e: any) {
-      failed.push(platform);
-      console.log(`Ayrshare ${platform} error:`, e.message);
-    }
-  }
-
-  return { ok: posted.length > 0, posted, failed };
+  return { status: "pending", error: "Still processing after 15 min — check manually" };
 }
 
 Deno.serve(async (req) => {
   try {
     const base44 = createClientFromRequest(req);
-
     const body = await req.json().catch(() => ({}));
-    // Can pass specific draft_id or leave empty to auto-pick queued drafts
-    const { draft_id, max_videos = 3, target_platforms = ["tiktok", "instagram"] } = body;
+
+    // Options:
+    //   draft_id   — generate for a specific draft
+    //   max_videos — how many to process this run (default 3)
+    //   pillar     — filter to a specific pillar
+    const { draft_id, max_videos = 3, pillar } = body;
 
     const db = base44.asServiceRole.entities;
 
-    // Get drafts to process
-    let draftsToProcess: any[] = [];
+    // --- Pick drafts to process ---
+    let drafts: any[] = [];
+
     if (draft_id) {
       const d = await db.ContentDraft.get(draft_id);
-      if (d) draftsToProcess = [d];
+      if (d) drafts = [d];
     } else {
-      // Auto-pick: queued drafts with scripts ready, prioritize by pillar balance
-      const allDrafts = await db.ContentDraft.list();
-      const queued = allDrafts.filter((d: any) =>
-        d.heygen_status === "Queued" &&
-        (d.script_30sec || d.script_15sec || d.script_45sec) &&
-        d.status === "Approved"
+      const all = await db.ContentDraft.list();
+      let pool = all.filter((d: any) =>
+        d.status === "Approved" &&
+        (d.heygen_status === "Queued" || !d.heygen_status) &&
+        !d.video_cdn_url &&
+        (d.video_prompt || d.script_30sec || d.script_45sec || d.script_15sec || d.hook)
       );
-      // Prioritize: vary pillars, pick top scoring first
-      const sorted = queued.sort((a: any, b: any) => {
+      if (pillar) pool = pool.filter((d: any) => d.pillar === pillar);
+      // Sort: highest avg score first
+      pool.sort((a: any, b: any) => {
         const aAvg = ((a.clarity_score||7) + (a.relatability_score||7) + (a.conversion_score||7)) / 3;
         const bAvg = ((b.clarity_score||7) + (b.relatability_score||7) + (b.conversion_score||7)) / 3;
         return bAvg - aAvg;
       });
-      draftsToProcess = sorted.slice(0, max_videos);
+      drafts = pool.slice(0, max_videos);
     }
 
-    if (draftsToProcess.length === 0) {
-      return Response.json({ ok: true, message: "No queued drafts with scripts found", processed: 0 });
+    if (drafts.length === 0) {
+      return Response.json({ ok: true, message: "No eligible drafts found", processed: 0 });
     }
 
     const results: any[] = [];
 
-    for (const draft of draftsToProcess) {
-      const draftResult: any = { draft_id: draft.id, title: draft.title, videos: [] };
+    for (const draft of drafts) {
+      console.log(`[HeyGen VA] Submitting: ${draft.title}`);
 
-      // Generate one video per target platform (different aspect ratios)
-      const platformsToGenerate = new Set<string>();
+      // Mark as processing
+      await db.ContentDraft.update(draft.id, {
+        heygen_status: "Processing",
+        editor_notes: `[Video Agent] Submitted ${new Date().toISOString()}`,
+      });
 
-      // Pick platforms based on draft content availability
-      for (const plat of target_platforms) {
-        const platField = `platform_${plat}`;
-        if (draft[platField] || draft.platform_tiktok || draft.platform_instagram) {
-          platformsToGenerate.add(plat);
-        }
+      // Submit to Video Agent
+      const submission = await submitVideoAgent(draft);
+      if ("error" in submission) {
+        console.log(`[HeyGen VA] Submit failed for ${draft.title}: ${submission.error}`);
+        await db.ContentDraft.update(draft.id, {
+          heygen_status: "Failed",
+          editor_notes: `[Video Agent] Submit error: ${submission.error}`,
+        });
+        results.push({ title: draft.title, status: "submit_failed", error: submission.error });
+        continue;
       }
 
-      // Dedupe by aspect ratio — only generate each ratio once
-      const generatedRatios = new Set<string>();
+      const { video_id } = submission;
+      console.log(`[HeyGen VA] Submitted ${draft.title} → video_id: ${video_id}`);
 
-      for (const platform of platformsToGenerate) {
-        const config = PLATFORM_VIDEO_CONFIG[platform] || PLATFORM_VIDEO_CONFIG.tiktok;
-        const ratioKey = config.aspect_ratio;
+      // Save the video_id immediately so we can track it
+      await db.ContentDraft.update(draft.id, { heygen_video_id: video_id });
 
-        if (generatedRatios.has(ratioKey)) {
-          // Already generating this ratio — reuse for this platform
-          draftResult.videos.push({ platform, status: "reusing", aspect_ratio: ratioKey });
-          continue;
-        }
-        generatedRatios.add(ratioKey);
+      // Poll for completion
+      const result = await pollStatus(video_id);
 
-        const script = draft[config.script] || draft.script_30sec || draft.script_15sec || "";
-        if (!script) {
-          draftResult.videos.push({ platform, status: "skipped", reason: "No script available" });
-          continue;
-        }
-
-        // Score the video BEFORE generating
-        const score = scoreVideo(draft, script, platform);
-        console.log(`[HeyGen] Draft: ${draft.title} | Platform: ${platform} | Score: ${score.avg.toFixed(1)}`);
-
-        if (score.avg < 7.5) {
-          // Don't generate — would fail anyway
-          await db.ContentDraft.update(draft.id, {
-            heygen_status: "Failed",
-            editor_notes: `Pre-generation score check failed (${score.avg.toFixed(1)}). ${score.notes}`
-          });
-          draftResult.videos.push({ platform, status: "rejected_pre_score", score: score.avg, notes: score.notes });
-          continue;
-        }
-
-        // Build payload and generate
-        const payload = buildHeyGenPayload(draft, platform, config);
-        if (!payload) {
-          draftResult.videos.push({ platform, status: "skipped", reason: "Could not build payload" });
-          continue;
-        }
-
-        console.log(`[HeyGen] Generating video for ${draft.title} (${platform} ${ratioKey})...`);
-
-        // Mark as generating
-        await db.ContentDraft.update(draft.id, { heygen_status: "Generating" });
-
-        const genResult = await generateVideo(payload);
-        if ("error" in genResult) {
-          await db.ContentDraft.update(draft.id, {
-            heygen_status: "Failed",
-            editor_notes: `HeyGen API error: ${genResult.error}`
-          });
-          draftResult.videos.push({ platform, status: "generation_failed", error: genResult.error });
-          continue;
-        }
-
-        // Store video_id immediately
-        await db.ContentDraft.update(draft.id, { heygen_video_id: genResult.video_id });
-
-        // Poll for completion
-        console.log(`[HeyGen] Polling video ${genResult.video_id}...`);
-        const pollResult = await pollVideoStatus(genResult.video_id);
-
-        if (pollResult.status !== "completed" || !pollResult.video_url) {
-          await db.ContentDraft.update(draft.id, {
-            heygen_status: "Failed",
-            editor_notes: `HeyGen polling failed: ${pollResult.error || "unknown"}`
-          });
-          draftResult.videos.push({ platform, status: "poll_failed", error: pollResult.error });
-          continue;
-        }
-
-        const videoUrl = pollResult.video_url;
-        console.log(`[HeyGen] Video ready: ${videoUrl}`);
-
-        // Store CDN URL and mark completed
+      if (result.status === "completed" && result.video_url) {
         await db.ContentDraft.update(draft.id, {
           heygen_status: "Completed",
-          video_cdn_url: videoUrl
+          video_cdn_url: result.video_url,
+          editor_notes: `[Video Agent] Completed ${new Date().toISOString()} — full scenes, B-roll, motion graphics`,
         });
-
-        // Now post to applicable platforms
-        const platformsForPost = Array.from(platformsToGenerate).filter(p => {
-          return PLATFORM_VIDEO_CONFIG[p]?.aspect_ratio === ratioKey;
-        });
-
-        const caption = draft[`platform_${platform}`] || draft.platform_instagram || draft.platform_tiktok || draft.primary_caption || "";
-
-        const postResult = await postVideoToAyrshare(platformsForPost, caption, videoUrl);
-
-        // Update posted_platforms
-        const existingPosted = draft.posted_platforms ? draft.posted_platforms.split(",").map((s: string) => s.trim()).filter(Boolean) : [];
-        const allPosted = [...new Set([...existingPosted, ...postResult.posted])];
-
+        console.log(`[HeyGen VA] ✅ Completed: ${draft.title}`);
+        results.push({ title: draft.title, status: "completed", video_id, video_url: result.video_url });
+      } else if (result.status === "pending") {
+        // Still processing after timeout — save ID, automation will catch it next run
         await db.ContentDraft.update(draft.id, {
-          status: postResult.ok ? "Posted" : "Approved",
-          posted_platforms: allPosted.join(", ")
+          heygen_status: "Processing",
+          editor_notes: `[Video Agent] Still processing after timeout — video_id: ${video_id}`,
         });
-
-        draftResult.videos.push({
-          platform,
-          status: "completed",
-          video_url: videoUrl,
-          score: score.avg,
-          posted_to: postResult.posted,
-          failed_platforms: postResult.failed
+        results.push({ title: draft.title, status: "still_processing", video_id });
+      } else {
+        await db.ContentDraft.update(draft.id, {
+          heygen_status: "Failed",
+          editor_notes: `[Video Agent] Failed: ${result.error}`,
         });
+        results.push({ title: draft.title, status: "failed", error: result.error });
       }
-
-      results.push(draftResult);
     }
 
-    return Response.json({
-      ok: true,
-      processed: results.length,
-      results
-    });
+    return Response.json({ ok: true, processed: drafts.length, results });
 
-  } catch (error: any) {
-    console.error("[HeyGen Function Error]", error);
-    return Response.json({ error: error.message }, { status: 500 });
+  } catch (e: any) {
+    console.error("[HeyGen VA] Fatal error:", e.message);
+    return Response.json({ ok: false, error: e.message }, { status: 500 });
   }
 });
