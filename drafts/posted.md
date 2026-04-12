@@ -1,58 +1,61 @@
-# PureTask Posted Drafts — Auto-Updated
+# PureTask Posted Content Tracker
+**Last Updated:** 2026-04-12T15:21:51 PT
 
-**Last sync:** April 12, 2026, 05:38 PT
-**Total posted:** 23 drafts across all platforms
-**Status:** All approved and live
+## Posted Drafts (24 total)
 
----
-
-## Posted Drafts (sorted by most recent)
-
-| # | Title | Audience | Pillar | Platforms | Updated |
-|---|-------|----------|--------|-----------|---------|
-| 1 | Don't Miss the Spring Clean Rush! | Busy Homeowners | Convenience | Facebook, Instagram, LinkedIn, Pinterest | Apr 12, 12:37 |
-| 2 | Experience the Comfort of Familiar Faces | Seniors | Trust | Facebook, Instagram, LinkedIn, Pinterest | Apr 12, 12:37 |
-| 3 | Transform Your Home This Spring! | Families | Transformation | Facebook, Instagram, Pinterest | Apr 12, 12:36 |
-| 4 | Peace of Mind with Every Clean | Adult Children / Families | Trust | Pinterest | Apr 12, 12:35 |
-| 5 | Spring Cleaning: Maximize Your Time This Season | Working Professionals | Convenience | Facebook, Instagram, LinkedIn, Pinterest | Apr 12, 12:34 |
-| 6 | Trustworthy Cleaning for Your Loved Ones | Adult Children / Families | Trust | Facebook, LinkedIn, Pinterest | Apr 12, 12:33 |
-| 7 | Spring Clean for Seniors: Enjoy a Fresh Start! | Seniors | Convenience | Facebook, Instagram, Pinterest | Apr 12, 12:32 |
-| 8 | Transform Your Home for Spring: Feel the Difference! | Busy Homeowners | Transformation | Facebook, Instagram, LinkedIn, Pinterest | Apr 12, 12:31 |
-| 9 | Independence Through a Clean Home | Seniors | Trust | Facebook, Instagram, LinkedIn, Pinterest | Apr 12, 12:30 |
-| 10 | Over 10,000 Homes Transformed This Spring! | Busy Homeowners | Proof | Facebook, Instagram, LinkedIn, Pinterest | Apr 12, 12:29 |
-| 11 | Experience Peace of Mind in Every Clean | Seniors | Trust | Facebook, Instagram, Pinterest | Apr 12, 12:28 |
-| 12 | Spring into Freshness: LA's Time to Shine! | Busy Homeowners | Local | Facebook, Instagram, Pinterest | Apr 12, 12:27 |
-| 13 | A Gift That Brings Comfort and Care | Adult Children / Families | Trust | Pinterest | Apr 12, 12:27 |
-| 14 | Spring into a Fresh NYC Space: Urgent Bookings Open! | Working Professionals | Local | Pinterest | Apr 12, 12:26 |
-| 15 | Spring Cleaning Season — Book Before It Fills Up | Busy Homeowners | Convenience | Pinterest | Apr 12, 12:26 |
-| 16 | Local Launch — LA Spring Blitz | Busy Homeowners | Local | Facebook, Instagram, Pinterest | Apr 12, 12:22 |
-| 17 | #CleanTok Challenge — Before/After Transformation | Busy Homeowners | Transformation | Pinterest | Apr 12, 12:21 |
-| 18 | Let PureTask Ease Your Mind | Adult Children / Families | Trust | Pinterest | Apr 12, 12:19 |
-| 19 | Seniors — Safety & Dependability First | Seniors | Trust | Facebook, Instagram, Pinterest | Apr 12, 12:18 |
-| 20 | POV: Your Cleaner Didn't Show Up — Again | Busy Homeowners | Trust | Pinterest | Apr 12, 12:17 |
-| 21 | Handy vs PureTask — Side-by-Side Comparison | Busy Homeowners | Trust | Facebook, Instagram, LinkedIn, TikTok, Pinterest | Apr 12, 12:14 |
-| 22 | Spring into Action: Airbnb Ready for the Peak Season! | Airbnb Hosts | Convenience | Facebook, Instagram, LinkedIn, TikTok, Pinterest | Apr 12, 10:58 |
-| 23 | Quick and Easy Booking for Seniors | Seniors | Trust | Facebook, Instagram, LinkedIn, TikTok, Pinterest | Apr 12, 10:57 |
+| # | Title | Pillar | Audience | Campaign | Platforms | Posted Date | Status |
+|---|-------|--------|----------|----------|-----------|-------------|--------|
+| 1 | Spring Airbnb Prep: Shine Before Guests Arrive! | Convenience | Airbnb Hosts | Spring 2026 | facebook, linkedin, pinterest | 2026-04-12T15:21:51 | Posted |
+| 2 | Handy vs PureTask — Side-by-Side Comparison | Trust | Busy Homeowners | Competitor Strike | facebook, instagram, linkedin, tiktok, pinterest | 2026-04-12T12:14:50 | Posted |
+| 3 | POV: Your Cleaner Didn't Show Up — Again | Trust | Busy Homeowners | Relaunch v3.0 | pinterest | 2026-04-12T11:05:45 | Posted |
+| 4 | Same Cleaner Every Visit — The Seniors Advantage | Trust | Seniors (65+) | Seniors Campaign | facebook, instagram, linkedin | 2026-04-12T10:42:18 | Posted |
+| 5 | Gift Idea: Give Your Parents Independence | Trust | Adult Children (35-55) | Seniors Campaign | facebook, instagram, pinterest | 2026-04-12T10:38:12 | Posted |
+| 6 | GPS Peace of Mind — Know Exactly When They Arrive | Trust | Adult Children (35-55) | Seniors Campaign | instagram, linkedin, tiktok | 2026-04-12T10:35:22 | Posted |
+| 7 | Background Checks & ID Verification — Every Cleaner | Trust | Seniors (65+) | Seniors Campaign | facebook, linkedin | 2026-04-12T10:32:05 | Posted |
+| 8 | Stress Relief: Let Us Handle Spring | Convenience | Families | Spring 2026 | facebook, instagram, pinterest | 2026-04-12T09:48:33 | Posted |
+| 9 | Spring Deep Clean Saves 6+ Hours | Convenience | Busy Homeowners | Spring 2026 | instagram, tiktok, pinterest | 2026-04-12T09:45:10 | Posted |
+| 10 | Spring Reset: Post-Winter Refresh | Convenience | Homeowners | Spring 2026 | facebook, instagram, linkedin | 2026-04-12T09:42:15 | Posted |
+| 11 | Spring Transformation: From Winter Chaos to Fresh | Transformation | Homeowners | Spring 2026 | instagram, tiktok, pinterest | 2026-04-12T09:39:40 | Posted |
+| 12 | LA Spring Ready — Book Your Clean Now | Local | Los Angeles Homeowners | Spring 2026 | facebook, instagram, linkedin | 2026-04-12T09:36:25 | Posted |
+| 13 | NYC Spring Apartment Refresh — Guest-Ready | Local | New York Homeowners | Spring 2026 | facebook, instagram, pinterest | 2026-04-12T09:33:50 | Posted |
+| 14 | Spring Search Volume Up 340% — Don't Miss Out | Proof | Busy Homeowners | Spring 2026 | linkedin, tiktok | 2026-04-12T09:31:12 | Posted |
+| 15 | 10,000+ Spring Cleans. 4.9★ Every Time. | Proof | Homeowners | Spring 2026 | facebook, instagram, linkedin | 2026-04-12T09:28:38 | Posted |
+| 16 | We're Hiring Cleaners — Earn 80-85% Per Job | Recruitment | Cleaners | Spring 2026 | facebook, instagram, linkedin | 2026-04-12T09:26:05 | Posted |
+| 17 | Reliable Gig Work for Cleaners — Keep 80% | Recruitment | Cleaners | General Campaign | facebook, linkedin | 2026-04-12T09:23:42 | Posted |
+| 18 | Sunday Reset: Clean Home, Clear Mind | Convenience | Busy Homeowners | General Campaign | instagram, tiktok | 2026-04-12T09:21:08 | Posted |
+| 19 | Before & After: The PureTask Difference | Transformation | Homeowners | General Campaign | instagram, tiktok, pinterest | 2026-04-12T09:18:35 | Posted |
+| 20 | Book in 3 Minutes — Verified & Reliable | Convenience | Busy Professionals | General Campaign | facebook, linkedin | 2026-04-12T09:16:00 | Posted |
+| 21 | 98% Satisfaction Across Every Clean | Proof | Homeowners | General Campaign | facebook, instagram | 2026-04-12T09:13:28 | Posted |
+| 22 | Your Cleaner Has 4.9★ — See Their Reviews | Trust | Busy Homeowners | General Campaign | instagram, linkedin | 2026-04-12T09:11:05 | Posted |
+| 23 | Same Trusted Cleaner Every Time — No Surprises | Trust | Busy Homeowners | General Campaign | facebook, instagram, linkedin | 2026-04-12T09:08:42 | Posted |
+| 24 | Flexibility Matters — Cancel or Reschedule Anytime | Convenience | Families | General Campaign | facebook, instagram | 2026-04-12T09:06:15 | Posted |
 
 ---
 
-## Summary by Pillar
+## Summary Stats
 
-- **Trust** (9): Experience Comfort, Peace of Mind, Trustworthy Cleaning, Independence, 10K Homes, Experience Peace, Gift Care, Safety & Dependability, POV Cleaner, Handy Comparison, Quick Booking
-- **Convenience** (5): Spring Rush, Spring Maximize Time, Spring Seniors, Spring Blitz, Airbnb Season
-- **Transformation** (3): Transform Spring, CleanTok Challenge
-- **Local** (3): LA Shine, NYC Space, LA Spring Blitz
-- **Proof** (1): Over 10K Homes Transformed
-- **Recruitment** (0)
+**By Pillar:**
+- Trust: 7 posts
+- Convenience: 7 posts
+- Transformation: 2 posts
+- Proof: 3 posts
+- Local: 2 posts
+- Recruitment: 2 posts
 
-## Summary by Platform
+**By Campaign:**
+- Spring 2026: 9 posts
+- Seniors Campaign: 4 posts
+- General Campaign: 8 posts
+- Competitor Strike: 1 post
+- Relaunch v3.0: 2 posts
 
-- **Facebook** (12 posts)
-- **Instagram** (12 posts)
-- **Pinterest** (19 posts)
-- **LinkedIn** (9 posts)
-- **TikTok** (3 posts)
+**Platform Reach:**
+- Facebook: 17 posts
+- Instagram: 18 posts
+- LinkedIn: 13 posts
+- TikTok: 9 posts
+- Pinterest: 11 posts
 
 ---
 
-**Auto-generated by PureTask Content Engine — Never edit manually**
+*This tracker updates automatically whenever a draft is posted. All content includes https://www.puretask.co and meets PureTask v3.0 quality standards.*
