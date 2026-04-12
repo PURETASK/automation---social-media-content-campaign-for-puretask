@@ -1,104 +1,104 @@
-# PureTask Posted Content Tracker
+# PureTask Posted Drafts Tracker
+**Last Updated:** April 12, 2026 at 3:15 PM PT
 
-**Last Updated:** April 12, 2026 | 22:14 PT
-**Total Posted:** 56 drafts
-
----
-
-## Posted Content Log (Newest First)
-
-| # | Title | Pillar | Audience | Platforms | Campaign | Posted Date |
-|---|-------|--------|----------|-----------|----------|-------------|
-| 1 | Transform Your Home for Spring: Feel the Difference! | Transformation | Busy Homeowners | Facebook, Instagram, LinkedIn, Pinterest | Spring 2026 | 2026-04-12 |
-| 2 | #CleanTok Challenge — Before/After Transformation | Transformation | Busy Homeowners | Pinterest | CleanTok | 2026-04-12 |
-| 3 | Spring is Here: Transform Your Home Now! | Transformation | Families | Facebook, Instagram, LinkedIn, Pinterest | Spring 2026 | 2026-04-12 |
-| 4 | Feel the Spring Relief — Book Now! | Transformation | Busy Homeowners | Facebook, LinkedIn, Pinterest | Spring 2026 | 2026-04-12 |
-| 5 | V2 — Set It & Forget It Recurring | Convenience | Busy Homeowners | Pinterest | Relaunch v3.0 | 2026-04-12 |
-| 6 | V2 — Cleaner Recruitment: Keep What You Earn | Recruitment | Cleaners / Recruiting | LinkedIn | Relaunch v3.0 | 2026-04-12 |
-| 7 | V2 — Working Professional Relief | Convenience | Working Professionals | Facebook, LinkedIn, Pinterest | Relaunch v3.0 | 2026-04-12 |
-| 8 | V2 — GPS + Photo Proof Transparency | Trust | Busy Homeowners | Facebook, LinkedIn | Relaunch v3.0 | 2026-04-12 |
-| 9 | V2 — Social Proof Wall | Proof | Busy Homeowners | Pinterest | Relaunch v3.0 | 2026-04-12 |
-| 10 | Luxury Cleaning for Busy Los Angeles Professionals | Local | Busy Homeowners | Facebook, LinkedIn, Pinterest | City Launch Series | 2026-04-12 |
-| 11 | Effortless Living in Los Angeles | Local | Working Professionals | Facebook, LinkedIn, Pinterest | City Launch Series | 2026-04-12 |
-| 12 | Cleaning Solutions for NYC's Busy Professionals | Local | Working Professionals | Facebook, LinkedIn, Pinterest | City Launch Series | 2026-04-12 |
-| 13 | Efficient Cleaning for NYC's Apartment Dwellers | Local | Busy Homeowners | Facebook, LinkedIn, Pinterest | City Launch Series | 2026-04-12 |
-| 14 | PureTask: Lakefront Living Made Simple | Local | Families | Facebook, LinkedIn, Pinterest | City Launch Series | 2026-04-12 |
-| 15 | A Clean Home for Chicago Working Parents | Local | Working Professionals | Facebook, LinkedIn, Pinterest | City Launch Series | 2026-04-12 |
-| 16 | Houston Home Harmony | Local | Families | Facebook, Instagram, LinkedIn, Pinterest | City Launch Series | 2026-04-12 |
-| 17 | Clean Homes, Clear Minds in Houston | Local | Busy Homeowners | LinkedIn, Pinterest | City Launch Series | 2026-04-12 |
-| 18 | Streamline Your Busy Life in Austin | Local | Working Professionals | Pinterest | City Launch Series | 2026-04-12 |
-| 19 | Effortlessly Cleaned Homes in Austin | Local | Busy Homeowners | Facebook, Instagram, LinkedIn, Pinterest | City Launch Series | 2026-04-12 |
-| 20 | Maximize Your Earnings with PureTask | Recruitment | Cleaners / Gig Workers | Facebook, Instagram, LinkedIn | Cleaner Recruitment Campaign | 2026-04-12 |
-| 21 | Maximize Your Earnings with PureTask! | Recruitment | Cleaners / Gig Workers | Facebook, Instagram, LinkedIn | Cleaner Recruitment Campaign | 2026-04-12 |
-| 22 | Elevate Your Earnings: From Bronze to Platinum with PureTask | Recruitment | Cleaners / Gig Workers | Facebook, Instagram, LinkedIn | Cleaner Recruitment Campaign | 2026-04-12 |
-| 23 | Earn $500-$2000/Month on Your Schedule! | Recruitment | Cleaners / Gig Workers | Facebook, Instagram, LinkedIn | Cleaner Recruitment Campaign | 2026-04-12 |
-| 24 | Keep Up to 85% of Your Earnings with PureTask! | Recruitment | Cleaners / Gig Workers | Facebook, Instagram, LinkedIn | Cleaner Recruitment Campaign | 2026-04-12 |
-| 25 | Join 2,400+ Cleaners Building Their Business! | Recruitment | Cleaners / Gig Workers | LinkedIn | Cleaner Recruitment Campaign | 2026-04-12 |
-| 26 | Don't Let Spring Pass You By! | Convenience | Busy Homeowners | LinkedIn, Pinterest | Spring 2026 | 2026-04-12 |
-| 27 | Spring Clean Made Easy for Busy Professionals | Convenience | Working Professionals | Facebook, LinkedIn, Pinterest | Spring 2026 | 2026-04-12 |
-| 28 | Spring Clean Made Easy for Seniors – Book Now! | Convenience | Seniors | Facebook, LinkedIn, Pinterest | Spring 2026 | 2026-04-12 |
-| 29 | Join 10,000+ Homes in a Spring Clean Revolution! | Proof | Busy Homeowners | Facebook, LinkedIn, Pinterest | Spring 2026 | 2026-04-12 |
-| 30 | V2 — 3-Minute Booking Demo | Convenience | Working Professionals | Facebook, LinkedIn, Pinterest | Relaunch v3.0 | 2026-04-12 |
+## Summary
+- **Total Posted:** 56 drafts
+- **Platforms Active:** Facebook, Instagram, LinkedIn, Pinterest, TikTok, Threads
+- **Top Pillar:** Local (13 posts)
+- **Top Audience:** Busy Homeowners (18 posts)
 
 ---
 
-## Campaign Summary
+## Posted Content by Pillar
 
-### Spring 2026 Campaign
-- **Status:** Live
-- **Posted:** 9 drafts
-- **Audience:** Busy Homeowners, Families, Working Professionals, Seniors
-- **Pillars:** Transformation (4), Convenience (3), Proof (2)
-- **Window:** April 1-30, 2026
+### Transformation (7 posts)
+| Title | Audience | Platforms | Status |
+|-------|----------|-----------|--------|
+| V2 — Before & After Transformation | Busy Homeowners | facebook, linkedin, pinterest | Posted |
+| Feel the Spring Relief — Book Now! | Busy Homeowners | facebook, linkedin, pinterest | Posted |
+| Spring is Here: Transform Your Home Now! | Families | facebook, instagram, linkedin, pinterest | Posted |
+| #CleanTok Challenge — Before/After Transformation | Busy Homeowners | pinterest | Posted |
+| Transform Your Home This Spring! | Families | facebook, instagram, pinterest | Posted |
+| Transform Your Home for Spring: Feel the Difference! | Busy Homeowners | facebook, instagram, linkedin, pinterest | Posted |
 
-### City Launch Series
-- **Status:** Live
-- **Posted:** 8 drafts
-- **Cities:** Los Angeles, NYC, Chicago, Houston, Austin
-- **Platforms:** Primarily Facebook, LinkedIn, Pinterest
+### Trust (13 posts)
+| Title | Audience | Platforms | Status |
+|-------|----------|-----------|--------|
+| Handy vs PureTask — Side-by-Side Comparison | Busy Homeowners | facebook, instagram, linkedin, tiktok, pinterest | Posted |
+| POV: Your Cleaner Didn't Show Up — Again | Busy Homeowners | pinterest | Posted |
+| Seniors — Safety & Dependability First | Seniors | facebook, instagram, pinterest | Posted |
+| Quick and Easy Booking for Seniors | Seniors | facebook, instagram, linkedin, tiktok, pinterest | Posted |
+| Let PureTask Ease Your Mind | Adult Children / Families | pinterest | Posted |
+| A Gift That Brings Comfort and Care | Adult Children / Families | pinterest | Posted |
+| Experience Peace of Mind in Every Clean | Seniors | facebook, instagram, pinterest | Posted |
+| Independence Through a Clean Home | Seniors | facebook, instagram, linkedin, pinterest | Posted |
+| Trustworthy Cleaning for Your Loved Ones | Adult Children / Families | facebook, linkedin, pinterest | Posted |
+| Peace of Mind with Every Clean | Adult Children / Families | pinterest | Posted |
+| Experience the Comfort of Familiar Faces | Seniors | facebook, instagram, linkedin, pinterest | Posted |
 
-### Cleaner Recruitment Campaign
-- **Status:** Live
-- **Posted:** 6 drafts
-- **Target Audience:** Cleaners / Gig Workers
-- **Message Focus:** Earnings, platform benefits, scale opportunity
+### Convenience (11 posts)
+| Title | Audience | Platforms | Status |
+|-------|----------|-----------|--------|
+| Spring Airbnb Prep: Shine Before Guests Arrive! | Airbnb Hosts | facebook, linkedin, pinterest | Posted |
+| Spring Clean Made Easy for Seniors – Book Now! | Seniors | facebook, linkedin, pinterest | Posted |
+| Spring Clean Made Easy for Busy Professionals | Working Professionals | facebook, linkedin, pinterest | Posted |
+| Don't Let Spring Pass You By! | Busy Homeowners | linkedin, pinterest | Posted |
+| Spring Cleaning Season — Book Before It Fills Up | Busy Homeowners | pinterest | Posted |
+| Spring into Action: Airbnb Ready for the Peak Season! | Airbnb Hosts | facebook, instagram, linkedin, tiktok, pinterest | Posted |
+| Spring Cleaning: Maximize Your Time This Season | Working Professionals | facebook, instagram, linkedin, pinterest | Posted |
+| Don't Miss the Spring Clean Rush! | Busy Homeowners | facebook, instagram, linkedin, pinterest | Posted |
 
-### Relaunch v3.0
-- **Status:** Live
-- **Posted:** 6 drafts
-- **Focus:** Core value props (convenience, trust, proof, recruitment)
+### Proof (2 posts)
+| Title | Audience | Platforms | Status |
+|-------|----------|-----------|--------|
+| Join 10,000+ Homes in a Spring Clean Revolution! | Busy Homeowners | facebook, linkedin, pinterest | Posted |
+| Over 10,000 Homes Transformed This Spring! | Busy Homeowners | facebook, instagram, linkedin, pinterest | Posted |
+
+### Local (13 posts)
+| Title | Audience | Platforms | Status |
+|-------|----------|-----------|--------|
+| NYC Spring Refresh: Book Now to Transform Your Space! | Working Professionals | facebook, linkedin, pinterest | Posted |
+| Los Angeles Spring Transformation Awaits | Busy Homeowners | linkedin, pinterest | Posted |
+| Local Launch — LA Spring Blitz | Busy Homeowners | facebook, instagram, pinterest | Posted |
+| Spring into a Fresh NYC Space: Urgent Bookings Open! | Working Professionals | pinterest | Posted |
+| Spring into Freshness: LA's Time to Shine! | Busy Homeowners | facebook, instagram, pinterest | Posted |
+| Effortlessly Cleaned Homes in Austin | Busy Homeowners | facebook, instagram, linkedin, pinterest | Posted |
+| Streamline Your Busy Life in Austin | Working Professionals | pinterest | Posted |
+| Clean Homes, Clear Minds in Houston | Busy Homeowners | linkedin, pinterest | Posted |
+| Houston Home Harmony | Families | facebook, instagram, linkedin, pinterest | Posted |
+| A Clean Home for Chicago Working Parents | Working Professionals | facebook, linkedin, pinterest | Posted |
+| PureTask: Lakefront Living Made Simple | Families | facebook, linkedin, pinterest | Posted |
+| Efficient Cleaning for NYC's Apartment Dwellers | Busy Homeowners | facebook, linkedin, pinterest | Posted |
+| Busy Lives in Boston? Let Us Handle the Rest | Busy Homeowners | facebook, linkedin, pinterest | Posted |
+
+### Recruitment (6 posts)
+| Title | Audience | Platforms | Status |
+|-------|----------|-----------|--------|
+| Join 2,400+ Cleaners Building Their Business! | Cleaners / Gig Workers | linkedin | Posted |
+| Keep Up to 85% of Your Earnings with PureTask! | Cleaners / Gig Workers | facebook, instagram, linkedin | Posted |
+| Earn $500-$2000/Month on Your Schedule! | Cleaners / Gig Workers | facebook, instagram, linkedin | Posted |
+| Elevate Your Earnings: From Bronze to Platinum with PureTask | Cleaners / Gig Workers | facebook, instagram, linkedin | Posted |
+| Maximize Your Earnings with PureTask! | Cleaners / Gig Workers | facebook, instagram, linkedin | Posted |
+| Maximize Your Earnings with PureTask | Cleaners / Gig Workers | facebook, instagram, linkedin | Posted |
 
 ---
 
-## Pillar Distribution (Posted Content)
-
-- **Transformation:** 4 drafts (7%)
-- **Proof:** 2 drafts (4%)
-- **Convenience:** 8 drafts (14%)
-- **Trust:** 1 draft (2%)
-- **Local:** 8 drafts (14%)
-- **Recruitment:** 6 drafts (11%)
-- **[Other]:** 27 drafts (48%)
-
----
-
-## Platform Performance (by posting count)
-
-| Platform | Posts | % of Total |
-|----------|-------|-----------|
-| Facebook | 32 | 57% |
-| Pinterest | 31 | 55% |
-| LinkedIn | 31 | 55% |
-| Instagram | 14 | 25% |
-
-*Note: Posts are counted per platform — some content appears on multiple platforms.*
+## Distribution by Platform
+| Platform | Count |
+|----------|-------|
+| Pinterest | 41 posts |
+| Facebook | 32 posts |
+| LinkedIn | 31 posts |
+| Instagram | 24 posts |
+| TikTok | 6 posts |
+| Threads | 0 posts |
 
 ---
 
-## Next Steps
+## Performance Notes
+- Most drafts have performance data pending (avg_performance_score pending from platform analytics)
+- Will update with engagement metrics as posts go live and social data flows in
 
-- Monitor engagement metrics for Spring campaign through April 30
-- Track senior audience CTR and booking conversion
-- Analyze platform performance to optimize future content scheduling
-- Prepare transition strategy for May content campaigns
+---
 
+*This file is automatically updated when content drafts are marked as "Posted" in the database.*
