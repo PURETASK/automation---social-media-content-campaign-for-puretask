@@ -1,53 +1,63 @@
-# PureTask Posted Content Tracker
-**Last Updated:** April 12, 2026 · 05:17 PT
+# PureTask Posted Content Tracker — April 12, 2026
 
-## Posted Drafts (4 total)
-
-### 1. Handy vs PureTask — Side-by-Side Comparison
-- **ID:** 69db8c4f7a5a682b4cd9606f
-- **Pillar:** Trust
-- **Audience:** Busy Homeowners
-- **Posted Platforms:** facebook, instagram, linkedin, tiktok, pinterest
-- **Posted Date:** April 12, 2026
-- **Score:** 9.2/10 (Clarity: 9.0 | Relatability: 9.2 | Conversion: 9.0)
-- **Campaign:** Competitor Strike
-
-### 2. POV: Your Cleaner Didn't Show Up — Again
-- **ID:** 69db8c4f7a5a682b4cd96070
-- **Pillar:** Trust
-- **Audience:** Busy Homeowners
-- **Posted Platforms:** pinterest
-- **Posted Date:** April 12, 2026
-- **Score:** 9.0/10 (Clarity: 9.0 | Relatability: 9.0 | Conversion: 9.0)
-- **Campaign:** Relaunch v3.0
-
-### 3. Quick and Easy Booking for Seniors
-- **ID:** 69db8c4f7a5a682b4cd9606e
-- **Pillar:** Trust
-- **Audience:** Seniors
-- **Posted Platforms:** facebook, instagram, linkedin, tiktok, pinterest
-- **Posted Date:** April 12, 2026
-- **Score:** 8.0/10 (Clarity: 8.0 | Relatability: 8.5 | Conversion: 8.0)
-- **Campaign:** Seniors Campaign
-
-### 4. Why PureTask Cleaners Earn More
-- **ID:** 69db8c4f7a5a682b4cd9606c
-- **Pillar:** Recruitment
-- **Audience:** Cleaners / Recruitment
-- **Posted Platforms:** facebook, instagram, linkedin, tiktok, pinterest
-- **Posted Date:** April 12, 2026
-- **Score:** 8.5/10 (Clarity: 8.0 | Relatability: 9.0 | Conversion: 8.0)
-- **Campaign:** Recruitment Drive
+## Posted Drafts Summary
+**Total Posted:** 11 drafts  
+**Last Updated:** 2026-04-12 12:26:55 (PT)
 
 ---
 
-## Summary
-- **Total Posted:** 4
-- **Platforms Covered:** Facebook (3), Instagram (3), LinkedIn (3), TikTok (3), Pinterest (4)
-- **Average Score:** 8.68/10
-- **Primary Pillar:** Trust (3), Recruitment (1)
-- **Campaigns:** Competitor Strike, Relaunch v3.0, Seniors Campaign, Recruitment Drive
+## Posted Content Log
+
+| # | Title | Audience | Pillar | Platforms | City | Posted Date |
+|---|-------|----------|--------|-----------|------|-------------|
+| 1 | Handy vs PureTask — Side-by-Side Comparison | Busy Homeowners | Trust | Facebook, Instagram, LinkedIn, TikTok, Pinterest | — | 2026-04-12 |
+| 2 | POV: Your Cleaner Didn't Show Up — Again | Busy Homeowners | Trust | Pinterest | — | 2026-04-12 |
+| 3 | #CleanTok Challenge — Before/After Transformation | Busy Homeowners | Transformation | Pinterest | — | 2026-04-12 |
+| 4 | Local Launch — LA Spring Blitz | Busy Homeowners | Local | Facebook, Instagram, Pinterest | Los Angeles | 2026-04-12 |
+| 5 | Spring Cleaning Season — Book Before It Fills Up | Busy Homeowners | Convenience | Pinterest | — | 2026-04-12 |
+| 6 | Seniors — Safety & Dependability First | Seniors | Trust | Facebook, Instagram, Pinterest | — | 2026-04-12 |
+| 7 | Quick and Easy Booking for Seniors | Seniors | Trust | Facebook, Instagram, LinkedIn, TikTok, Pinterest | — | 2026-04-12 |
+| 8 | Spring into Action: Airbnb Ready for the Peak Season! | Airbnb Hosts | Convenience | Facebook, Instagram, LinkedIn, TikTok, Pinterest | — | 2026-04-12 |
+| 9 | Let PureTask Ease Your Mind | Adult Children / Families | Trust | Pinterest | — | 2026-04-12 |
+| 10 | Spring into a Fresh NYC Space: Urgent Bookings Open! | Working Professionals | Local | Pinterest | New York | 2026-04-12 |
+| 11 | A Gift That Brings Comfort and Care | Adult Children / Families | Trust | Pinterest | — | 2026-04-12 |
 
 ---
 
-*This file is auto-updated whenever a draft status changes to "Posted".*
+## Platform Posting Breakdown
+
+| Platform | Count | Top Pillar |
+|----------|-------|-----------|
+| Pinterest | 10 | Trust (6) |
+| Instagram | 5 | Trust (3) |
+| Facebook | 5 | Trust (3) |
+| TikTok | 3 | Trust (2) |
+| LinkedIn | 3 | Trust (2) |
+
+---
+
+## Audience Breakdown
+
+| Audience | Count | Top Pillar |
+|----------|-------|-----------|
+| Busy Homeowners | 5 | Trust (2) |
+| Seniors | 2 | Trust (2) |
+| Adult Children / Families | 2 | Trust (2) |
+| Airbnb Hosts | 1 | Convenience |
+| Working Professionals | 1 | Local |
+
+---
+
+## Pillar Distribution (Posted)
+
+| Pillar | Count | % |
+|--------|-------|---|
+| Trust | 7 | 64% |
+| Local | 2 | 18% |
+| Convenience | 2 | 18% |
+| Transformation | 1 | 9% |
+
+---
+
+**Next Sync:** Automatic on next ContentDraft status update to "Posted"  
+**Dashboard:** See ContentDashboard.jsx for real-time draft management
