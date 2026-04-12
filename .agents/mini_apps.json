@@ -7,6 +7,9 @@
     },
     "ContentDashboard": {
       "title": "ContentDashboard"
+    },
+    "Overview": {
+      "title": "Overview"
     }
   }
 }
