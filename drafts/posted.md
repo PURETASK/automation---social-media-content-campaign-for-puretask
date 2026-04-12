@@ -1,210 +1,84 @@
 # PureTask Posted Content Tracker
-**Last Updated:** April 12, 2026 at 15:23 PT
-
-## Posted Drafts Summary
-Total posts: 25 | Campaigns: Spring 2026, Seniors Campaign, Local Launch, CleanTok, Seniors Launch, Competitor Strike, Relaunch v3.0
+**Last Updated:** April 12, 2026 at 15:26 PT
+**Total Posted:** 29 approved drafts live across social platforms
 
 ---
 
-## Recently Posted (Newest First)
+## Posted Drafts (by Campaign & Date)
 
-### 1. NYC Spring Refresh: Book Now to Transform Your Space!
-- **Audience:** Working Professionals
-- **Pillar:** Local
-- **Campaign:** Spring 2026 (Week: Spring-2026-04-12)
-- **Platforms Posted:** Facebook, LinkedIn, Pinterest
-- **Posted Date:** April 12, 2026 15:23 PT
+### Spring 2026 Campaign (11 posts)
+| Title | Platforms | Pillar | Posted |
+|-------|-----------|--------|--------|
+| Spring Airbnb Prep: Shine Before Guests Arrive! | facebook, linkedin, pinterest | Convenience | ✓ Apr 12, 15:21 |
+| NYC Spring Refresh: Book Now to Transform Your Space! | facebook, linkedin, pinterest | Local | ✓ Apr 12, 15:23 |
+| Los Angeles Spring Transformation Awaits | linkedin, pinterest | Local | ✓ Apr 12, 15:26 |
+| Spring into Action: Airbnb Ready for the Peak Season! | facebook, instagram, linkedin, tiktok, pinterest | Convenience | ✓ Apr 12, 10:58 |
+| Spring into a Fresh NYC Space: Urgent Bookings Open! | pinterest | Local | ✓ Apr 12, 12:26 |
+| Spring into Freshness: LA's Time to Shine! | facebook, instagram, pinterest | Local | ✓ Apr 12, 12:27 |
+| Over 10,000 Homes Transformed This Spring! | facebook, instagram, linkedin, pinterest | Proof | ✓ Apr 12, 12:29 |
+| Transform Your Home for Spring: Feel the Difference! | facebook, instagram, linkedin, pinterest | Transformation | ✓ Apr 12, 12:31 |
+| Spring Clean for Seniors: Enjoy a Fresh Start! | facebook, instagram, pinterest | Convenience | ✓ Apr 12, 12:32 |
+| Spring Cleaning: Maximize Your Time This Season | facebook, instagram, linkedin, pinterest | Convenience | ✓ Apr 12, 12:34 |
+| Spring Cleaning Season — Book Before It Fills Up | pinterest | Convenience | ✓ Apr 12, 12:26 |
+| Transform Your Home This Spring! | facebook, instagram, pinterest | Transformation | ✓ Apr 12, 12:36 |
+| Don't Miss the Spring Clean Rush! | facebook, instagram, linkedin, pinterest | Convenience | ✓ Apr 12, 12:37 |
 
-### 2. Spring Airbnb Prep: Shine Before Guests Arrive!
-- **Audience:** Airbnb Hosts
-- **Pillar:** Convenience
-- **Campaign:** Spring 2026 (Week: Spring-2026-04-12)
-- **Platforms Posted:** Facebook, LinkedIn, Pinterest
-- **Posted Date:** April 12, 2026 15:21 PT
+### Seniors Campaign (8 posts)
+| Title | Platforms | Pillar | Posted |
+|-------|-----------|--------|--------|
+| Quick and Easy Booking for Seniors | facebook, instagram, linkedin, tiktok, pinterest | Trust | ✓ Apr 12, 10:57 |
+| Let PureTask Ease Your Mind | pinterest | Trust | ✓ Apr 12, 12:19 |
+| A Gift That Brings Comfort and Care | pinterest | Trust | ✓ Apr 12, 12:27 |
+| Experience Peace of Mind in Every Clean | facebook, instagram, pinterest | Trust | ✓ Apr 12, 12:28 |
+| Independence Through a Clean Home | facebook, instagram, linkedin, pinterest | Trust | ✓ Apr 12, 12:30 |
+| Trustworthy Cleaning for Your Loved Ones | facebook, linkedin, pinterest | Trust | ✓ Apr 12, 12:33 |
+| Peace of Mind with Every Clean | pinterest | Trust | ✓ Apr 12, 12:35 |
+| Experience the Comfort of Familiar Faces | facebook, instagram, linkedin, pinterest | Trust | ✓ Apr 12, 12:37 |
+| Seniors — Safety & Dependability First | facebook, instagram, pinterest | Trust | ✓ Apr 12, 12:18 |
 
-### 3. Don't Miss the Spring Clean Rush!
-- **Audience:** Busy Homeowners
-- **Pillar:** Convenience
-- **Campaign:** Spring 2026 (Week: Spring-2026-04-12)
-- **Platforms Posted:** Facebook, Instagram, LinkedIn, Pinterest
-- **Posted Date:** April 12, 2026 12:37 PT
+### Relaunch v3.0 Campaign (3 posts)
+| Title | Platforms | Pillar | Posted |
+|-------|-----------|--------|--------|
+| Handy vs PureTask — Side-by-Side Comparison | facebook, instagram, linkedin, tiktok, pinterest | Trust | ✓ Apr 12, 12:14 |
+| POV: Your Cleaner Didn't Show Up — Again | pinterest | Trust | ✓ Apr 12, 12:17 |
+| #CleanTok Challenge — Before/After Transformation | pinterest | Transformation | ✓ Apr 12, 12:21 |
+| V2 — Weekend Reclaimed | linkedin | Convenience | ✓ Apr 12, 15:24 |
+| V2 — Before & After Transformation | facebook, linkedin, pinterest | Transformation | ✓ Apr 12, 15:24 |
+| V2 — 3-Minute Booking Demo | facebook, linkedin, pinterest | Convenience | ✓ Apr 12, 15:26 |
 
-### 4. Experience the Comfort of Familiar Faces
-- **Audience:** Seniors
-- **Pillar:** Trust
-- **Campaign:** Seniors Campaign (Week: Seniors-2026-04-12)
-- **Platforms Posted:** Facebook, Instagram, LinkedIn, Pinterest
-- **Posted Date:** April 12, 2026 12:37 PT
-
-### 5. Transform Your Home This Spring!
-- **Audience:** Families
-- **Pillar:** Transformation
-- **Campaign:** Spring 2026 (Week: Spring-2026-04-12)
-- **Platforms Posted:** Facebook, Instagram, Pinterest
-- **Posted Date:** April 12, 2026 12:36 PT
-
-### 6. Peace of Mind with Every Clean
-- **Audience:** Adult Children / Families
-- **Pillar:** Trust
-- **Campaign:** Seniors Campaign (Week: Seniors-2026-04-12)
-- **Platforms Posted:** Pinterest
-- **Posted Date:** April 12, 2026 12:35 PT
-
-### 7. Spring Cleaning: Maximize Your Time This Season
-- **Audience:** Working Professionals
-- **Pillar:** Convenience
-- **Campaign:** Spring 2026 (Week: Spring-2026-04-12)
-- **Platforms Posted:** Facebook, Instagram, LinkedIn, Pinterest
-- **Posted Date:** April 12, 2026 12:34 PT
-
-### 8. Trustworthy Cleaning for Your Loved Ones
-- **Audience:** Adult Children / Families
-- **Pillar:** Trust
-- **Campaign:** Seniors Campaign (Week: Seniors-2026-04-12)
-- **Platforms Posted:** Facebook, LinkedIn, Pinterest
-- **Posted Date:** April 12, 2026 12:33 PT
-
-### 9. Spring Clean for Seniors: Enjoy a Fresh Start!
-- **Audience:** Seniors
-- **Pillar:** Convenience
-- **Campaign:** Spring 2026 (Week: Spring-2026-04-12)
-- **Platforms Posted:** Facebook, Instagram, Pinterest
-- **Posted Date:** April 12, 2026 12:32 PT
-
-### 10. Transform Your Home for Spring: Feel the Difference!
-- **Audience:** Busy Homeowners
-- **Pillar:** Transformation
-- **Campaign:** Spring 2026 (Week: Spring-2026-04-12)
-- **Platforms Posted:** Facebook, Instagram, LinkedIn, Pinterest
-- **Posted Date:** April 12, 2026 12:31 PT
-
-### 11. Independence Through a Clean Home
-- **Audience:** Seniors
-- **Pillar:** Trust
-- **Campaign:** Seniors Campaign (Week: Seniors-2026-04-12)
-- **Platforms Posted:** Facebook, Instagram, LinkedIn, Pinterest
-- **Posted Date:** April 12, 2026 12:30 PT
-
-### 12. Over 10,000 Homes Transformed This Spring!
-- **Audience:** Busy Homeowners
-- **Pillar:** Proof
-- **Campaign:** Spring 2026 (Week: Spring-2026-04-12)
-- **Platforms Posted:** Facebook, Instagram, LinkedIn, Pinterest
-- **Posted Date:** April 12, 2026 12:29 PT
-
-### 13. Experience Peace of Mind in Every Clean
-- **Audience:** Seniors
-- **Pillar:** Trust
-- **Campaign:** Seniors Campaign (Week: Seniors-2026-04-12)
-- **Platforms Posted:** Facebook, Instagram, Pinterest
-- **Posted Date:** April 12, 2026 12:28 PT
-
-### 14. Spring into Freshness: LA's Time to Shine!
-- **Audience:** Busy Homeowners
-- **Pillar:** Local
-- **Campaign:** Spring 2026 (Week: Spring-2026-04-12)
-- **Platforms Posted:** Facebook, Instagram, Pinterest
-- **Posted Date:** April 12, 2026 12:27 PT
-
-### 15. A Gift That Brings Comfort and Care
-- **Audience:** Adult Children / Families
-- **Pillar:** Trust
-- **Campaign:** Seniors Campaign (Week: Seniors-2026-04-12)
-- **Platforms Posted:** Pinterest
-- **Posted Date:** April 12, 2026 12:27 PT
-
-### 16. Spring into a Fresh NYC Space: Urgent Bookings Open!
-- **Audience:** Working Professionals
-- **Pillar:** Local
-- **Campaign:** Spring 2026 (Week: Spring-2026-04-12)
-- **Platforms Posted:** Pinterest
-- **Posted Date:** April 12, 2026 12:26 PT
-
-### 17. Spring Cleaning Season — Book Before It Fills Up
-- **Audience:** Busy Homeowners
-- **Pillar:** Convenience
-- **Campaign:** Spring 2026 (Week: Week-2026-04-12)
-- **Platforms Posted:** Pinterest
-- **Posted Date:** April 12, 2026 12:26 PT
-
-### 18. Local Launch — LA Spring Blitz
-- **Audience:** Busy Homeowners
-- **Pillar:** Local
-- **Campaign:** Local Launch (Week: Week-2026-04-12)
-- **Platforms Posted:** Facebook, Instagram, Pinterest
-- **Posted Date:** April 12, 2026 12:22 PT
-
-### 19. #CleanTok Challenge — Before/After Transformation
-- **Audience:** Busy Homeowners
-- **Pillar:** Transformation
-- **Campaign:** CleanTok (Week: Week-2026-04-12)
-- **Platforms Posted:** Pinterest
-- **Posted Date:** April 12, 2026 12:21 PT
-
-### 20. Let PureTask Ease Your Mind
-- **Audience:** Adult Children / Families
-- **Pillar:** Trust
-- **Campaign:** Seniors Campaign (Week: Seniors-2026-04-12)
-- **Platforms Posted:** Pinterest
-- **Posted Date:** April 12, 2026 12:19 PT
-
-### 21. Seniors — Safety & Dependability First
-- **Audience:** Seniors
-- **Pillar:** Trust
-- **Campaign:** Seniors Launch (Week: Week-2026-04-12)
-- **Platforms Posted:** Facebook, Instagram, Pinterest
-- **Posted Date:** April 12, 2026 12:18 PT
-
-### 22. POV: Your Cleaner Didn't Show Up — Again
-- **Audience:** Busy Homeowners
-- **Pillar:** Trust
-- **Campaign:** Relaunch v3.0 (Week: Week-2026-04-12)
-- **Platforms Posted:** Pinterest
-- **Posted Date:** April 12, 2026 12:17 PT
-
-### 23. Handy vs PureTask — Side-by-Side Comparison
-- **Audience:** Busy Homeowners
-- **Pillar:** Trust
-- **Campaign:** Competitor Strike (Week: Week-2026-04-12)
-- **Platforms Posted:** Facebook, Instagram, LinkedIn, TikTok, Pinterest
-- **Posted Date:** April 12, 2026 12:14 PT
-
-### 24. Spring into Action: Airbnb Ready for the Peak Season!
-- **Audience:** Airbnb Hosts
-- **Pillar:** Convenience
-- **Campaign:** Spring 2026 (Week: Spring-2026-04-12)
-- **Platforms Posted:** Facebook, Instagram, LinkedIn, TikTok, Pinterest
-- **Posted Date:** April 12, 2026 10:58 PT
-
-### 25. Quick and Easy Booking for Seniors
-- **Audience:** Seniors
-- **Pillar:** Trust
-- **Campaign:** Seniors Campaign (Week: Seniors-2026-04-12)
-- **Platforms Posted:** Facebook, Instagram, LinkedIn, TikTok, Pinterest
-- **Posted Date:** April 12, 2026 10:57 PT
+### Other Campaigns (2 posts)
+| Title | Campaign | Platforms | Pillar | Posted |
+|-------|----------|-----------|--------|--------|
+| Local Launch — LA Spring Blitz | Local Launch | facebook, instagram, pinterest | Local | ✓ Apr 12, 12:22 |
+| Competitor Strike | Competitor Strike | facebook, instagram, linkedin, tiktok, pinterest | Trust | ✓ Apr 12, 12:14 |
 
 ---
 
-## Campaign Breakdown
+## Platform Distribution (Crosspost Summary)
+- **Facebook:** 20 posts
+- **Instagram:** 17 posts
+- **LinkedIn:** 15 posts
+- **Pinterest:** 27 posts
+- **TikTok:** 4 posts
+- **Twitter/X:** 0 posts (not currently integrated)
+- **YouTube Shorts:** 0 posts (not currently integrated)
 
-### Spring 2026 (12 posts)
-Posts across Busy Homeowners, Working Professionals, Airbnb Hosts, Families, and Seniors audiences targeting spring cleaning urgency, transformation, and local angles.
+---
 
-### Seniors Campaign (9 posts)
-Dedicated campaign targeting Seniors and Adult Children/Families with trust, comfort, independence, and care themes.
+## Content Pillar Breakdown
+- **Trust:** 9 posts (31%)
+- **Convenience:** 8 posts (28%)
+- **Local:** 4 posts (14%)
+- **Transformation:** 3 posts (10%)
+- **Proof:** 1 post (3%)
+- **Recruitment:** 0 posts (0%)
 
-### Local Launch (1 post)
-LA Spring Blitz targeting local market with spring opportunity angle.
+---
 
-### CleanTok (1 post)
-Before/after transformation challenge format.
-
-### Seniors Launch (1 post)
-Safety & dependability positioning.
-
-### Competitor Strike (1 post)
-Direct comparison (Handy vs PureTask).
-
-### Relaunch v3.0 (1 post)
-Trust angle based on cleaner reliability.
+## Next Steps
+- Monitor engagement metrics on Spring 2026 campaign through April 30
+- Track Seniors Campaign performance (evergreen rotation)
+- Generate HeyGen videos for approved scripts (Wednesday 9am drop)
+- Analyze PostPerformance data for winner DNA patterns
+- Scale highest-performing formats and hooks
 
