@@ -1,18 +1,19 @@
 import { useState, useEffect } from "react";
+import { ContentDraft, PostPerformance, WinnerDNA, ContentIdea } from "@/api/entities";
 
-const APP_ID = "69d5e4bdf3e0e9aab2818c8a";
-const PROXY_URL = `https://app.base44.com/api/apps/${APP_ID}/functions/getDashboardData`;
-
-async function fetchAllData(entityNames) {
-  const res = await fetch(PROXY_URL, {
-    method: "POST",
-    headers: { "Content-Type": "application/json" },
-    body: JSON.stringify({ entities: entityNames }),
-  });
-  if (!res.ok) throw new Error(`Proxy error: ${res.status}`);
-  const json = await res.json();
-  if (!json.ok) throw new Error(json.error || "Unknown proxy error");
-  return json.data;
+async function fetchAllData() {
+  const [drafts, perfs, dna, ideas] = await Promise.all([
+    ContentDraft.list(),
+    PostPerformance.list(),
+    WinnerDNA.list(),
+    ContentIdea.list(),
+  ]);
+  return {
+    ContentDraft:    Array.isArray(drafts) ? drafts : [],
+    PostPerformance: Array.isArray(perfs)  ? perfs  : [],
+    WinnerDNA:       Array.isArray(dna)    ? dna    : [],
+    ContentIdea:     Array.isArray(ideas)  ? ideas  : [],
+  };
 }
 
 const BRAND_BLUE = "#0099FF";
@@ -59,7 +60,7 @@ export default function Overview() {
   async function load() {
     setLoading(true); setError(null);
     try {
-      const data = await fetchAllData(["ContentDraft","PostPerformance","WinnerDNA","ContentIdea"]);
+      const data = await fetchAllData();
       setDrafts(data.ContentDraft || []);
       setPerfs(data.PostPerformance || []);
       setDna(data.WinnerDNA || []);
@@ -158,20 +159,27 @@ export default function Overview() {
           {/* KPI strip */}
           <div className="grid grid-cols-4 md:grid-cols-8 gap-2">
             {[
-              { icon: "📝", v: drafts.length,  l: "Total"     },
-              { icon: "✅", v: approved,        l: "Approved"  },
-              { icon: "📤", v: posted,          l: "Posted"    },
-              { icon: "🖼️", v: withImage,       l: "Has Image" },
-              { icon: "⚠️", v: needImage,       l: "Need Img"  },
-              { icon: "🎬", v: videosReady,     l: "Videos"    },
-              { icon: "🏆", v: winners,         l: "Winners"   },
-              { icon: "💬", v: avgEng + (avgEng !== "—" ? "%" : ""), l: "Avg Eng" },
-            ].map(({ icon, v, l }) => (
-              <div key={l} className="bg-white/15 backdrop-blur rounded-2xl p-3 text-center">
-                <p className="text-xl">{icon}</p>
-                <p className="text-xl font-black mt-0.5">{v}</p>
-                <p className="text-blue-200 text-[10px] font-semibold mt-0.5">{l}</p>
-              </div>
+              { icon: "📝", v: drafts.length,  l: "Total",     href: null },
+              { icon: "✅", v: approved,        l: "Approved",  href: "/ContentDashboard?status=Approved" },
+              { icon: "📤", v: posted,          l: "Posted",    href: "/PostedContent" },
+              { icon: "🖼️", v: withImage,       l: "Has Image", href: "/ImageGallery" },
+              { icon: "⚠️", v: needImage,       l: "Need Img",  href: "/ContentDashboard?status=Draft" },
+              { icon: "🎬", v: videosReady,     l: "Videos",    href: null },
+              { icon: "🏆", v: winners,         l: "Winners",   href: null },
+              { icon: "💬", v: avgEng + (avgEng !== "—" ? "%" : ""), l: "Avg Eng", href: null },
+            ].map(({ icon, v, l, href }) => (
+              href
+                ? <a key={l} href={href} className="bg-white/15 backdrop-blur rounded-2xl p-3 text-center hover:bg-white/25 transition-all cursor-pointer ring-2 ring-transparent hover:ring-white/40 block">
+                    <p className="text-xl">{icon}</p>
+                    <p className="text-xl font-black mt-0.5">{v}</p>
+                    <p className="text-blue-200 text-[10px] font-semibold mt-0.5">{l}</p>
+                    <p className="text-white/60 text-[9px] mt-0.5">↗ view</p>
+                  </a>
+                : <div key={l} className="bg-white/15 backdrop-blur rounded-2xl p-3 text-center">
+                    <p className="text-xl">{icon}</p>
+                    <p className="text-xl font-black mt-0.5">{v}</p>
+                    <p className="text-blue-200 text-[10px] font-semibold mt-0.5">{l}</p>
+                  </div>
             ))}
           </div>
         </div>
