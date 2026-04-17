@@ -1,4 +1,4 @@
-// postAllApproved v3.0 — NEVER posts without a real image. Blocks generic fallbacks.
+// postAllApproved v3.1 — FIXED: Use OR logic for image/video, not AND
 import { createClientFromRequest } from 'npm:@base44/sdk@0.8.23';
 
 const AYRSHARE_KEY = Deno.env.get("AYRSHARE_API_KEY")!;
@@ -52,9 +52,9 @@ Deno.serve(async (req) => {
   const body = await req.json().catch(() => ({}));
   const batchSize: number = body.batch_size || 5;
 
-  const all = await db.ContentDraft.list();
+  const all = await db.ContentDraft.list({ limit: 200 });
 
-  // Only post if: Approved + no posted_platforms + has a REAL non-blocked image
+  // Only post if: Approved + no posted_platforms + has a REAL non-blocked image OR video
   const unposted = all.filter((d: any) => {
     if (d.status !== "Approved") return false;
     const pp = d.posted_platforms;
@@ -62,11 +62,12 @@ Deno.serve(async (req) => {
     return true;
   });
 
-  const withImage = unposted.filter((d: any) => !isBlockedImage(d.image_url) && !isBlockedImage(d.video_cdn_url));
+  // FIXED: Use OR logic — draft is postable if it has image OR video (not both)
+  const withImage = unposted.filter((d: any) => !isBlockedImage(d.image_url) || !isBlockedImage(d.video_cdn_url));
   const missingImage = unposted.filter((d: any) => isBlockedImage(d.image_url) && isBlockedImage(d.video_cdn_url));
 
   const batch = withImage.slice(0, batchSize);
-  console.log(`[postAllApproved v3] ${unposted.length} unposted. ${withImage.length} have real images. ${missingImage.length} blocked (no real image). Posting batch of ${batch.length}.`);
+  console.log(`[postAllApproved v3.1] ${unposted.length} unposted. ${withImage.length} have real images/videos. ${missingImage.length} blocked (no media). Posting batch of ${batch.length}.`);
 
   let totalOk = 0, totalFail = 0;
   const results: any[] = [];
@@ -87,9 +88,9 @@ Deno.serve(async (req) => {
 
     if (postedPlats.length > 0) {
       await db.ContentDraft.update(draft.id, { posted_platforms: postedPlats.join(","), status: "Posted" });
-      console.log(`[postAllApproved v3] ✅ "${draft.title}" → ${postedPlats.join(", ")}`);
+      console.log(`[postAllApproved v3.1] ✅ "${draft.title}" → ${postedPlats.join(", ")}`);
     } else {
-      console.log(`[postAllApproved v3] ❌ "${draft.title}" — all platforms failed`);
+      console.log(`[postAllApproved v3.1] ❌ "${draft.title}" — all platforms failed`);
     }
     results.push({ title: draft.title, platforms: postedPlats });
   }
