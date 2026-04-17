@@ -1,38 +1,33 @@
 import { useState, useEffect } from "react";
+import { ContentIdea, MarketResearch, WinnerDNA, ContentDraft } from "@/api/entities";
 
-const APP_ID = "69d5e4bdf3e0e9aab2818c8a";
-const PROXY_URL = `https://app.base44.com/api/apps/${APP_ID}/functions/getDashboardData`;
-
-async function fetchAllData(entityNames) {
-  const res = await fetch(PROXY_URL, {
-    method: "POST",
-    headers: { "Content-Type": "application/json" },
-    body: JSON.stringify({ entities: entityNames }),
-  });
-  if (!res.ok) throw new Error(`Proxy error: ${res.status}`);
-  const json = await res.json();
-  if (!json.ok) throw new Error(json.error || "Unknown proxy error");
-  return json.data;
+async function fetchAllData() {
+  const [ideas, research, dna, drafts] = await Promise.all([
+    ContentIdea.list(),
+    MarketResearch.list(),
+    WinnerDNA.list(),
+    ContentDraft.list(),
+  ]);
+  return {
+    ContentIdea:    Array.isArray(ideas)    ? ideas    : [],
+    MarketResearch: Array.isArray(research) ? research : [],
+    WinnerDNA:      Array.isArray(dna)      ? dna      : [],
+    ContentDraft:   Array.isArray(drafts)   ? drafts   : [],
+  };
 }
 
+const ENTITY_MAP = { ContentIdea, MarketResearch, WinnerDNA, ContentDraft };
+
 async function updateEntity(name, id, payload) {
-  const res = await fetch(`${BASE_URL}/${name}/${id}`, {
-    method: "PATCH",
-    headers: { "Content-Type": "application/json" },
-    body: JSON.stringify(payload),
-  });
-  if (!res.ok) throw new Error(`Update failed: ${res.status}`);
-  return res.json();
+  const E = ENTITY_MAP[name];
+  if (!E) throw new Error("Unknown entity: " + name);
+  return E.update(id, payload);
 }
 
 async function createEntity(name, payload) {
-  const res = await fetch(`${BASE_URL}/${name}`, {
-    method: "POST",
-    headers: { "Content-Type": "application/json" },
-    body: JSON.stringify(payload),
-  });
-  if (!res.ok) throw new Error(`Create failed: ${res.status}`);
-  return res.json();
+  const E = ENTITY_MAP[name];
+  if (!E) throw new Error("Unknown entity: " + name);
+  return E.create(payload);
 }
 
 const BRAND_BLUE = "#0099FF";
@@ -119,7 +114,7 @@ export default function BrainstormDashboard() {
   async function load() {
     setLoading(true);
     try {
-      const data = await fetchAllData(["ContentIdea","MarketResearch","WinnerDNA"]);
+      const data = await fetchAllData();
       setIdeas(data.ContentIdea || []);
       setResearch(data.MarketResearch || []);
       setWinners(data.WinnerDNA || []);
