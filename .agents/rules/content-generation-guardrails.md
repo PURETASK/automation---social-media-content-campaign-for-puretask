@@ -1,303 +1,104 @@
-# PureTask Content Engine — Operating Rules v3.1
-# FULL AUTOPILOT MODE — Nathan delegates ALL decisions to the AI
-# Last Updated: 2026-04-11 — Added HeyGen video brand foundation
-
-## LOCKED BRAND CONSTANTS — NEVER DEVIATE
-- **Website URL:** https://www.puretask.co — full format always, no exceptions
-- Every single post on every platform MUST include https://www.puretask.co
-- Every post MUST have at least one image or video attached — text-only posts are REJECTED
-- City-specific posts MUST have a city-specific image or visual (city name/landmark visible)
-- Every HeyGen video MUST display https://www.puretask.co visually on screen
+# PureTask Content Engine — Automation Execution Rules v4.0
+# Last Updated: 2026-04-16
+# FULLY BASE44 NATIVE — No OpenAI for copy OR images
 
 ---
 
-## PureTask Brand Personality (apply to ALL content — text and video)
-- Trustworthy
-- Modern
-- Helpful
-- Efficient
-- Polished
-- Human
-- Operationally reliable
+## WHEN AUTOMATION FIRES: `generate_spring_content_base44_native`
 
-**Brand vibe:** Clean-tech. Service marketplace. Confidence. Convenience.
-**Never feel:** Corporate, generic, hype-heavy, futuristic, cluttered, vague.
+I (the Base44 AI agent) generate ALL content myself. No backend functions. No OpenAI.
 
----
+### My exact workflow:
+1. Check function_args for which angles to cover today
+2. For each angle, write full draft copy myself using the PureTask brand rules
+3. Score each draft using v3.0 rubric (honest, skeptical consumer grading)
+4. For drafts scoring ≥ 7.5: call `generate_image` tool with post-specific prompt
+5. Save completed draft to ContentDraft entity via `create_entity_records`
+6. Report summary to Nathan
 
-## Core Message Themes (pick ONE per piece of content)
-- Booking a cleaner should feel easy
-- Trust matters — you know exactly who's coming into your home
-- Flexibility matters — for customers AND cleaners
-- Reliability matters — every job, every time
-- Clear process matters — GPS, photos, Reliability Score
-- PureTask helps both sides of the marketplace
-
-## Emotional Outcomes by Audience
-| Audience | Target Emotion |
-|----------|---------------|
-| Customers | Relief, confidence, ease |
-| Cleaners | Empowerment, opportunity, independence |
-| General viewer | "This looks legit, modern, and easy to use" |
-
----
-
-## Core Behavior Rules
-- ALWAYS produce structured outputs with all required fields populated
-- NEVER output raw ideas without formatting them into the full content schema
-- ALWAYS tie every piece of content to one of the 6 content pillars
-- ALWAYS include at least one CTA (3 variations preferred)
-- NEVER produce vague or generic content — specific beats general every time
-- NEVER use spammy language ("insane deal", "unbelievable", "crazy")
-- ALWAYS prioritize clarity over cleverness
-- NEVER make guarantees, financial claims, or false promises
-- NEVER use fake scarcity or fabricated urgency
-- ALWAYS include https://www.puretask.co in every post, every platform, every time
+### Spring angles + what each image must show:
+| Angle | Pillar | Audience | City | Image must show |
+|-------|--------|----------|------|-----------------|
+| spring_urgency | Convenience | Busy Homeowners | — | Person relaxed in clean bright spring home, coffee, phone |
+| post_winter_reset | Transformation | Families | — | Split before/after OR family on clean floor, spring light |
+| spring_professional | Convenience | Working Professionals | — | Business casual person, clean minimal home, spring morning |
+| spring_seniors | Seniors | Seniors | — | Dignified senior (NOT frail) in clean bright home, warm light |
+| spring_transformation | Transformation | Busy Homeowners | — | Dramatic before/after split panel, spring tulips after |
+| spring_social_proof | Proof | Busy Homeowners | — | Stats infographic: 4.9★, 10K+, 98%, 2,400+ on white/blue |
+| spring_la | Local | Busy Homeowners | Los Angeles | LA home, palm trees + blue sky CLEARLY VISIBLE through window |
+| spring_nyc | Local | Working Professionals | New York | NYC apartment, Central Park or skyline VISIBLE through window |
+| spring_airbnb | Convenience | Airbnb Hosts | — | Guest-ready bedroom: hotel-quality linen, flowers, sparkling |
+| spring_chicago | Local | Working Professionals | Chicago | Chicago home, Lake Michigan or skyline VISIBLE through window |
+| spring_phoenix | Local | Busy Homeowners | Phoenix | Phoenix home, Camelback Mountain CLEARLY VISIBLE through window |
+| spring_adult_children | Seniors | Adult Children (35-55) | — | Adult child + parent, warm clean home, intergenerational joy |
 
 ---
 
-## Decision Authority — Full Autopilot
-| Action | Who Decides |
-|--------|-------------|
-| Ideation / drafting / rewriting | AI — fully autonomous |
-| Content calendar generation | AI — fully autonomous |
-| Queueing/organizing drafts | AI — fully autonomous |
-| Approving drafts (scoring 7.5+) | AI — auto-approve |
-| Rejecting drafts (scoring <7.5) | AI — auto-reject, reason in editor_notes |
-| Selecting best ideas | AI — uses scoring data |
-| Choosing platforms per post | AI — based on pillar + format fit |
-| Scheduling timing | AI — uses optimal posting windows per platform |
-| Public posting via Ayrshare | AI — auto-posts all approved content |
-| HeyGen video generation | AI — generates, scores, posts if ≥7.5 |
-| Deleting failed/low-score drafts | AI — cleans up scoring <5 after 7 days |
-| Editing drafts pre-publish | AI — self-corrects before posting |
-| Platform copy selection | AI — picks best-fit version per platform |
+## WHEN AUTOMATION FIRES: `generate_seniors_content_base44_native`
 
-## Still Hard-Blocked (Legal / Financial / Reputation)
-- Responding to angry or negative customer comments
-- DM sales conversations
-- Ad budget decisions or spend adjustments
-- Customer support claims or complaints
-- Refunds or account-level actions
-- Reputation-sensitive public responses
-- Ad boosting / paid promotion decisions
+Same process — I write all copy, I generate all images.
+
+### Seniors angles + what each image must show:
+| Angle | Segment | Image must show |
+|-------|---------|-----------------|
+| same_cleaner | Seniors | Senior opening door with warm smile to familiar cleaner, real ID badge visible |
+| gps_safety | Adult Children | Adult child (40s) looking at phone, visible relief — "Your cleaner arrived at Mom's" |
+| background_checks | Adult Children | Stats infographic: ✅ Background Check ✅ ID Verification ✅ Sex Offender Registry |
+| independence | Seniors | Dignified senior (70s) relaxed in clean bright home, tea, golden light — NOT medical |
+| reliability_proof | Seniors | Stats infographic: 4.9★, 98% satisfaction, 2,400+ cleaners on white/blue |
+| gift_angle | Adult Children | Adult child + parent TOGETHER in clean bright home, warm smiles, afternoon light |
+| stress_relief | Adult Children | Adult child relaxed, phone showing PureTask confirmation, expression of relief |
+| booking_simplicity | Seniors | Senior comfortably using phone/tablet to book, clean home, warm natural light |
+
+### Hard rules for Seniors content:
+- NEVER use the word "elderly"
+- NEVER show frail, helpless, or medical imagery
+- Warm, dignified, capable people in comfortable clean homes
 
 ---
 
-## STRICT Scoring Rubric v3.0
-Score each dimension honestly. A 7 is genuinely hard to earn. Grade like a skeptical consumer.
+## IMAGE GENERATION RULES (all content)
 
-### Clarity (1–10)
-Would a complete stranger instantly understand what PureTask is and exactly what to do next?
-- 9–10: Zero ambiguity. Message + CTA + URL crystal clear. Could stand alone with no context.
-- 7–8: Clear message, obvious CTA, URL present. Minor polish needed.
-- 5–6: Message is understandable but CTA is vague or URL missing.
-- 3–4: Confusing, generic, or missing key info.
-- 1–2: No one knows what this is for.
+**Tool:** `generate_image` (Base44 native — permanent CDN, never expires)
+**NOT:** OpenAI DALL-E, Unsplash, or any external image service
 
-### Relatability (1–10)
-Would someone stop mid-scroll and say "that's literally me"?
-- 9–10: Hyper-specific real pain point. Reader feels seen. Emotional resonance.
-- 7–8: Clear audience targeting, recognizable scenario, feels personal.
-- 5–6: Somewhat relatable but could apply to anyone. Too broad.
-- 3–4: Generic "cleaning is hard" messaging. No specificity.
-- 1–2: Talks at the audience, not to them.
+### Brand prefix for ALL image prompts:
+"Magazine-quality lifestyle photography for PureTask, a premium home cleaning marketplace. Brand: clean, modern, premium, warm, trustworthy, human. PureTask blue #0099FF accents. Style: real lifestyle photography — NOT stock, NOT corporate, NOT staged."
 
-### Conversion Potential (1–10)
-Does this make someone click, book, or share RIGHT NOW?
-- 9–10: Strong urgency + social proof (real stats) + direct CTA + URL. Irresistible.
-- 7–8: At least 2 of: urgency, proof, direct CTA. Drives action.
-- 5–6: Has a CTA but weak or missing proof/urgency.
-- 3–4: Vague CTA ("learn more", "check us out"). No reason to act now.
-- 1–2: No CTA. No reason to click.
-
-### AUTO-PENALTIES — Text Content (applied before final avg):
-- No image or video attached → **-3 from Conversion score**
-- Missing https://www.puretask.co URL → **-2 from Clarity score**
-- City post with no city-specific visual → **-2 from Relatability score**
-- Fewer than 5 relevant hashtags (Instagram/TikTok/Pinterest) → **-1 from Conversion score**
-- Same copy pasted across platforms (not adapted) → **-2 from Clarity score**
-- Generic hook ("Are you tired of...") → **-2 from Relatability score**
-- Stats/proof missing when available (4.9★, 10K+, 98%, 6 hrs) → **-1 from Conversion score**
-
-### AUTO-PENALTIES — Video Content (applied before final avg):
-- No URL visible on screen → **-2 from Clarity score**
-- No subtitles/captions → **-2 from Conversion score**
-- Hook takes longer than 3 seconds → **-2 from Relatability score**
-- No CTA in final scene → **-3 from Conversion score**
-- Wrong aspect ratio for platform → **Auto-reject**
-- Dark moody visuals / cheesy stock → **-2 from Relatability score**
-- Script sounds corporate or stiff → **-2 from Relatability score**
-- Missing before/after contrast when applicable → **-1 from Conversion score**
-
-### Thresholds (after penalties applied):
-- Avg ≥ 7.5 → **Auto-approve + post**
-- Avg 5.0–7.4 → **Draft — rewrite next cycle**
-- Avg < 5.0 → **Auto-reject, reason logged in editor_notes**
+### Hard rules:
+- City posts MUST show the city's landmark/skyline visible through a window
+- Proof/stats posts MUST show the actual numbers as a visual infographic
+- Transformation posts MUST be before/after split panel
+- Seniors posts MUST show dignified, capable people — never frail
+- Every image MUST have a PureTask blue #0099FF design element
 
 ---
 
-## HeyGen Video Rules (in addition to all rules above)
+## SCORING RUBRIC v3.0 (apply every time, no exceptions)
 
-### The Golden Story Formula (every video)
-```
-MESS/STRESS → EASY BOOKING → TRUSTED CLEANER → VISIBLE TRANSFORMATION → RELIEF/CONFIDENCE → CTA
-```
+Grade like a skeptical consumer. 7 is genuinely hard to earn.
 
-### Video Script Standards
-- Written in **spoken language** — natural, simple, direct, conversational
-- No corporate stiffness. No abstract claims. No jargon.
-- One audience per video. One message. One emotional transformation.
-- Word count targets: 15s=~38 words · 30s=~75 words · 45s=~110 words · 60s=~145 words
-- Always ends with: "Visit https://www.puretask.co" + action
+**Clarity (1-10):** Would a complete stranger instantly understand PureTask + what to do?
+**Relatability (1-10):** Would someone stop mid-scroll saying "that's literally me"?
+**Conversion (1-10):** Does this make someone click/book RIGHT NOW?
 
-### Video Visual Standards
-- Style: Bright, clean, modern, polished — lifestyle authentic
-- Colors: #0099FF (blue), #FFFFFF (white), #1A1A2E (dark text)
-- Before/after contrast required when applicable (mess→clean, stress→relief)
-- NEVER: dark moody shots, cheesy stock, cluttered frames, corporate energy
+**Auto-penalties (applied before final avg):**
+- No image → -3 from Conversion
+- Missing https://www.puretask.co → -2 from Clarity
+- City post with no city visual → -2 from Relatability
+- Generic hook ("Are you tired of...") → -2 from Relatability
+- Stats missing when available → -1 from Conversion
+- Same copy pasted across platforms → -2 from Clarity
 
-### Avatar Decision Rule
-| Use Avatar | No Avatar (VO only) |
-|-----------|---------------------|
-| Explainers, spokesperson content | Lifestyle montage ads |
-| Facebook, LinkedIn posts | TikTok/IG Reels transformation videos |
-| Recruitment messages | Before/after B-roll content |
-| Trust/vetting explainers | Fast visual promos |
-
-### Default HeyGen Settings
-- Default voice: addison carter - Voice 1 (`PXNEIUJiwgmsriDe9m6P`)
-- Default avatar (when used): Abigail_expressive_2024112501
-- Subtitles: ALWAYS on
-- Intro card: ALWAYS (PureTask logo + pillar tagline)
-- Outro card: ALWAYS (Logo + https://www.puretask.co + CTA)
+**Thresholds:** ≥ 7.5 avg → Auto-approve | 5.0–7.4 → Draft | < 5.0 → Reject
 
 ---
 
-## Hashtag Requirements
-**Instagram/TikTok:** 8–15 hashtags (trim to 5 for Ayrshare API call on current plan)
-- Brand: #PureTask #PureTaskCleaning
-- Service: #HomeCleaning #HouseCleaning #ProfessionalCleaning #CleaningService #MaidService
-- Audience: #BusyMom #WorkingProfessional #HomeOwner #AirbnbHost
-- Local: #[City]Cleaning #[City]Homes #[City]Services
-- Contextual: #CleanHome #CleaningMotivation #HomeGoals #CleanTok
+## URL RULE — ABSOLUTE
+**https://www.puretask.co** — in EVERY caption, EVERY platform, EVERY time.
+NOT puretask.com. NOT www.puretask.com. NOT puretask.co without https://www.
 
-**Facebook:** 3–5 hashtags, natural
-**LinkedIn:** 3–5: #HomeServices #MarketplacePlatform #TrustFirst #GigEconomy
-**Pinterest:** 8–12 keyword-rich hashtags
-
----
-
-## Visual Requirements (MANDATORY — ALL Content)
-Every post MUST have at least one image or video. No exceptions.
-
-**Image standards:**
-- Branded with PureTask blue (#0099FF) accent
-- Clean, minimal, premium aesthetic
-- Real lifestyle photography style (bright interiors, before/after)
-- City posts: must show city name, skyline, or recognizable local element
-
-**Video standards (HeyGen):**
-- Hook visible within first 2 seconds
-- Subtitles/captions: ALWAYS
-- https://www.puretask.co visible on screen
-- City posts: city-specific B-roll or text overlay
-- 15–30 sec for Reels/TikTok · 30–60 sec for Facebook/LinkedIn · up to 60 sec for YouTube Shorts
-
----
-
-## URL Rule — ABSOLUTE
-**The correct website is: https://www.puretask.co**
-- NOT puretask.com · NOT www.puretask.com · NOT puretask.co without https://www.
-- Must appear in EVERY post caption, every platform, every time
-- Must appear VISUALLY in every video — no exceptions
-
----
-
-## Brand Stats (use these — never invent numbers)
-- 10,000+ happy clients
-- 2,400+ verified cleaners
-- 4.9★ average rating
-- 98% satisfaction rate
-- 50+ cities
-- 6 hours saved per deep clean visit
-- Cleaners keep 80–85% of every booking
-- TaskRabbit takes ~30% · Handy takes ~35%
-
----
-
-## Auto-Scheduling Logic
-| Platform | Best Window (PT) |
-|----------|-----------------|
-| Facebook | Tue–Thu 9am–12pm |
-| Instagram | Mon/Wed/Fri 8am–10am or 6pm–8pm |
-| TikTok | Daily 7am or 7pm |
-| LinkedIn | Tue–Thu 7am–9am |
-| X/Twitter | Weekdays 8am–10am |
-| Pinterest | Evenings 8pm–11pm |
-
-Space posts minimum 3 hours apart per platform to avoid feed flooding.
-
----
-
-## Auto-Posting Logic
-- Only post content that passed the auto-approval threshold (avg ≥ 7.5)
-- Every post MUST have image_url or video_url populated before posting
-- Use platform-specific copy field for each platform (not primary_caption fallback)
-- If platform-specific copy is empty, rewrite from primary_caption before posting
-- Mark draft as "Posted" after Ayrshare confirms success
-- Log platform + timestamp in posted_platforms field
-- Instagram: trim to 5 hashtags in API call (plan limitation) — keep full list in DB
-
----
-
-## Audience Rotation Schedule
-- Week 1: Busy Homeowners
-- Week 2: Families
-- Week 3: Working Professionals
-- Week 4: Cleaners / Recruiting
-- (Repeat with seasonal/local variants)
-
----
-
-## Platform Adaptation Rules
-| Platform | Tone & Format |
-|----------|--------------|
-| X/Twitter | Short, punchy, under 280 chars, include https://www.puretask.co |
-| Instagram | Visual-first, emotional, 8–15 hashtags (send 5 to API), include URL |
-| Facebook | Slightly longer, practical, community feel, 3–5 hashtags, include URL |
-| LinkedIn | Trust + professionalism, story→insight→connection, include URL |
-| TikTok/Reels | Fast hook, POV format, include URL — video required |
-| YouTube Shorts | Problem → solution → payoff, include URL |
-| Pinterest | Aspirational, keyword-rich, 8–12 hashtags, include URL |
-
----
-
-## Content Quality Checklist (Every Draft — ALL must pass)
-**Text content:**
-- [ ] Tied to a specific content pillar
-- [ ] Written for one specific audience
-- [ ] Hook grabs in first line — specific, not generic
-- [ ] Pain → Solution → Outcome structure
-- [ ] Platform-specific versions adapted (NOT copy-pasted)
-- [ ] CTA is specific ("Book in [City] → https://www.puretask.co")
-- [ ] Uses real numbers where available (4.9★, 10K+, 98%, 6 hrs)
-- [ ] No hype words, no guarantees
-- [ ] https://www.puretask.co in every platform version
-- [ ] Image or video attached (image_prompt filled at minimum)
-- [ ] City posts: city-specific visual reference
-- [ ] Hashtags meet platform minimums
-- [ ] Avg score ≥ 7.5 after penalties
-
-**Video content (additional checks):**
-- [ ] One audience, one message, one emotional transformation
-- [ ] Script sounds natural and conversational — not corporate
-- [ ] Before/after contrast shown (mess→clean / stress→relief)
-- [ ] Correct avatar or VO-only specified with ID
-- [ ] Correct voice ID specified
-- [ ] Scene-by-scene breakdown written
-- [ ] https://www.puretask.co visible on screen
-- [ ] Subtitles on
-- [ ] Intro + outro cards specified
-- [ ] Aspect ratio matches platform
-- [ ] Duration matches platform target
+## BRAND STATS (use these only — never invent)
+10,000+ happy clients · 2,400+ verified cleaners · 4.9★ average rating
+98% satisfaction rate · 50+ cities · 6 hours saved per deep clean
+Cleaners keep 80–85% · TaskRabbit takes ~30% · Handy takes ~35%
