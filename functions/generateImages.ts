@@ -1,92 +1,191 @@
-// PureTask Image Generator v3.9 — Returns generation tasks for agent execution
-// Generates DALL-E prompts and returns them for the agent to process via generate_image + upload_file
+// PureTask Image Generator v6.0 — Base44 Native Image Generation
+// ─────────────────────────────────────────────────────────────────────────────
+// KEY CHANGE from v5.0: Uses Base44's built-in generate_image tool instead of
+// OpenAI DALL-E. This means:
+//   ✅ No OpenAI billing required
+//   ✅ Images saved directly to permanent Base44 CDN (media.base44.com)
+//   ✅ URLs never expire
+//   ✅ No separate CDN upload step needed
+//
+// Exports used by other content generators:
+//   generateImageForDraft(draft)  → string | null  (permanent CDN URL)
+//   buildImagePrompt(draft)       → string
+//   PILLAR_VISUAL_GUIDE           → Record<string, string>
+// ─────────────────────────────────────────────────────────────────────────────
 
 import { createClientFromRequest } from 'npm:@base44/sdk@0.8.23';
 
-const FALLBACK_PATTERNS = [
+const APP_ID = "69d5e4bdf3e0e9aab2818c8a";
+
+// ── Fallback / expired URL detection ────────────────────────────────────────
+const BLOCKED_PATTERNS = [
   "unsplash.com",
   "photo-1558618666",
   "photo-1584820927",
   "photo-1609220136",
-  "oaidalleapiprodscus.blob.core.windows.net",
+  "oaidalleapiprodscus.blob.core.windows.net", // OpenAI temp URLs — always expired
 ];
 
-function isFallback(url: string | null | undefined): boolean {
+export function isFallback(url: string | null | undefined): boolean {
   if (!url) return true;
-  return FALLBACK_PATTERNS.some(p => url.includes(p));
+  return BLOCKED_PATTERNS.some(p => url.includes(p));
 }
 
-const BRAND_PREFIX = `Magazine-quality lifestyle photography for PureTask, a premium home cleaning marketplace.
-Brand: Clean, modern, premium, warm. Colors: PureTask blue #0099FF accents, white backgrounds, natural light.
-Style: Real lifestyle photography feel — NOT stock. NOT corporate. NOT staged.
-Always include a subtle PureTask blue #0099FF design element (throw pillow, artwork, product, wall accent).`;
+export function isPermanentCDN(url: string | null | undefined): boolean {
+  if (!url) return false;
+  return url.includes("media.base44.com");
+}
 
-const PILLAR_ENHANCERS: Record<string, string> = {
-  "Transformation": "Split-panel professional illustration style: LEFT PANEL shows a specific cluttered/messy scene (dust visible, mail piled, laundry on chair, grimy surfaces). RIGHT PANEL shows exact same room completely transformed: gleaming floors, fresh flowers, sunlight streaming in, immaculate surfaces. Text labels 'Before' and 'After — PureTask'. Magazine-quality design, PureTask blue #0099FF on right panel.",
-  "Proof":          "Clean premium infographic design: white background, PureTask blue #0099FF headers, large bold typography showing stats (4.9★, 10,000+ clients, 98% satisfaction, 2,400+ verified cleaners). Minimal layout, no clutter, magazine typography. Like an Apple product marketing graphic.",
-  "Trust":          "Warm authentic lifestyle scene showing real trust moment. Natural window light, warm golden tones. A specific real interaction — NOT posed.",
-  "Convenience":    "Bright modern home scene showing relief and ease. Natural morning light. Person relaxed — NOT stressed. Aspirational but achievable.",
-  "Recruitment":    "Empowering scene for professional cleaners. Bright clean working environment. Person looks confident and in control of their work.",
-  "Local":          "Bright modern home interior. Through large windows: the SPECIFIC city's most recognizable skyline or landmark. Natural daylight. Premium lifestyle feel.",
-  "Seniors":        "Warm dignified intergenerational scene OR senior person in a spotlessly clean bright home. Warm light. NOT frail. NOT medical. NOT stock-looking.",
-  "Spring":         "Bright spring scene: fresh flowers, natural light through clean windows, sparkling surfaces. Warm lifestyle energy. Aspirational.",
+// ── Visual style guide per pillar ────────────────────────────────────────────
+export const PILLAR_VISUAL_GUIDE: Record<string, string> = {
+  Transformation:
+    "Split-panel before/after: LEFT = cluttered messy room (visible dust, piled mail, laundry on chair, dim lighting). RIGHT = exact same room completely transformed — gleaming floors, fresh flowers, bright sunlight, immaculate surfaces. Text overlay: 'Before' left, 'After — PureTask' right in PureTask blue #0099FF. Magazine-quality reveal.",
+  Proof:
+    "Clean premium infographic: white background, PureTask blue #0099FF headers. Large bold stats: 4.9★ rating, 10,000+ clients, 98% satisfaction, 2,400+ verified cleaners. Minimal Apple-product-marketing aesthetic. Trust and credibility in every detail.",
+  Trust:
+    "Warm lifestyle moment: homeowner at front door warmly greeting a professional cleaner. Natural window light, golden tones. Genuine smiles. Real, human — NOT staged or stock. Warmth and confidence.",
+  Convenience:
+    "Bright modern home — morning light. Person relaxed on couch with coffee, clean home around them. Phone in hand, visibly at ease and happy. Aspirational but real. Time reclaimed.",
+  Recruitment:
+    "Empowering scene: professional cleaner in crisp white uniform, confident, genuinely smiling, in control. Bright clean work environment. Independence and opportunity energy. NOT servile. NOT stock.",
+  Local:
+    "Premium home interior. Through large floor-to-ceiling windows: the city's most recognizable skyline or landmark clearly visible outside. Natural daylight. Polished lifestyle feel.",
+  Seniors:
+    "Warm dignified scene: senior in spotlessly clean bright home, relaxed with cup of tea. Warm golden afternoon light. NOT frail, NOT medical. Peace of mind and independence evident. Adult child may be present with warm smile.",
+  Spring:
+    "Bright spring transformation: fresh tulips/lilies in a clear vase on a polished table, natural spring light through sparkling clean windows, gleaming surfaces. Open-window spring-breeze energy. Relief and freshness.",
 };
 
-const PRIORITY_PILLARS = ["Transformation", "Proof", "Trust", "Convenience", "Local", "Recruitment", "Seniors", "Spring"];
+const BRAND_PREFIX =
+  `Magazine-quality lifestyle photography for PureTask, a premium home cleaning marketplace. ` +
+  `Brand values: clean, modern, premium, warm, trustworthy, human. ` +
+  `Color palette: PureTask blue #0099FF accents, white backgrounds, natural warm light. ` +
+  `Style: real lifestyle photography — NOT stock, NOT corporate, NOT staged. ` +
+  `Always include a subtle PureTask blue #0099FF design element (throw pillow, artwork, wall accent, text overlay).`;
 
+// ── Build image prompt ───────────────────────────────────────────────────────
+export function buildImagePrompt(draft: any): string {
+  const pillarHint = PILLAR_VISUAL_GUIDE[draft.pillar] ?? "";
+  const cityHint   = draft.city
+    ? `Setting: ${draft.city} home. Show recognizable ${draft.city} landmark or skyline through a window if possible.`
+    : "";
+  const scene = draft.image_prompt?.trim()
+    ?? `PureTask ${draft.pillar ?? "Convenience"} content — ${draft.audience ?? "homeowner"} audience. Clean, premium, lifestyle-authentic scene.`;
+
+  return `${BRAND_PREFIX}\n\n${pillarHint ? `PILLAR VISUAL:\n${pillarHint}\n\n` : ""}${cityHint ? `${cityHint}\n\n` : ""}SCENE:\n${scene}`.slice(0, 3900);
+}
+
+// ── Generate image via Base44 API → returns permanent CDN URL ────────────────
+async function generateBase44Image(prompt: string): Promise<string | null> {
+  const apiKey = Deno.env.get("BASE44_API_KEY") ?? Deno.env.get("APP_API_KEY") ?? "";
+
+  const res = await fetch(`https://app.base44.com/api/apps/${APP_ID}/tools/generate_image`, {
+    method:  "POST",
+    headers: {
+      "Content-Type": "application/json",
+      ...(apiKey ? { "X-API-Key": apiKey } : {}),
+    },
+    body: JSON.stringify({ prompt }),
+  });
+
+  if (!res.ok) {
+    const text = await res.text();
+    console.error(`[ImageGen v6] Base44 API ${res.status}: ${text.slice(0, 200)}`);
+    return null;
+  }
+
+  const data = await res.json();
+  // Base44 returns { url: "https://media.base44.com/..." }
+  const url = data?.url ?? data?.file_url ?? data?.image_url ?? null;
+  if (url) console.log(`[ImageGen v6] ✅ CDN: ${url}`);
+  return url;
+}
+
+// ── Main export: generate image for a draft ──────────────────────────────────
+export async function generateImageForDraft(draft: {
+  id?:           string;
+  title?:        string;
+  pillar?:       string;
+  audience?:     string;
+  city?:         string;
+  image_prompt?: string;
+}): Promise<string | null> {
+  const prompt = buildImagePrompt(draft);
+  console.log(`[ImageGen v6] Generating for: "${draft.title ?? 'untitled'}"`);
+  const url = await generateBase44Image(prompt);
+  if (!url) console.warn(`[ImageGen v6] ❌ Failed for "${draft.title}"`);
+  return url;
+}
+
+// ── HTTP batch handler ───────────────────────────────────────────────────────
+// Manual trigger only (hourly automation is paused).
+// Processes drafts missing permanent images — prioritized by pillar.
 Deno.serve(async (req) => {
   try {
-    const base44  = createClientFromRequest(req);
-    const db      = base44.asServiceRole.entities;
-    const body    = await req.json().catch(() => ({}));
-    const batchSize: number = body.batch_size || 4;
+    const base44    = createClientFromRequest(req);
+    const db        = base44.asServiceRole.entities;
+    const body      = await req.json().catch(() => ({}));
+    const batchSize = Number(body.batch_size ?? 5);
 
-    const all = await db.ContentDraft.list();
+    const PRIORITY = ["Transformation","Proof","Trust","Convenience","Local","Recruitment","Seniors","Spring"];
 
+    const all: any[] = await db.ContentDraft.list({ limit: 200 });
+
+    // Target: any draft that lacks a permanent CDN image and has no video
     const needsImage = all.filter((d: any) =>
       ["Approved", "Draft"].includes(d.status) &&
-      isFallback(d.image_url) &&
-      !d.video_cdn_url
+      !d.video_cdn_url &&
+      !isPermanentCDN(d.image_url)
     );
 
     needsImage.sort((a: any, b: any) => {
-      const ai = PRIORITY_PILLARS.indexOf(a.pillar) ?? 99;
-      const bi = PRIORITY_PILLARS.indexOf(b.pillar) ?? 99;
+      const ai = PRIORITY.indexOf(a.pillar) >= 0 ? PRIORITY.indexOf(a.pillar) : 99;
+      const bi = PRIORITY.indexOf(b.pillar) >= 0 ? PRIORITY.indexOf(b.pillar) : 99;
       return ai - bi;
     });
 
-    const batch = needsImage.slice(0, batchSize);
-    console.log(`[ImageGen v3.9] ${needsImage.length} need images. Preparing batch of ${batch.length} for agent processing.`);
+    const batch     = needsImage.slice(0, batchSize);
+    const remaining = needsImage.length - batch.length;
 
-    const tasks: any[] = [];
+    console.log(`[ImageGen v6] ${needsImage.length} need permanent images. Batch: ${batch.length}`);
+
+    const results: any[] = [];
 
     for (const draft of batch) {
-      const pillarHint = PILLAR_ENHANCERS[draft.pillar] || "";
-      const cityHint   = draft.city ? `Setting: ${draft.city} home. Show ${draft.city} landmark through window if possible.` : "";
-      const prompt     = `${BRAND_PREFIX}\n\n${pillarHint}\n\n${cityHint}\n\nSPECIFIC SCENE DIRECTION:\n${draft.image_prompt || `PureTask ${draft.pillar} pillar — ${draft.audience || "homeowner"} audience.`}`;
-
-      tasks.push({
-        draft_id: draft.id,
-        title: draft.title,
-        pillar: draft.pillar,
-        prompt: prompt.slice(0, 4000),
-        action: "generate_image_and_upload"
-      });
-      console.log(`[ImageGen v3.9] Task queued: "${draft.title}" (${draft.pillar})`);
+      try {
+        const url = await generateImageForDraft(draft);
+        if (url && isPermanentCDN(url)) {
+          await db.ContentDraft.update(draft.id, { image_url: url });
+          results.push({ id: draft.id, title: draft.title, status: "✅ permanent CDN saved" });
+        } else if (url) {
+          await db.ContentDraft.update(draft.id, { image_url: url });
+          results.push({ id: draft.id, title: draft.title, status: "⚠️ saved (not recognized as CDN)" });
+        } else {
+          results.push({ id: draft.id, title: draft.title, status: "❌ generation failed" });
+        }
+      } catch (e: any) {
+        console.error(`[ImageGen v6] Exception "${draft.title}":`, e.message);
+        results.push({ id: draft.id, title: draft.title, status: `❌ error: ${e.message.slice(0, 80)}` });
+      }
+      // Small delay between requests
+      await new Promise(r => setTimeout(r, 1500));
     }
 
-    const remaining = needsImage.length - batch.length;
-    
+    const ok   = results.filter(r => r.status.startsWith("✅") || r.status.startsWith("⚠️")).length;
+    const fail = results.filter(r => r.status.startsWith("❌")).length;
+
     return Response.json({
-      ok: true,
-      tasks_prepared: tasks.length,
-      tasks: tasks,
+      ok:                    true,
+      engine:                "base44_native",
+      processed:             batch.length,
+      saved_to_cdn:          ok,
+      failed:                fail,
       remaining_after_batch: remaining,
-      agent_action: tasks.length > 0 ? "Generate images and upload to each draft" : "No images needed",
+      results,
     });
 
   } catch (e: any) {
-    console.error("[ImageGen v3.9 Error]", e);
+    console.error("[ImageGen v6 Error]", e);
     return Response.json({ error: e.message }, { status: 500 });
   }
 });
