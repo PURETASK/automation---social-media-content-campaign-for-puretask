@@ -1,0 +1,52 @@
+{
+  "type": "object",
+  "properties": {
+    "content_draft_id": {
+      "type": "string"
+    },
+    "title": {
+      "type": "string"
+    },
+    "winning_hook_style": {
+      "type": "string"
+    },
+    "winning_pillar": {
+      "type": "string"
+    },
+    "winning_audience": {
+      "type": "string"
+    },
+    "winning_format": {
+      "type": "string"
+    },
+    "winning_platform": {
+      "type": "string"
+    },
+    "winning_cta_style": {
+      "type": "string"
+    },
+    "emotional_trigger": {
+      "type": "string"
+    },
+    "key_phrases": {
+      "type": "string"
+    },
+    "avg_score": {
+      "type": "number"
+    },
+    "total_reach": {
+      "type": "number"
+    },
+    "total_engagement": {
+      "type": "number"
+    },
+    "pattern_notes": {
+      "type": "string"
+    },
+    "reuse_count": {
+      "type": "number"
+    }
+  },
+  "required": [],
+  "name": "WinnerDNA"
+}
