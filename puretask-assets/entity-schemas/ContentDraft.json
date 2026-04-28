@@ -1,0 +1,175 @@
+{
+  "type": "object",
+  "properties": {
+    "title": {
+      "type": "string"
+    },
+    "audience": {
+      "type": "string"
+    },
+    "pillar": {
+      "type": "string"
+    },
+    "hook": {
+      "type": "string"
+    },
+    "primary_caption": {
+      "type": "string"
+    },
+    "short_caption": {
+      "type": "string"
+    },
+    "long_caption": {
+      "type": "string"
+    },
+    "cta_1": {
+      "type": "string"
+    },
+    "cta_2": {
+      "type": "string"
+    },
+    "cta_3": {
+      "type": "string"
+    },
+    "image_prompt": {
+      "type": "string"
+    },
+    "image_url": {
+      "type": "string"
+    },
+    "image_url_a": {
+      "type": "string",
+      "description": "Square/portrait version (1:1) \u2014 Instagram, Threads, Facebook"
+    },
+    "image_url_b": {
+      "type": "string",
+      "description": "Landscape version (16:9) \u2014 LinkedIn, Pinterest, X, YouTube"
+    },
+    "image_prompt_a": {
+      "type": "string",
+      "description": "Prompt used to generate Image A"
+    },
+    "image_prompt_b": {
+      "type": "string",
+      "description": "Prompt used to generate Image B"
+    },
+    "video_prompt": {
+      "type": "string"
+    },
+    "heygen_video_id": {
+      "type": "string"
+    },
+    "heygen_status": {
+      "type": "string"
+    },
+    "video_cdn_url": {
+      "type": "string"
+    },
+    "script_15sec": {
+      "type": "string"
+    },
+    "script_30sec": {
+      "type": "string"
+    },
+    "script_45sec": {
+      "type": "string"
+    },
+    "comment_replies": {
+      "type": "string"
+    },
+    "platform_x": {
+      "type": "string"
+    },
+    "platform_instagram": {
+      "type": "string"
+    },
+    "platform_facebook": {
+      "type": "string"
+    },
+    "platform_linkedin": {
+      "type": "string"
+    },
+    "platform_tiktok": {
+      "type": "string"
+    },
+    "platform_pinterest": {
+      "type": "string"
+    },
+    "platform_threads": {
+      "type": "string"
+    },
+    "platform_youtube": {
+      "type": "string"
+    },
+    "blog_post": {
+      "type": "string"
+    },
+    "status": {
+      "type": "string",
+      "enum": [
+        "Draft",
+        "Approved",
+        "Scheduled",
+        "Posted",
+        "Archived"
+      ]
+    },
+    "week_tag": {
+      "type": "string"
+    },
+    "campaign_tag": {
+      "type": "string"
+    },
+    "city": {
+      "type": "string"
+    },
+    "post_type": {
+      "type": "string",
+      "description": "e.g. BeforeAfter, Humor, VideoScript, Poll, Carousel, DataMath, Education, FOMO, Recruitment, Seasonal"
+    },
+    "post_type_detail": {
+      "type": "string",
+      "description": "Specific post type e.g. 'The 5 stages of spring cleaning guilt'"
+    },
+    "editor_notes": {
+      "type": "string"
+    },
+    "clarity_score": {
+      "type": "number"
+    },
+    "relatability_score": {
+      "type": "number"
+    },
+    "conversion_score": {
+      "type": "number"
+    },
+    "scheduled_date": {
+      "type": "string"
+    },
+    "scheduled_platforms": {
+      "type": "string"
+    },
+    "posted_platforms": {
+      "type": "string"
+    },
+    "is_winner": {
+      "type": "boolean"
+    },
+    "avg_performance_score": {
+      "type": "number"
+    },
+    "top_performing_platform": {
+      "type": "string"
+    },
+    "day_number": {
+      "type": "number",
+      "description": "Day number in campaign (1-60 for Spring, 1-28 for Recruitment)"
+    },
+    "session_number": {
+      "type": "number",
+      "description": "1 = AM post, 2 = PM post"
+    }
+  },
+  "required": [],
+  "name": "ContentDraft"
+}
