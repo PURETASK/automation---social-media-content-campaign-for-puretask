@@ -1,0 +1,100 @@
+{
+  "type": "object",
+  "properties": {
+    "content_draft_id": {
+      "type": "string"
+    },
+    "content_title": {
+      "type": "string"
+    },
+    "platform": {
+      "type": "string",
+      "enum": [
+        "Facebook",
+        "Instagram",
+        "TikTok",
+        "LinkedIn",
+        "X",
+        "Pinterest",
+        "Blog"
+      ]
+    },
+    "posted_at": {
+      "type": "string"
+    },
+    "reach": {
+      "type": "number"
+    },
+    "impressions": {
+      "type": "number"
+    },
+    "likes": {
+      "type": "number"
+    },
+    "comments": {
+      "type": "number"
+    },
+    "shares": {
+      "type": "number"
+    },
+    "saves": {
+      "type": "number"
+    },
+    "clicks": {
+      "type": "number"
+    },
+    "video_completion_rate": {
+      "type": "number"
+    },
+    "follower_growth": {
+      "type": "number"
+    },
+    "engagement_rate": {
+      "type": "number"
+    },
+    "performance_score": {
+      "type": "number"
+    },
+    "performance_label": {
+      "type": "string",
+      "enum": [
+        "Winner",
+        "Good",
+        "Average",
+        "Underperformer",
+        "Pending"
+      ]
+    },
+    "pillar": {
+      "type": "string",
+      "enum": [
+        "Convenience",
+        "Trust",
+        "Transformation",
+        "Recruitment",
+        "Local",
+        "Proof"
+      ]
+    },
+    "audience": {
+      "type": "string"
+    },
+    "hook": {
+      "type": "string"
+    },
+    "week_tag": {
+      "type": "string"
+    },
+    "campaign_tag": {
+      "type": "string"
+    },
+    "notes": {
+      "type": "string"
+    },
+    "analyzed": {
+      "type": "boolean"
+    }
+  },
+  "required": [],
+  "name": "PostPerformance"
+}
