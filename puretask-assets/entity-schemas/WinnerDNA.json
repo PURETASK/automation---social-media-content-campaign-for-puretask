@@ -1,0 +1,99 @@
+{
+  "type": "object",
+  "properties": {
+    "content_draft_id": {
+      "type": "string"
+    },
+    "title": {
+      "type": "string"
+    },
+    "winning_hook_style": {
+      "type": "string"
+    },
+    "winning_arc": {
+      "type": "string",
+      "enum": [
+        "Moment of Recognition",
+        "Industry Indictment",
+        "Math They Never Showed You",
+        "Character Story",
+        "Before/After Reveal",
+        "Poll/Engagement"
+      ]
+    },
+    "winning_pillar": {
+      "type": "string"
+    },
+    "winning_audience": {
+      "type": "string"
+    },
+    "winning_format": {
+      "type": "string"
+    },
+    "winning_platform": {
+      "type": "string"
+    },
+    "winning_cta_style": {
+      "type": "string"
+    },
+    "winning_voice": {
+      "type": "string"
+    },
+    "emotional_trigger": {
+      "type": "string"
+    },
+    "key_phrases": {
+      "type": "string"
+    },
+    "hook_quality_score": {
+      "type": "number"
+    },
+    "emotional_pull_score": {
+      "type": "number"
+    },
+    "avg_score": {
+      "type": "number"
+    },
+    "total_reach": {
+      "type": "number"
+    },
+    "total_engagement": {
+      "type": "number"
+    },
+    "pattern_notes": {
+      "type": "string"
+    },
+    "reuse_count": {
+      "type": "number"
+    },
+    "ab_hook_winner": {
+      "type": "string"
+    },
+    "ab_hook_variants": {
+      "type": "string"
+    },
+    "ab_test_platform": {
+      "type": "string"
+    },
+    "performance_label": {
+      "type": "string",
+      "enum": [
+        "Elite",
+        "Strong",
+        "Solid",
+        "Testing"
+      ]
+    },
+    "city": {
+      "type": "string"
+    },
+    "week_tag": {
+      "type": "string"
+    },
+    "campaign_tag": {
+      "type": "string"
+    }
+  },
+  "required": [],
+  "name": "WinnerDNA"
+}
