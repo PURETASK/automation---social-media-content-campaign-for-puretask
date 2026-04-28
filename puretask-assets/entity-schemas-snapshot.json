@@ -1,0 +1,27 @@
+{
+  "generated_at": "2026-04-16T23:01:00-07:00",
+  "app_id": "69d5e4bdf3e0e9aab2818c8a",
+  "entity_count": 5,
+  "schemas": [
+    {
+      "entity_name": "ContentDraft",
+      "description": "Social media content drafts with platform-specific variations, scoring, and posting metadata"
+    },
+    {
+      "entity_name": "PostPerformance",
+      "description": "Analytics and performance metrics for posted content across platforms"
+    },
+    {
+      "entity_name": "MarketResearch",
+      "description": "Market research findings, trending topics, competitor intel, and seasonal insights"
+    },
+    {
+      "entity_name": "ContentIdea",
+      "description": "Brainstormed content ideas with scoring, format suggestions, and winner pattern matching"
+    },
+    {
+      "entity_name": "WinnerDNA",
+      "description": "Patterns and characteristics of high-performing content for reuse and optimization"
+    }
+  ]
+}
