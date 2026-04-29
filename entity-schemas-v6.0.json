@@ -1,0 +1,101 @@
+{
+  "timestamp": "2026-04-28T23:01:00Z",
+  "version": "6.0",
+  "environment": "production",
+  "entities": {
+    "ContentDraft": {
+      "description": "Multi-platform content generation with video, image, and platform-specific captions",
+      "fields": [
+        "title",
+        "audience",
+        "pillar",
+        "hook",
+        "primary_caption",
+        "short_caption",
+        "long_caption",
+        "cta_1",
+        "cta_2",
+        "cta_3",
+        "image_prompt",
+        "image_url",
+        "video_prompt",
+        "heygen_video_id",
+        "status",
+        "week_tag",
+        "campaign_tag"
+      ]
+    },
+    "ContentIdea": {
+      "description": "Brainstorm and ideation tracking with scoring and pillar mapping",
+      "fields": [
+        "idea_title",
+        "concept",
+        "pillar",
+        "audience",
+        "hook_options",
+        "format_suggestion",
+        "predicted_score",
+        "status",
+        "week_tag",
+        "campaign_tag"
+      ]
+    },
+    "MarketResearch": {
+      "description": "Market research input, trend analysis, and actionable insights",
+      "fields": [
+        "title",
+        "research_type",
+        "source",
+        "source_url",
+        "summary",
+        "suggested_pillar",
+        "suggested_audience",
+        "sentiment",
+        "urgency",
+        "actionable",
+        "research_date"
+      ]
+    },
+    "PostPerformance": {
+      "description": "Post analytics, engagement metrics, and performance tracking",
+      "fields": [
+        "content_draft_id",
+        "platform",
+        "posted_at",
+        "reach",
+        "impressions",
+        "likes",
+        "comments",
+        "shares",
+        "saves",
+        "engagement_rate",
+        "performance_score",
+        "performance_label",
+        "pillar",
+        "audience"
+      ]
+    },
+    "WinnerDNA": {
+      "description": "High-performing content pattern extraction and reuse tracking",
+      "fields": [
+        "content_draft_id",
+        "title",
+        "winning_hook_style",
+        "winning_pillar",
+        "winning_audience",
+        "winning_platform",
+        "emotional_trigger",
+        "key_phrases",
+        "avg_score",
+        "total_reach",
+        "total_engagement",
+        "performance_label"
+      ]
+    }
+  },
+  "metadata": {
+    "total_entities": 5,
+    "total_fields": 64,
+    "description": "PureTask v6.0 Content Generation System \u2014 Entity Schemas"
+  }
+}
