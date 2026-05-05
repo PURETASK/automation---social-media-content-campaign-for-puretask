@@ -1,0 +1,59 @@
+{
+  "export_timestamp": "2026-05-03T23:01:00Z",
+  "app_id": "69d5e4bdf3e0e9aab2818c8a",
+  "schemas": {
+    "ContentDraft": {
+      "entity_name": "ContentDraft",
+      "description": "Master content drafts for all platforms, campaigns, and audiences",
+      "fields": 44,
+      "key_fields": ["title", "pillar", "audience", "hook", "primary_caption", "status", "campaign_tag", "week_tag", "platform_x", "platform_instagram", "platform_facebook", "platform_linkedin", "platform_tiktok", "platform_pinterest", "platform_threads", "platform_youtube", "clarity_score", "relatability_score", "conversion_score", "avg_performance_score", "is_winner"],
+      "enum_fields": {
+        "status": ["Draft", "Approved", "Scheduled", "Posted", "Archived"],
+        "pillar": ["Convenience", "Trust", "Transformation", "Recruitment", "Local", "Proof"],
+        "post_type": ["BeforeAfter", "Humor", "VideoScript", "Poll", "Carousel", "DataMath", "Education", "FOMO", "Recruitment", "Seasonal"]
+      }
+    },
+    "ContentIdea": {
+      "entity_name": "ContentIdea",
+      "description": "Brainstormed content ideas before conversion to drafts",
+      "fields": 28,
+      "key_fields": ["idea_title", "concept", "pillar", "audience", "hook_options", "format_suggestion", "status", "predicted_score", "best_platform", "campaign_tag"],
+      "enum_fields": {
+        "status": ["Brainstormed", "Selected", "Rejected", "Converted to Draft"],
+        "format_suggestion": ["Short Post", "Carousel", "Reel / Short Video", "Story Sequence", "Long-form Blog", "Testimonial Style", "Before/After", "FAQ / Objection", "Trending Audio Overlay", "Meme / Relatable", "How-To / Tutorial"]
+      }
+    },
+    "PostPerformance": {
+      "entity_name": "PostPerformance",
+      "description": "Analytics tracking for posted content across all platforms",
+      "fields": 25,
+      "key_fields": ["content_draft_id", "platform", "posted_at", "reach", "impressions", "likes", "comments", "shares", "engagement_rate", "performance_score", "performance_label", "analyzed"],
+      "enum_fields": {
+        "platform": ["Facebook", "Instagram", "TikTok", "LinkedIn", "X", "Pinterest", "Blog"],
+        "performance_label": ["Winner", "Good", "Average", "Underperformer", "Pending"]
+      }
+    },
+    "MarketResearch": {
+      "entity_name": "MarketResearch",
+      "description": "Market research, trends, competitor intel, and audience insights",
+      "fields": 16,
+      "key_fields": ["title", "research_type", "source", "summary", "relevance_to_puretask", "suggested_pillar", "suggested_audience", "sentiment", "urgency", "actionable", "used_in_brainstorm"],
+      "enum_fields": {
+        "research_type": ["Trending Topic", "Competitor Intel", "Audience Pain Point", "Seasonal Trend", "Industry News", "Platform Algorithm Change", "Viral Format"],
+        "sentiment": ["Positive", "Negative", "Neutral", "Frustrated", "Curious"],
+        "urgency": ["High", "Medium", "Low"]
+      }
+    },
+    "WinnerDNA": {
+      "entity_name": "WinnerDNA",
+      "description": "Pattern analysis of winning content — hooks, arcs, emotions, CTAs",
+      "fields": 23,
+      "key_fields": ["title", "winning_hook_style", "winning_arc", "winning_pillar", "winning_audience", "winning_platform", "emotional_trigger", "key_phrases", "hook_quality_score", "emotional_pull_score", "avg_score", "performance_label"],
+      "enum_fields": {
+        "winning_arc": ["Moment of Recognition", "Industry Indictment", "Math They Never Showed You", "Character Story", "Before/After Reveal", "Poll/Engagement"],
+        "performance_label": ["Elite", "Strong", "Solid", "Testing"]
+      }
+    }
+  },
+  "notes": "All schemas exported from Production app. Row-level security (RLS) enabled on content entities for multi-user access control. Timestamps auto-managed by Base44 platform."
+}
