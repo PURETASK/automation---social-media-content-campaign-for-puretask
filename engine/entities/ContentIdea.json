@@ -1,15 +1,6 @@
 {
   "name": "ContentIdea",
-  "description": "Content brainstorm ideas and concepts",
-  "fields": {
-    "idea_title": {
-      "type": "string"
-    },
-    "pillar": {
-      "type": "string"
-    },
-    "audience": {
-      "type": "string"
-    }
-  }
+  "type": "entity",
+  "synced_at": "2026-05-13T06:03:06.812Z",
+  "note": "Entity schema auto-synced from Base44"
 }
