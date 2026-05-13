@@ -1,15 +1,6 @@
 {
   "name": "MarketResearch",
-  "description": "Market research and trend data",
-  "fields": {
-    "title": {
-      "type": "string"
-    },
-    "research_type": {
-      "type": "string"
-    },
-    "actionable": {
-      "type": "boolean"
-    }
-  }
+  "type": "entity",
+  "synced_at": "2026-05-13T06:03:07.651Z",
+  "note": "Entity schema auto-synced from Base44"
 }
