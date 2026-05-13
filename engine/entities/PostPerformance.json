@@ -1,15 +1,6 @@
 {
   "name": "PostPerformance",
-  "description": "Analytics data for posted content",
-  "fields": {
-    "content_draft_id": {
-      "type": "string"
-    },
-    "platform": {
-      "type": "string"
-    },
-    "engagement_rate": {
-      "type": "number"
-    }
-  }
+  "type": "entity",
+  "synced_at": "2026-05-13T06:03:08.484Z",
+  "note": "Entity schema auto-synced from Base44"
 }
