@@ -1,0 +1,12 @@
+{
+  "version": "6.0",
+  "timestamp": "2026-05-13T06:02:57.834Z",
+  "entities": [
+    "ContentDraft",
+    "ContentIdea",
+    "MarketResearch",
+    "PostPerformance",
+    "WinnerDNA"
+  ],
+  "automation": "Auto-Commit New Assets to GitHub"
+}
