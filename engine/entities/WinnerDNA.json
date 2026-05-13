@@ -1,15 +1,6 @@
 {
   "name": "WinnerDNA",
-  "description": "Winning content patterns and templates",
-  "fields": {
-    "title": {
-      "type": "string"
-    },
-    "winning_pillar": {
-      "type": "string"
-    },
-    "avg_score": {
-      "type": "number"
-    }
-  }
+  "type": "entity",
+  "synced_at": "2026-05-13T06:03:09.379Z",
+  "note": "Entity schema auto-synced from Base44"
 }
