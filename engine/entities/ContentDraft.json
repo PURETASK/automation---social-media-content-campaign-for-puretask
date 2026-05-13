@@ -1,25 +1,6 @@
 {
   "name": "ContentDraft",
-  "description": "Marketing content drafts for multi-platform publishing",
-  "fields": {
-    "title": {
-      "type": "string"
-    },
-    "audience": {
-      "type": "string"
-    },
-    "pillar": {
-      "type": "string"
-    },
-    "status": {
-      "type": "string",
-      "enum": [
-        "Draft",
-        "Approved",
-        "Scheduled",
-        "Posted",
-        "Archived"
-      ]
-    }
-  }
+  "type": "entity",
+  "synced_at": "2026-05-13T06:03:05.971Z",
+  "note": "Entity schema auto-synced from Base44"
 }
